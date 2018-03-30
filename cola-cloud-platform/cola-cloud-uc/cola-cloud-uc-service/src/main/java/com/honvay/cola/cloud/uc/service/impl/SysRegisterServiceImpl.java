@@ -1,7 +1,6 @@
 package com.honvay.cola.cloud.uc.service.impl;
 
 import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
-import com.honvay.cola.cloud.uc.constant.UcConstant;
 import com.honvay.cola.cloud.uc.entity.SysRegister;
 import com.honvay.cola.cloud.uc.entity.SysUser;
 import com.honvay.cola.cloud.uc.model.SysRegisterDTO;
