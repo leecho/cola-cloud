@@ -19,7 +19,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@TableName("adi_dict")
+@TableName("cola_dict")
 public class Dict implements Serializable {
 
     private static final long serialVersionUID = 1L;

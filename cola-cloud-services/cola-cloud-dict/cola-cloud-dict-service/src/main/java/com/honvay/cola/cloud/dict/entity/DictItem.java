@@ -20,7 +20,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@TableName("adi_dict_item")
+@TableName("cola_dict_item")
 public class DictItem extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -22,7 +22,7 @@ public interface DictItemMapper extends BaseMapper<DictItem> {
      * @param code
      * @return
      */
-    @Select("select * from adi_dict_item t " +
-            " where t.dict_id in (select id from adi_dict d where d.code = #{code} order by order_no)")
+    @Select("select * from cola_dict_item t " +
+            " where t.dict_id in (select id from cola_dict d where d.code = #{code} order by order_no)")
     public List<DictItem> selectListByDictCode(@Param("code") String code);
 }
