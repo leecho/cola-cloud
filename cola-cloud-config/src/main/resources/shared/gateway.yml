@@ -1,0 +1,63 @@
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 60000
+
+  routes:
+    auth-service:
+        path: /uaa/**
+        serviceId: auth-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+    organization-service:
+            path: /organization/**
+            serviceId: organization-service
+            stripPrefix: false
+            sensitiveHeaders:
+
+    uc-service:
+        path: /uc/**
+        serviceId: uc-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+    upm-service:
+        path: /upm/**
+        serviceId: upm-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+    notification-service:
+        path: /notifications/**
+        serviceId: notification-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+    common-service:
+        path: /common/**
+        serviceId: common-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+    management-service:
+            path: /management/**
+            serviceId: management-service
+            stripPrefix: false
+            sensitiveHeaders:
+
+server:
+  port: 4000

@@ -1,0 +1,8 @@
+spring:
+  oauth2:
+    resource:
+      filter-order: 0
+      user-info-uri: /users/current
+server:
+  context-path: /uaa
+  port: 5000

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8"/>
+    <title>Cola Cloud</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="asset/dist/css/share.min.css" type="text/css"/>
+    <link rel="stylesheet" href="asset/dist/css/control.min.css" type="text/css"/>
+    <link rel="stylesheet" href="asset/dist/css/app.min.css" type="text/css"/>
+    <!-- <link rel="stylesheet" href="asset/css/control.css" type="text/css" />
+    <link rel="stylesheet" href="asset/css/index.css" type="text/css" /> -->
+    <link rel="shortcut icon" href="asset/img/favicon.ico" media="screen"/>
+</head>
+<body ng-controller="AppCtrl">
+<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+<input id="uploadFile" type="file" multiple="multiple" class="hidden"
+       onchange="angular.element(this).scope().onUploadFileChange()"/>
+<div class="app app-client" id="app">
+    <div class="app-header box-shadow pos-rlt bg-primary w-full">
+        <div class="collapse pos-rlt navbar-collapse">
+            <div class="wrapper-sm inline">
+                <a href="#" class="text-lt">
+		          <span class="m-r-xs">
+                    <span class="app-name"><i class="fa fa-code"></i>
+                        Cola Cloud - 代码生成器</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="app-content" style="overflow: hidden">
+        <div ui-butterbar></div>
+        <div class="app-content-body " ui-view></div>
+    </div>
+    <!-- /content -->
+</div>
+<script src="asset/dist/js/basic.min.js"></script>
+<script src="asset/dist/js/basic.angular.js"></script>
+<script src="asset/dist/js/basic.module.js"></script>
+<script src="asset/js/app.js"></script>
+<script src="asset/js/devtools/devtools.js"></script>
+</body>
+</html>

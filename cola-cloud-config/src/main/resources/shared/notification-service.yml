@@ -1,0 +1,18 @@
+server:
+  context-path: /notification
+  port: 8001
+
+cola:
+  sms:  #短信配置
+    type: aliyun
+    aliyun:
+      access-key-id:
+      access-key-secret:
+spring:
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username:
+    password:
+    from:
+    name:

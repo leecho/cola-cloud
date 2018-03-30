@@ -1,0 +1,3 @@
+server:
+  context-path: /upm
+  port: 6005

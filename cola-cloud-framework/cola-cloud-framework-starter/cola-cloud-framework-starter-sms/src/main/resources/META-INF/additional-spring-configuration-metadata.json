@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "cola.sms.type",
+    "type": "java.lang.String",
+    "description": "A description for 'cola.sms.type'"
+  },
+  {
+    "name": "cola.sms.aliyun.access-key-id",
+    "type": "java.lang.String",
+    "description": "A description for 'cola.sms.aliyun.access-key-id'"
+  },
+  {
+    "name": "cola.sms.aliyun.access-key-secret",
+    "type": "java.lang.String",
+    "description": "A description for 'cola.sms.aliyun.access-key-secret'"
+  }
+]}

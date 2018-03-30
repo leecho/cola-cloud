@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.honvay.cola</groupId>
+		<artifactId>cola-cloud-platform</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>cola-cloud-uc</artifactId>
+    <modules>
+        <module>cola-cloud-uc-service</module>
+		<module>cola-cloud-uc-model</module>
+		<module>cola-cloud-uc-client</module>
+    </modules>
+    <packaging>pom</packaging>
+	<name>cola-cloud-uc</name>
+
+
+</project>

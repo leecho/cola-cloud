@@ -1,0 +1,19 @@
+package
+
+    ${package.Service}
+        ;
+    ${package.Entity}.${entity};
+    ${superServiceClassPackage}
+        ;
+
+/**
+ * <p>
+ * $!{table.comment} 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+	
+}

@@ -1,0 +1,3 @@
+server:
+  context-path: /organization
+  port: 8000
