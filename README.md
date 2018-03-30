@@ -146,7 +146,7 @@ cola:
 
 ### 存储配置
 ```yml
-cola
+cola:
   storage:
     type: aliyun
     oss:
