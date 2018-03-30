@@ -38,7 +38,6 @@ public class SysRegisterServiceImpl extends BaseSerivceImpl<SysRegister> impleme
         Date date = new Date();
         sysUser.setCreateTime(date);
         sysUser.setUpdateTime(date);
-        sysUser.setType(UcConstant.USER_TYPE_FEEDER);
         sysUserService.insert(sysUser);
 
         // 新增注册信息
