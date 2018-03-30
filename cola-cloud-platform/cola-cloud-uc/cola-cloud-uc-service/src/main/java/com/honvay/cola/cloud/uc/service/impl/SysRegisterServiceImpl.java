@@ -32,7 +32,7 @@ public class SysRegisterServiceImpl extends BaseSerivceImpl<SysRegister> impleme
         // 新增手机注册用户
         SysUser sysUser = new SysUser();
         sysUser.setPhoneNumber(sysRegisterDTO.getPhoneNumber());
-        String name = "xknf" + System.currentTimeMillis();
+        String name = "colauser" + System.currentTimeMillis();
         sysUser.setUsername(name);
         sysUser.setName(name);
         Date date = new Date();
