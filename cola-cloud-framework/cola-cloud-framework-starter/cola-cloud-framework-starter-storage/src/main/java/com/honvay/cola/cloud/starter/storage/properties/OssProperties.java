@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * 阿里云文件上传属性配置
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017年12月14日10:29:37
  */
 @ConfigurationProperties(prefix = "cola.storage.oss" )

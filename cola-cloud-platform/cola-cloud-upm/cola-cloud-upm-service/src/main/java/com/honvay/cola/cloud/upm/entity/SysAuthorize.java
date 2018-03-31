@@ -14,8 +14,7 @@ import java.io.Serializable;
  * 权限-资源中间表
  * </p>
  *
- * @author fengshuonan
- * @since 2017-11-23
+ * @author LIQIU
  */
 @Data
 @Accessors(chain = true)

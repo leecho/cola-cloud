@@ -6,7 +6,7 @@ import com.honvay.cola.cloud.framework.util.StringUtils;
 /**
  * 通用的模板生成引擎
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-05-09 20:32
  */
 public class SimpleTemplateEngine extends TemplateEngine {

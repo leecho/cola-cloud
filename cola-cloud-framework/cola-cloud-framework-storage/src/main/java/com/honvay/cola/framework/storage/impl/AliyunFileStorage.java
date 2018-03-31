@@ -12,7 +12,7 @@ import java.io.*;
 /**
  * 阿里云文件上传
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-12-14-上午10:53
  */
 public class AliyunFileStorage implements FileStorage {

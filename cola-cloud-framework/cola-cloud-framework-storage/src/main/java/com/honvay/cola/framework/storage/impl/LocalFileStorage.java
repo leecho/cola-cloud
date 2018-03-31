@@ -9,7 +9,7 @@ import java.io.*;
 /**
  * 本地文件上传
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-12-14-上午10:52
  */
 public class LocalFileStorage implements FileStorage {

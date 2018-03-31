@@ -20,7 +20,7 @@ import java.util.Properties;
 /**
  * 邮件发送配置
  *
- * @author fengshuonan
+ * @author LIQIU
  * @Date 2017/12/12 下午4:53
  */
 @Configuration

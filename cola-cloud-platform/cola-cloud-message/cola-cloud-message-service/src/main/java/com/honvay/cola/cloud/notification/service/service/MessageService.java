@@ -11,7 +11,7 @@ import java.util.List;
  * 站内信表 服务类
  * </p>
  *
- * @author 周鹏飞
+ * @author LIQIU
  * @date 2018-03-13
  */
 public interface MessageService extends BaseService<Message> {

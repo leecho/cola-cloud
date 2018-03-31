@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * 房重复提交标识的存储(通过实现此接口拓展不同的存储方式,可存入redis可存入session等等)
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-12-06-下午3:52
  */
 public class DuplicationVerifyTokenRepository {

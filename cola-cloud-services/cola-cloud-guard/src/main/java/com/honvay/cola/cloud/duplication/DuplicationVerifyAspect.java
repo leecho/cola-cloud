@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 防重复提交验证,渲染页面之前的操作
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-12-06-下午2:51
  */
 @Aspect

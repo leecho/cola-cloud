@@ -24,7 +24,7 @@ import java.util.Arrays;
 /**
  * 文件上传自动配置
  *
- * @author fengshuonan
+ * @author LIQIU
  * @Date 2017/12/12 下午4:53
  */
 @Configuration

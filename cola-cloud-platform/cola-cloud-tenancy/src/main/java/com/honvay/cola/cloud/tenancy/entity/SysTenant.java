@@ -15,7 +15,7 @@ import java.util.Date;
  * 租户表
  * </p>
  *
- * @author fengshuonan
+ * @author LIQIU
  * @since 2017-11-23
  */
 @Data

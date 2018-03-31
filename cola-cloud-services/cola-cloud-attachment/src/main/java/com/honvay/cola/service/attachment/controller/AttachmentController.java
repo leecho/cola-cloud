@@ -20,7 +20,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * 文件上传控制器
  *
- * @author fengshuonan
+ * @author LIQIU
  * @Date Thu Dec 14 15:57:29 CST 2017
  */
 @EnableAudit

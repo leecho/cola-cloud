@@ -5,7 +5,7 @@ import java.io.InputStream;
 /**
  * 文件上传接口
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-12-14-上午10:45
  */
 public interface FileStorage {
@@ -16,7 +16,7 @@ public interface FileStorage {
      * @param fileBytes 文件的字节数组
      * @param key 文件名
      * @return 文件标识的唯一id
-     * @author fengshuonan
+     * @author LIQIU
      * @Date 2017/12/14 上午11:28
      */
     void store(byte[] fileBytes, String key);
@@ -32,7 +32,7 @@ public interface FileStorage {
      * 下载文件
      *
      * @param key 文件名(带后缀名的)
-     * @author fengshuonan
+     * @author LIQIU
      * @Date 2017/12/14 上午11:28
      */
     byte[] getBytes(String key);

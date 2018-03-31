@@ -6,7 +6,7 @@ import com.honvay.cola.cloud.devtools.generator.engine.config.*;
 /**
  * 模板生成父类
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-05-08 20:17
  */
 public class AbstractTemplateEngine {

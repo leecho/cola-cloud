@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 防重复提交的控制器
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017年12月06日16:17:29
  */
 @EnableAudit
@@ -30,7 +30,7 @@ public class DuplicationVerifyTokenController {
     /**
      * 获取防重复提交的唯一标识码
      *
-     * @author fengshuonan
+     * @author LIQIU
      */
     @GetMapping(path = "/token")
     @ResponseBody

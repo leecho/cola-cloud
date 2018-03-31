@@ -3,7 +3,7 @@ package com.honvay.cola.cloud.devtools.generator.engine.config;
 /**
  * Dao模板生成的配置
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-05-07 22:12
  */
 public class DaoConfig {

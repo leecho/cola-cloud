@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 代码生成的抽象配置
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-10-28-下午8:22
  */
 public abstract class AbstractGeneratorConfig {

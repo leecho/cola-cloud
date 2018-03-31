@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * 邮件发送参数配置
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-12-13-下午1:36
  */
 public class MailSenderParams {

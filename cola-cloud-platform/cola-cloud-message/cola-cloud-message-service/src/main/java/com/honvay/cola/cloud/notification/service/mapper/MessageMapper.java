@@ -8,7 +8,7 @@ import com.honvay.cola.cloud.notification.service.entity.Message;
   * 站内信表 Mapper 接口
  * </p>
  *
- * @author 周鹏飞
+ * @author LIQIU
  * @date 2018-03-13
  */
 public interface MessageMapper extends BaseMapper<Message> {

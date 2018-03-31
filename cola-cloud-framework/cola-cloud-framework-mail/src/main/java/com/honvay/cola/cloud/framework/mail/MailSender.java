@@ -20,7 +20,7 @@ import java.util.Properties;
 /**
  * 邮件发送服务
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017年12月12日16:53:19
  */
 public class MailSender {

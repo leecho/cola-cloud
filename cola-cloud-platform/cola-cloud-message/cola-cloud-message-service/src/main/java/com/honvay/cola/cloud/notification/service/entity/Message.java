@@ -14,7 +14,7 @@ import java.util.Date;
  * 站内信表
  * </p>
  *
- * @author 周鹏飞
+ * @author LIQIU
  * @since 2018-03-13
  */
 @Data

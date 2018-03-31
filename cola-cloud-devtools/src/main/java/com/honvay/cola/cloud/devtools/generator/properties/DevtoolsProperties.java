@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * 代码生成配置
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-12-13-下午4:53
  */
 @Component

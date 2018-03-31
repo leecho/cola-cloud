@@ -22,7 +22,7 @@ import java.util.List;
  * 站内信表 服务实现类
  * </p>
  *
- * @author 周鹏飞
+ * @author LIQIU
  * @date 2018-03-13
  */
 @Service

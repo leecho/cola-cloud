@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * 邮件服务的配置
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-12-13-上午11:15
  */
 @Component

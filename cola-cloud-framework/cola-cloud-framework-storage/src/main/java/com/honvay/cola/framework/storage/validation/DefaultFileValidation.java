@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 默认的文件合法性校验器
  *
- * @author fengshuonan
+ * @author LIQIU
  * @date 2017-12-14-下午1:56
  */
 public class DefaultFileValidation implements FileValidator {
