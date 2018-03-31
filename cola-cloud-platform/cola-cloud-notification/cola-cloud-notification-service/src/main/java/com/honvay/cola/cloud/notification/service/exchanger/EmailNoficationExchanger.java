@@ -22,7 +22,7 @@ public class EmailNoficationExchanger implements NotificationExchanger{
     }
 
     @Override
-    public String exchange(Notification notification) {
-        return null;
+    public boolean exchange(Notification notification) {
+        return false;
     }
 }

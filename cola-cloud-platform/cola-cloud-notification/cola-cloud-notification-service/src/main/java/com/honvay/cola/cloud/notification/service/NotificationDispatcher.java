@@ -2,6 +2,7 @@ package com.honvay.cola.cloud.notification.service;
 
 import com.honvay.cola.cloud.notification.model.Notification;
 import com.honvay.cola.cloud.notification.service.exchanger.NotificationExchanger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author LIQIU
@@ -25,6 +28,7 @@ import java.util.Map;
  **/
 @Component
 @RabbitListener(queues = "${cola.notification.queue.name:notification-queue}")
+@Slf4j
 public class NotificationDispatcher implements ApplicationContextAware{
 
     private Logger logger = Logger.getLogger(this.getClass());
@@ -39,16 +43,22 @@ public class NotificationDispatcher implements ApplicationContextAware{
         return new Queue(notificationQueueName);
     }
 
-    @Autowired
-    private RabbitTemplate template;
+    private ExecutorService executorService;
+
+    public NotificationDispatcher(){
+        Integer availableProcessors = Runtime.getRuntime().availableProcessors();
+        Integer numOfThreads = availableProcessors + 1;
+        executorService = new ThreadPoolExecutor(numOfThreads,numOfThreads,0,TimeUnit.MILLISECONDS,new LinkedBlockingDeque<>());
+        log.info("Init Notification ExecutorService , numOfThread : " + numOfThreads);
+    }
 
     @RabbitHandler
     public void dispatch(@Payload Notification notification){
         if(notification != null && exchangers != null){
-            Notification finalNotification = notification;
             exchangers.forEach((exchanger) -> {
-                if(exchanger.support(finalNotification)){
-                    exchanger.exchange(finalNotification);
+                if(exchanger.support(notification)){
+                    //添加到线程池进行处理
+                   executorService.submit(new NotificationTask(exchanger,notification));
                 }
             });
         }

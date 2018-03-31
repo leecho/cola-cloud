@@ -25,6 +25,8 @@ public class SmsNotificationExchanger implements NotificationExchanger {
 
     private SmsSender smsSender;
 
+    private final static String STATUS_OK = "OK";
+
     public SmsNotificationExchanger(SmsSender smsSender) {
         if (smsSender != null) {
             logger.info("初始化短信通知组件");
@@ -41,7 +43,7 @@ public class SmsNotificationExchanger implements NotificationExchanger {
     }
 
     @Override
-    public String exchange(Notification notification) {
+    public boolean exchange(Notification notification) {
 
         Assert.notNull(smsSender, "短信接口没有初始化");
 
@@ -66,6 +68,6 @@ public class SmsNotificationExchanger implements NotificationExchanger {
             }
         }
         SmsSendResult smsSendResult = smsSender.send(parameter);
-        return smsSendResult.getCode();
+        return STATUS_OK.equals(smsSendResult.getCode());
     }
 }

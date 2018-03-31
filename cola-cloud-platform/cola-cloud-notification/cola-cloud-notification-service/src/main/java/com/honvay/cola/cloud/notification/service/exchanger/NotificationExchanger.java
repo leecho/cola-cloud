@@ -10,5 +10,5 @@ public interface NotificationExchanger {
 
     boolean support(Object notification);
 
-    String exchange(Notification notification);
+    boolean exchange(Notification notification);
 }
