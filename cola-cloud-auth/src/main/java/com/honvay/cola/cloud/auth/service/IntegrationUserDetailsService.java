@@ -27,16 +27,7 @@ import java.util.List;
 public class IntegrationUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UcClient ucClient;
-
-    @Autowired
     private UpmClient upmClient;
-
-    @Autowired
-    private VccClient vccClient;
-
-    @Autowired
-    private DefaultAuthenticator defaultAuthenticator;
 
     private List<IntegrationAuthenticator> authenticators;
 

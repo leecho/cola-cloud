@@ -54,9 +54,11 @@ monitor，在config启动之后即可启动
 
 ### 访问
 ```js
+
 http://localhost:4000/ 服务网关，已经聚合了所有服务的Swagger
 http://localhost:8761/ 注册中心，可以查看服务注册情况
 http://localhost:8080/ 监控中心，可以查看服务运行状态
+
 ```
 ### 获取ACCESS_TOKEN
 ```js
@@ -155,3 +157,22 @@ cola:
       bucket-name: 
       endpoint: 
 ```
+
+## 系统截图
+### 获取Token
+![](images/token.jpg)
+
+### 注册中心
+![](images/registry.png)
+
+### API文档
+![](images/gateway.png)
+
+### 监控中心
+![](images/monitor.png)
+
+### 监控详细信息
+![](images/detail.png)
+
+### 链路追踪
+![](images/zipkin.jpg)
