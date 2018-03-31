@@ -17,7 +17,7 @@ public class IntegrationAuthentication {
 
     public String getAuthParameter(String paramter){
         String[] values = this.authParameters.get(paramter);
-        if(values != null || values.length > 0){
+        if(values != null && values.length > 0){
             return values[0];
         }
         return null;
