@@ -1,8 +1,6 @@
 package com.honvay.cola.cloud.auth.exception;
 
-import com.honvay.cola.cloud.framework.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

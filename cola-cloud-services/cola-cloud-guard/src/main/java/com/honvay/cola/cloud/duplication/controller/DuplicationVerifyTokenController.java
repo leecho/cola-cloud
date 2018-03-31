@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.duplication.controller;
 
-import com.honvay.cola.cloud.framework.base.audit.EnableAudit;
 import com.honvay.cola.cloud.duplication.repository.DuplicationVerifyTokenRepository;
+import com.honvay.cola.cloud.framework.base.audit.EnableAudit;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

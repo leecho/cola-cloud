@@ -1,14 +1,11 @@
 package com.honvay.cola.cloud.devtools.generator.engine.config;
 
-import com.baomidou.mybatisplus.toolkit.IdWorker;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 全局配置

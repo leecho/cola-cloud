@@ -1,8 +1,8 @@
 package com.honvay.cola.cloud.vcc.controller;
 
-import com.honvay.cola.cloud.framework.util.StringUtils;
 import com.honvay.cola.cloud.framework.base.controller.BaseController;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
+import com.honvay.cola.cloud.framework.util.StringUtils;
 import com.honvay.cola.cloud.vcc.service.VerificationCodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,10 +28,10 @@ public class VerificationCodeController extends BaseController {
 
     @GetMapping("/token")
     @ApiOperation("获取新的验证码")
-    public Result<String> getToken(Integer size, Long expire, String type, String subject){
+    public Result<String> getToken(Integer size, Long expire, String type, String subject,Boolean sendSms){
         Object token = this.verificationCodeService.getToken(size,expire,type,subject);
         //如果有手机号则发送短信
-        if(StringUtils.isNotEmpty(subject) && StringUtils.isNumeric(subject)){
+        if(sendSms != null && sendSms && StringUtils.isNumeric(subject)){
             this.verificationCodeService.sendSms((String)token,subject);
         }
         return this.success(token);
@@ -39,8 +39,8 @@ public class VerificationCodeController extends BaseController {
 
     @GetMapping("/validate")
     @ApiOperation("校验验证码")
-    public Result<Boolean> validate(String token,String code,String phoneNumber){
-        return this.success(this.verificationCodeService.validate(token,code,phoneNumber));
+    public Result<Boolean> validate(String token,String code,String subject){
+        return this.success(this.verificationCodeService.validate(token,code,subject));
     }
 
     @GetMapping("/image")

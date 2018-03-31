@@ -3,7 +3,6 @@ package com.honvay.cola.cloud.notification.service;
 import com.honvay.cola.cloud.notification.model.Notification;
 import com.honvay.cola.cloud.notification.service.exchanger.NotificationExchanger;
 import org.apache.log4j.Logger;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

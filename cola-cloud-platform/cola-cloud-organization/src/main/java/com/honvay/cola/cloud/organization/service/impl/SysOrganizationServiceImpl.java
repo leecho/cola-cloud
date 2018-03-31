@@ -2,9 +2,9 @@ package com.honvay.cola.cloud.organization.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.honvay.cola.cloud.framework.util.Assert;
 import com.honvay.cola.cloud.framework.base.service.impl.TenancyServiceImpl;
 import com.honvay.cola.cloud.framework.core.constant.CommonConstant;
+import com.honvay.cola.cloud.framework.util.Assert;
 import com.honvay.cola.cloud.organization.entity.SysOrganization;
 import com.honvay.cola.cloud.organization.mapper.SysOrganizationMapper;
 import com.honvay.cola.cloud.organization.model.SysOrganizationVO;

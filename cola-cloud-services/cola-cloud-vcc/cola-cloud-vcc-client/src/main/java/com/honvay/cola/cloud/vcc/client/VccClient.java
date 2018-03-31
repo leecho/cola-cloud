@@ -20,13 +20,14 @@ public interface VccClient {
      */
     String API_PATH = "/api/v1";
 
-    @RequestMapping(value = "/base/vcc/token", method = RequestMethod.GET)
+    @RequestMapping(value = "/common/vcc/token", method = RequestMethod.GET)
     Result<String> getToken(@RequestParam("size") Integer size,
                             @RequestParam("expire") Long expire,
                             @RequestParam("type") String type,
-                            @RequestParam("phoneNumber") String phoneNumber);
+                            @RequestParam("subject") String subject,
+                            @RequestParam("sendSms") Boolean sendSms);
 
-    @RequestMapping(value = "/base/vcc/validate", method = RequestMethod.GET)
+    @RequestMapping(value = "/common/vcc/validate", method = RequestMethod.GET)
     Result<Boolean> validate(@RequestParam("token") String token, @RequestParam("code") String code, @RequestParam("subject") String subject);
 
 }

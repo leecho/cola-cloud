@@ -31,6 +31,6 @@ public class AuthController {
     @PostMapping("/sms/token")
     @ApiOperation("获取短信登录Token")
     public Result<String> getToken(String phoneNumber){
-        return vccClient.getToken(6,null,"0",phoneNumber);
+        return vccClient.getToken(6,null,"0",phoneNumber,true);
     }
 }

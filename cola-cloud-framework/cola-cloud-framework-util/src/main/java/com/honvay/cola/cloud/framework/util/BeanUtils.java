@@ -13,13 +13,12 @@
  */
 package com.honvay.cola.cloud.framework.util;
 
-import java.util.Map;
-
+import com.honvay.cola.cloud.framework.util.bean.NullAwareBeanUtilsBean;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.beans.BeanMap;
 
-import com.honvay.cola.cloud.framework.util.bean.NullAwareBeanUtilsBean;
+import java.util.Map;
 
 /**
  * <p> 基于CGlib，扩展BeanUtils，对于复杂类型的CGlib更有优势 </p>

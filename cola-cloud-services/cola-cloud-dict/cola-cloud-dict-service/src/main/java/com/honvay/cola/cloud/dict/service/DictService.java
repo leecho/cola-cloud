@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.dict.service;
 
-import com.honvay.cola.cloud.framework.base.service.BaseService;
 import com.honvay.cola.cloud.dict.entity.Dict;
+import com.honvay.cola.cloud.framework.base.service.BaseService;
 
 /**
  * <p>

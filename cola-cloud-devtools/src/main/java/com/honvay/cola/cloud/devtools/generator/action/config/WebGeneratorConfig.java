@@ -1,9 +1,9 @@
 package com.honvay.cola.cloud.devtools.generator.action.config;
 
-import com.honvay.cola.cloud.framework.util.StringUtils;
 import com.honvay.cola.cloud.devtools.generator.action.model.GenerateConfig;
 import com.honvay.cola.cloud.devtools.generator.config.rules.DbType;
 import com.honvay.cola.cloud.devtools.generator.config.rules.NamingStrategy;
+import com.honvay.cola.cloud.framework.util.StringUtils;
 
 import java.io.File;
 
