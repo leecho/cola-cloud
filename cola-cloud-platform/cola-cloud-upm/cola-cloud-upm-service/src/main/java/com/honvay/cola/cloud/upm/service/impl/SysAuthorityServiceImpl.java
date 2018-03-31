@@ -11,6 +11,7 @@ import com.honvay.cola.cloud.upm.entity.SysResource;
 import com.honvay.cola.cloud.upm.entity.SysRole;
 import com.honvay.cola.cloud.upm.mapper.SysResourceMapper;
 import com.honvay.cola.cloud.upm.mapper.SysRoleMapper;
+import com.honvay.cola.cloud.upm.model.SysAuthorityBatchDTO;
 import com.honvay.cola.cloud.upm.service.SysAuthorityService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,14 +77,6 @@ public class SysAuthorityServiceImpl extends BaseSerivceImpl<SysAuthority> imple
         EntityWrapper<SysResource> wrapper = new EntityWrapper<>();
         wrapper.andNew("id in (select sys_resource_id from cola_sys_authority t where t.sys_role_id = {0})",roleId);
         return this.sysResourceMapper.selectList(wrapper);
-        /*String sql = "select sys_resource_id from cola_sys_authority t where t.sys_role_id = {0}";
-        List<Object> resourceIds = commonMapper.selectObjs(sql, roleId);
-        if (CollectionUtils.isNotEmpty(resourceIds)) {
-            EntityWrapper<SysResource> wrapper = new EntityWrapper<>();
-            wrapper.in("id", resourceIds);
-            return this.sysResourceMapper.selectList(wrapper);
-        }
-        return null;*/
     }
 
     @Override
@@ -102,34 +95,16 @@ public class SysAuthorityServiceImpl extends BaseSerivceImpl<SysAuthority> imple
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void batchAddRole(Long resourceId, Long[] roleIds){
-        Assert.notNull(resourceId,"资源ID不能为空");
-        Assert.isTrue(roleIds.length > 0,"角色ID不能为为空");
-        for (Long roleId : roleIds) {
+    public void batch(SysAuthorityBatchDTO sysAuthorityBatchDTO){
+        for (Long roleId : sysAuthorityBatchDTO.getRoleIds()) {
             SysAuthority authority = new SysAuthority();
-            //已经存在的不能保存
-            if(this.exists(resourceId, roleId)) {
-                authority.setSysRoleId(roleId);
-                authority.setSysResourceId(resourceId);
-                this.insert(authority);
-            }
-        }
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void batchAddResource(Long roleId, Long[] resourceIds){
-        Assert.notNull(roleId,"角色ID不能为空");
-        Assert.isTrue(resourceIds.length > 0,"资源ID不能为为空");
-        //先将角色对应的权限清空
-        this.delete(new EntityWrapper<SysAuthority>().eq("sys_role_id",roleId));
-        for (Long resourceId : resourceIds) {
-            SysAuthority authority = new SysAuthority();
-            //已经存在的不能保存
-            if(this.exists(Long.valueOf(resourceId), roleId)) {
-                authority.setSysRoleId(roleId);
-                authority.setSysResourceId(Long.valueOf(resourceId));
-                this.insert(authority);
+            for(Long resourceId : sysAuthorityBatchDTO.getResourceIds()){
+                //已经存在的不能保存
+                if(this.exists(resourceId, roleId)) {
+                    authority.setSysRoleId(roleId);
+                    authority.setSysResourceId(resourceId);
+                    this.insert(authority);
+                }
             }
         }
     }

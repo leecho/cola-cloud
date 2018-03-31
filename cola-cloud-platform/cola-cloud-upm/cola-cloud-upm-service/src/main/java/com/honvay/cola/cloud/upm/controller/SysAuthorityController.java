@@ -5,10 +5,12 @@ import com.honvay.cola.cloud.framework.base.controller.BaseController;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.upm.entity.SysResource;
 import com.honvay.cola.cloud.upm.entity.SysRole;
+import com.honvay.cola.cloud.upm.model.SysAuthorityBatchDTO;
 import com.honvay.cola.cloud.upm.service.SysAuthorityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -55,29 +57,16 @@ public class SysAuthorityController extends BaseController {
 	public Result<List<SysResource>> listResourceByRole(Long roleId) {
 		return this.success(sysAuthorityService.getResourcesByRoleId(roleId));
 	}
-    /**
-     * 添加权限，多个角色ID使用","链接
-     * @param resourceId
-     * @param roleIds
-     * @return
-     */
-	@PostMapping("/batchAddRole")
-    @ApiOperation("批量添加权限角色")
-	public Result<String> add(Long resourceId ,Long[] roleIds) {
-		this.sysAuthorityService.batchAddRole(resourceId,roleIds);
-		return this.success();
-	}
 
     /**
      * 添加权限，多个资源ID使用","链接
-     * @param roleId
-     * @param resourceIds
+     * @param sysAuthorityBatchDTO
      * @return
      */
-    @PostMapping("/batchAddResource")
-    @ApiOperation("批量添加权限资源")
-    public Result<String> batchAddResource(Long roleId ,  Long[] resourceIds) {
-        this.sysAuthorityService.batchAddResource(roleId,resourceIds);
+    @PostMapping("/batch")
+    @ApiOperation("批量添加权限")
+    public Result<String> batch(@Validated SysAuthorityBatchDTO sysAuthorityBatchDTO) {
+        this.sysAuthorityService.batch(sysAuthorityBatchDTO);
         return this.success();
     }
 

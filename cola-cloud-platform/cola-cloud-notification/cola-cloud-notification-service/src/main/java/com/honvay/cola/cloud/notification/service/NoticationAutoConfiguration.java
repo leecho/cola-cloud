@@ -3,7 +3,7 @@ package com.honvay.cola.cloud.notification.service;
 import com.honvay.cola.cloud.framework.mail.MailSender;
 import com.honvay.cola.cloud.framework.sms.SmsSender;
 import com.honvay.cola.cloud.framework.starter.mail.MailAutoConfiguration;
-import com.honvay.cola.cloud.framework.starter.mail.SmsAutoConfiguration;
+import com.honvay.cola.cloud.framework.starter.sms.SmsAutoConfiguration;
 import com.honvay.cola.cloud.notification.service.exchanger.EmailNoficationExchanger;
 import com.honvay.cola.cloud.notification.service.exchanger.SmsNotificationExchanger;
 import com.honvay.cola.cloud.notification.service.exchanger.WebSocketNotificationExchanger;

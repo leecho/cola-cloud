@@ -24,9 +24,8 @@ public class SwaggerDocumentConfiguration implements SwaggerResourcesProvider {
         resources.add(swaggerResource("权限系统", "/upm/v2/api-docs", "2.0"));
         resources.add(swaggerResource("组织架构", "/organization/v2/api-docs", "2.0"));
         resources.add(swaggerResource("消息中心", "/message/v2/api-docs", "2.0"));
-        resources.add(swaggerResource("基础平台", "/management/v2/api-docs", "2.0"));
         resources.add(swaggerResource("通知中心", "/notification/v2/api-docs", "2.0"));
-        resources.add(swaggerResource("基础服务", "/base/v2/api-docs", "2.0"));
+        resources.add(swaggerResource("公共服务", "/common/v2/api-docs", "2.0"));
         return resources;
     }
 

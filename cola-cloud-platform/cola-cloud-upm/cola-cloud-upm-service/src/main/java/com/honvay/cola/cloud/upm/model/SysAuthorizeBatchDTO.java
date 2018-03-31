@@ -15,10 +15,10 @@ import java.io.Serializable;
  **/
 @Data
 @Accessors(chain = true)
-@ApiModel("批量添加角色授权对象")
+@ApiModel("批量授权")
 public class SysAuthorizeBatchDTO implements Serializable {
     @NotNull(message = "角色ID不能为空")
-    @ApiModelProperty("角色ID不能为空")
+    @ApiModelProperty("角色ID")
     private Long[] roleIds;
     @NotNull(message = "授权对象ID不能为空")
     @ApiModelProperty("授权对象(用户或者租户)ID字符串，多个使用,拼接")

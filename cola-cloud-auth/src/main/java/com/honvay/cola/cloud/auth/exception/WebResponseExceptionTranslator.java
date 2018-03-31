@@ -2,6 +2,7 @@ package com.honvay.cola.cloud.auth.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.exceptions.BadClientCredentialsException;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class WebResponseExceptionTranslator extends DefaultWebResponseExceptionTranslator {
 
-    public static final String BAD_MSG = "凭证错误";
+    public static final String BAD_MSG = "坏的凭证";
 
     /**
      * @param e spring security内部异常
@@ -30,14 +31,12 @@ public class WebResponseExceptionTranslator extends DefaultWebResponseExceptionT
         log.error("Grant Error : " + e);
         e.printStackTrace();
         OAuth2Exception oAuth2Exception;
-        if (e instanceof InternalAuthenticationServiceException) {
-            oAuth2Exception = new InvalidGrantException("系统内部错误", e);
-        } else if(e instanceof UsernameNotFoundException){
+        if (e.getMessage() != null && e.getMessage().equals(BAD_MSG)) {
             oAuth2Exception = new InvalidGrantException("用户名或密码错误", e);
-        }else if(e instanceof BadClientCredentialsException){
-            oAuth2Exception = new InvalidGrantException("用户名或密码错误", e);
-        }  else{
-            oAuth2Exception = new UnsupportedResponseTypeException("服务处理异常", e);
+        }else if (e instanceof InternalAuthenticationServiceException) {
+            oAuth2Exception = new InvalidGrantException(e.getMessage(), e);
+        }   else{
+            oAuth2Exception = new UnsupportedResponseTypeException("服务内部错误", e);
         }
         return super.translate(oAuth2Exception);
     }

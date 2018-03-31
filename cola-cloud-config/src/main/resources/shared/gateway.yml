@@ -52,12 +52,5 @@ zuul:
         serviceId: common-service
         stripPrefix: false
         sensitiveHeaders:
-
-    management-service:
-            path: /management/**
-            serviceId: management-service
-            stripPrefix: false
-            sensitiveHeaders:
-
 server:
   port: 4000

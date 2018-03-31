@@ -98,10 +98,11 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
             VerificationCodeUtils.generateVerifyCode(size);
         }
         String token = UUID.randomUUID().toString().replaceAll("-","");
+        String realToken = token;
         if(StringUtils.isNotEmpty(subject)){
-            token = subject + "@" + token;
+            realToken = subject + "@" + token;
         }
-        this.putCache(token, code,expire);
+        this.putCache(realToken, code,expire);
         return token;
     }
 
@@ -124,13 +125,15 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
     @Override
     public void sendSms(String token, String templateCode, String signName, String phoneNumber, String codeParamName, Map<String, Object> params) {
-        //Assert.isTrue(smsSender != null, "短信组件没有初始化");
         Assert.isTrue(StringUtils.isNotEmpty(templateCode), "短信模板没有配置");
         Assert.isTrue(StringUtils.isNotEmpty(signName), "短信模板没有没有配置");
         Assert.isTrue(StringUtils.isNotEmpty(codeParamName), "验证码参数不能为空");
         if (params == null) {
             params = new HashMap<>();
         }
+
+        token = phoneNumber + "@" + token;
+
         //验证是否已经过期
         boolean isExpired = this.verificationCodeCache.isExpire(VERIFICATION_CODE_CACHE_NAME,token);
         if (isExpired) {

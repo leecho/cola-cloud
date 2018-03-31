@@ -1,5 +1,6 @@
 package com.honvay.cola.cloud.auth.integration.authenticator.sms;
 
+import com.honvay.cola.cloud.auth.exception.BadVerificatioinCodeException;
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
 import com.honvay.cola.cloud.auth.integration.authenticator.sms.event.SmsAuthenticateBeforeEvent;
@@ -39,12 +40,12 @@ public class SmsIntegrationAuthenticator implements IntegrationAuthenticator,App
     public UserVO authenticate(IntegrationAuthentication integrationAuthentication) {
 
       String smsToken = integrationAuthentication.getAuthParameter("sms_token");
-      String smsCode = integrationAuthentication.getAuthParameter("sms_code");
+      String smsCode = integrationAuthentication.getAuthParameter("password");
       String username = integrationAuthentication.getUsername();
 
-      Result<Boolean> result = vccClient.validate(smsToken,smsCode,integrationAuthentication.getUsername());
+      Result<Boolean> result = vccClient.validate(smsToken,smsCode,username);
         if(!result.getData()){
-            throw new BadCredentialsException("验证码错误");
+            throw new BadVerificatioinCodeException("验证码错误或已过期");
         }
         //发布事件，可以监听事件进行自动注册用户
         this.applicationEventPublisher.publishEvent(new SmsAuthenticateBeforeEvent(integrationAuthentication));

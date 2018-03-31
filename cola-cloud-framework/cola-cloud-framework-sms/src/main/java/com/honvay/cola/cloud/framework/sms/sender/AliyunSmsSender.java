@@ -81,7 +81,7 @@ public class AliyunSmsSender implements SmsSender {
             throw new RuntimeException("发送短信发生错误：" + e);
         }
         if (sendSmsResponse.getCode() == null || !STATUS_OK.equals(sendSmsResponse.getCode())) {
-            logger.error("发送短信失败");
+            logger.error("发送短信失败：" + sendSmsResponse.getMessage());
             result.setSuccess(false);
             result.setCode(sendSmsResponse.getCode());
             return result;

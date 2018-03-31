@@ -5,6 +5,8 @@ import com.honvay.cola.cloud.framework.base.service.BaseService;
 import com.honvay.cola.cloud.upm.entity.SysAuthority;
 import com.honvay.cola.cloud.upm.entity.SysResource;
 import com.honvay.cola.cloud.upm.entity.SysRole;
+import com.honvay.cola.cloud.upm.model.SysAuthorityBatchDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
@@ -39,18 +41,10 @@ public interface SysAuthorityService extends BaseService<SysAuthority> {
     Collection<String> getResourceCodesByAuthorizeTargetAndType(Long target, String type);
 
     /**
-     * 批量添加角色授权
-     * @param resourceId
-     * @param roleIds
+     * 批量添加权限
+     * @param sysAuthorityBatchDTO
      */
-    void batchAddRole(Long resourceId, Long[] roleIds);
-
-    /**
-     * 批量添加资源授权
-     * @param roleId
-     * @param resourceIds
-     */
-    void batchAddResource(Long roleId, Long[] resourceIds);
+    void batch(SysAuthorityBatchDTO sysAuthorityBatchDTO);
 
     /**
      * 判断是否存在

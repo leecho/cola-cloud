@@ -4,15 +4,7 @@ server:
 
 cola:
   sms:  #短信配置
-    type: aliyun
+    type:
     aliyun:
       access-key-id:
       access-key-secret:
-spring:
-  mail:
-    host: smtp.qq.com
-    port: 465
-    username:
-    password:
-    from:
-    name:

@@ -1,6 +1,7 @@
 package com.honvay.cola.cloud.auth.integration.authenticator;
 
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
+import com.honvay.cola.cloud.framework.util.StringUtils;
 import com.honvay.cola.cloud.uc.client.UcClient;
 import com.honvay.cola.cloud.uc.model.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,6 @@ public class DefaultAuthenticator implements IntegrationAuthenticator {
 
     @Override
     public boolean support(IntegrationAuthentication integrationAuthentication) {
-        return false;
+        return StringUtils.isEmpty(integrationAuthentication.getAuthType());
     }
 }

@@ -1,8 +1,8 @@
-package com.honvay.cola.cloud.framework.starter.mail;
+package com.honvay.cola.cloud.framework.starter.sms;
 
 import com.honvay.cola.cloud.framework.sms.SmsSender;
 import com.honvay.cola.cloud.framework.sms.sender.AliyunSmsSender;
-import com.honvay.cola.cloud.framework.starter.mail.config.AliyunSmsProperties;
+import com.honvay.cola.cloud.framework.starter.sms.config.AliyunSmsProperties;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

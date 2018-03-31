@@ -1,4 +1,4 @@
-package com.honvay.cola.cloud.framework.starter.mail.config;
+package com.honvay.cola.cloud.framework.starter.sms.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

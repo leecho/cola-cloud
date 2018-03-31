@@ -51,16 +51,16 @@ public class IntegrationUserDetailsService implements UserDetailsService {
         UserVO userVo = null;
         IntegrationAuthentication integrationAuthentication = IntegrationAuthenticationContext.get();
         //判断是否是集成登录
-        if(integrationAuthentication != null){
-            integrationAuthentication.setUsername(username);
-            userVo = this.authenticate(integrationAuthentication);
-        }else{
-            //使用默认的认证器
-            userVo = this.defaultAuthenticator.authenticate(integrationAuthentication);
+        if(integrationAuthentication == null){
+            integrationAuthentication = new IntegrationAuthentication();
+
         }
 
+        integrationAuthentication.setUsername(username);
+        userVo = this.authenticate(integrationAuthentication);
+
         if(userVo == null){
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException("用户名或密码错误");
         }
 
         User user = new User();
