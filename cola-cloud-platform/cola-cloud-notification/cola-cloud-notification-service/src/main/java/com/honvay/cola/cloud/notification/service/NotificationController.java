@@ -28,14 +28,14 @@ public class NotificationController{
     @ApiOperation("/短信通知")
     @PostMapping("/send/sms")
     public Result<String> sendSms(SmsNotification smsNotification){
-        this.dispatcher.dispatch(rabbitTemplate.getMessageConverter().toMessage(smsNotification,new MessageProperties()));
+        this.dispatcher.dispatch(smsNotification);
         return Result.buildSuccess("");
     }
 
     @ApiOperation("/邮件通知")
     @PostMapping("/send/email")
     public Result<String> sendEmail(EmailNotification emailNotification){
-        this.dispatcher.dispatch(rabbitTemplate.getMessageConverter().toMessage(emailNotification,new MessageProperties()));
+        this.dispatcher.dispatch(emailNotification);
         return Result.buildSuccess("");
     }
 

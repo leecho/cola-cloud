@@ -28,11 +28,11 @@ public class VerificationCodeController extends BaseController {
 
     @GetMapping("/token")
     @ApiOperation("获取新的验证码")
-    public Result<String> getToken(Integer size, Long expire, String type, String phoneNumber){
-        Object token = this.verificationCodeService.getToken(size,expire,type,phoneNumber);
+    public Result<String> getToken(Integer size, Long expire, String type, String subject){
+        Object token = this.verificationCodeService.getToken(size,expire,type,subject);
         //如果有手机号则发送短信
-        if(StringUtils.isNotEmpty(phoneNumber)){
-            this.verificationCodeService.sendSms((String)token,phoneNumber);
+        if(StringUtils.isNotEmpty(subject) && StringUtils.isNumeric(subject)){
+            this.verificationCodeService.sendSms((String)token,subject);
         }
         return this.success(token);
     }

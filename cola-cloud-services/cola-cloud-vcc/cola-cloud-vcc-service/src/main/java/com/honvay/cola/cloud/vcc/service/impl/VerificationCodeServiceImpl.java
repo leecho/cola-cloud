@@ -84,7 +84,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     private static final String MIXED_VRIFICATION_CODE = "1";
 
     @Override
-    public String getToken(Integer size, Long expire, String type,String phoneNumber){
+    public String getToken(Integer size, Long expire, String type,String subject){
         if(size == null) {
             size = this.verificationCodeSize;
         }
@@ -98,13 +98,10 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
             VerificationCodeUtils.generateVerifyCode(size);
         }
         String token = UUID.randomUUID().toString().replaceAll("-","");
-        this.putCache(token, code,expire);
-
-        //绑定手机号
-        if(StringUtils.isNotEmpty(phoneNumber)){
-            this.verificationCodeCache.set(VERIFICATION_CODE_PHONE_NUMBER_CACHE_NAME,token,phoneNumber,expire);
+        if(StringUtils.isNotEmpty(subject)){
+            token = subject + "@" + token;
         }
-
+        this.putCache(token, code,expire);
         return token;
     }
 
@@ -152,26 +149,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         String value = this.getCode(token);
         params.put(codeParamName, value);
         smsNotification.setParams(params);
-
         notificationClient.send(smsNotification);
-
-        //获取验证码
-        /*String value = this.getCode(token);
-        params.put(codeParamName, value);
-        SmsParameter parameter = new SmsParameter();
-        parameter.setPhoneNumbers(Arrays.asList(phoneNumber));
-        parameter.setTemplateCode(templateCode);
-        parameter.setSignName(signName);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            parameter.setParams(mapper.writeValueAsString(params));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("格式化短信参数失败");
-        }
-        SmsSendResult smsSendResult = smsSender.send(parameter);
-        Assert.isTrue(smsSendResult.isSuccess(),"短信发送失败：" + smsSendResult.getCode());*/
-
-        //记录短信发送时间
         setSmsSendTimeStamp(token);
     }
 
@@ -190,40 +168,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     private void validateSmsSendInterval(String token){
        String timeStamp = this.verificationCodeCache.get(VERIFICATION_CODE_SMS_SEND_CACHE_NAME,token);
        Assert.isTrue(StringUtils.isEmpty(timeStamp),"短信发送间隔时间太短，请稍后再试");
-        /*if(timeStamp != null){
-            Long sendTimeStamp = Long.valueOf(timeStamp);
-            //判断间隔是否超过了预设的间隔
-            if(System.currentTimeMillis() - sendTimeStamp >= smsSendInterval){
-                //清除缓存
-                this.verificationCodeCache.remove(VERIFICATION_CODE_SMS_SEND_CACHE_NAME,token);
-            }else{
-                //间隔太短抛出异常
-                throw new IllegalArgumentException("短信发送间隔时间太短，请稍后再试");
-            }
-        }*/
     }
-
-/*
-    @Override
-    public String getToken(int size,String type) {
-        return this.getToken(size, this.verificationCodeExpireTime,type);
-    }
-
-    @Override
-    public String getToken(String type) {
-        return this.getToken(this.verificationCodeSize, this.verificationCodeExpireTime,type);
-    }
-
-    @Override
-    public String getToken(int size) {
-        return this.getToken(this.verificationCodeSize, this.verificationCodeExpireTime,null);
-    }
-
-    @Override
-    public String getToken() {
-        return this.getToken(this.verificationCodeSize, this.verificationCodeExpireTime,null);
-    }
-*/
 
     @Override
     public void renderImage(String token, OutputStream outputStream) throws IOException {
@@ -235,15 +180,14 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     }
 
     @Override
-    public boolean validate(String token, String code,String phoneNumber) {
-        return this.validate(token, code, phoneNumber,true);
+    public boolean validate(String token, String code,String subject) {
+        return this.validate(token, code, subject,true);
     }
 
     @Override
-    public boolean validate(String token, String code, String phoneNumber,boolean ignoreCase) {
-        String originPhoneNumber = this.verificationCodeCache.get(VERIFICATION_CODE_PHONE_NUMBER_CACHE_NAME,token);
-        if(StringUtils.isNotEmpty(originPhoneNumber) && !originPhoneNumber.equals(phoneNumber)){
-            return false;
+    public boolean validate(String token, String code, String subject,boolean ignoreCase) {
+        if(StringUtils.isNotEmpty(subject)){
+            token = subject + "@" + token;
         }
         return this.verificationCodeCache.validate(VERIFICATION_CODE_CACHE_NAME,token,code);
     }

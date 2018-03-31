@@ -35,7 +35,7 @@ public interface VerificationCodeService {
      * 验证码长度配置项：cola.vc.size 默认值：4<br/>
      * 验证码过期时间配置项：cola.vc.expire 默认值：180000(3分钟)
      */
-    String getToken(Integer size, Long expire, String type, String phoneNumber);
+    String getToken(Integer size, Long expire, String type, String subject);
 
     /**
      * 刷新验证码有效期

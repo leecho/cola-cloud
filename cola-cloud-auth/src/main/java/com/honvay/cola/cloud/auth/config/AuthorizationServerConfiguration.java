@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.auth.config;
 
 import com.honvay.cola.cloud.auth.exception.WebResponseExceptionTranslator;
-import com.honvay.cola.cloud.auth.service.UcUserDetailsService;
+import com.honvay.cola.cloud.auth.service.IntegrationUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +32,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UcUserDetailsService ucUserDetailsService;
+    private IntegrationUserDetailsService integrationUserDetailsService;
 
     @Autowired
     private WebResponseExceptionTranslator webResponseExceptionTranslator;
@@ -67,7 +67,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .authenticationManager(authenticationManager)
                 .exceptionTranslator(webResponseExceptionTranslator)
                 .reuseRefreshTokens(false)
-                .userDetailsService(ucUserDetailsService);
+                .userDetailsService(integrationUserDetailsService);
     }
 
     @Override

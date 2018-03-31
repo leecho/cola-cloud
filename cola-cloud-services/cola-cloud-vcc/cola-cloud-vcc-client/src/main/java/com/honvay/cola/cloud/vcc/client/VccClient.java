@@ -14,7 +14,7 @@ public interface VccClient {
     /**
      * eureka service name
      */
-    String SERVICE_ID = "base-service";
+    String SERVICE_ID = "common-service";
     /**
      * common api prefix
      */
@@ -27,6 +27,6 @@ public interface VccClient {
                             @RequestParam("phoneNumber") String phoneNumber);
 
     @RequestMapping(value = "/base/vcc/validate", method = RequestMethod.GET)
-    Result<Boolean> validate(@RequestParam("token") String token, @RequestParam("code") String code, @RequestParam("phoneNumber") String phoneNumber);
+    Result<Boolean> validate(@RequestParam("token") String token, @RequestParam("code") String code, @RequestParam("subject") String subject);
 
 }
