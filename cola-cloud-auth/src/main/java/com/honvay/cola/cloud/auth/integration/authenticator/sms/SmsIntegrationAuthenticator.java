@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
+ * 短信验证码集成认证
  * @author LIQIU
  * @date 2018-3-31
  **/
