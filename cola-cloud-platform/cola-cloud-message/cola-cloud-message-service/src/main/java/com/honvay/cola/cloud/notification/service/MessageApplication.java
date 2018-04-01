@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
@@ -25,13 +26,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableDiscoveryClient
 @EnableResourceServer
 @EnableOAuth2Client
-@EnableFeignClients
+@EnableFeignClients("com.honvay.cola")
 @EnableScheduling
 @EnableCustomTokenService
 @EnableEurekaClient
 @EnableSwagger2
 @EnableOAuth2ClientFeign
 @MapperScan(basePackages = {"com.honvay.cola.**.mapper"})
+@ComponentScan("com.honvay.cola")
 public class MessageApplication extends ResourceServerConfigurerAdapter {
 
 
