@@ -31,7 +31,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableEurekaClient
 @EnableSwagger2
 @EnableOAuth2ClientFeign
-@MapperScan(basePackages = {"classpath*:com.honvay.cola.**.mapper"})
+@MapperScan(basePackages = {"com.honvay.cola.**.mapper"})
 public class MessageApplication extends ResourceServerConfigurerAdapter {
 
 
