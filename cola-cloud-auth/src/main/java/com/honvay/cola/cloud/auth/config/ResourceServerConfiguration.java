@@ -22,7 +22,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/v2/api-docs","/app/token","/sms/token").permitAll()
+                .antMatchers("/v2/api-docs","/sms/token").permitAll()
                 .and().authorizeRequests().anyRequest().authenticated();
         http.addFilterAfter(integrationAuthenticationFilter,SecurityContextPersistenceFilter.class);
     }
