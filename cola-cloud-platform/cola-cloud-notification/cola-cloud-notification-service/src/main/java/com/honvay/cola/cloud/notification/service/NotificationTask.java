@@ -4,7 +4,6 @@ import com.honvay.cola.cloud.notification.model.Notification;
 import com.honvay.cola.cloud.notification.service.exchanger.NotificationExchanger;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author LIQIU

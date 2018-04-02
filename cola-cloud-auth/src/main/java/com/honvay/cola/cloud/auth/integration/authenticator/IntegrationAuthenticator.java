@@ -2,7 +2,6 @@ package com.honvay.cola.cloud.auth.integration.authenticator;
 
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.uc.model.UserVO;
-import io.swagger.models.auth.In;
 
 /**
  * @author LIQIU

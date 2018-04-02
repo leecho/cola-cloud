@@ -6,7 +6,6 @@ import com.honvay.cola.cloud.upm.entity.SysAuthority;
 import com.honvay.cola.cloud.upm.entity.SysResource;
 import com.honvay.cola.cloud.upm.entity.SysRole;
 import com.honvay.cola.cloud.upm.model.SysAuthorityBatchDTO;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;

@@ -6,8 +6,6 @@ import com.honvay.cola.cloud.uc.client.UcClient;
 import com.honvay.cola.cloud.uc.model.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.xml.ws.Action;
-
 /**
  * 小程序集成认证
  * @author LIQIU

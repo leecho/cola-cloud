@@ -3,9 +3,7 @@ package com.honvay.cola.cloud.auth.integration;
 import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
 import com.honvay.cola.cloud.framework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;

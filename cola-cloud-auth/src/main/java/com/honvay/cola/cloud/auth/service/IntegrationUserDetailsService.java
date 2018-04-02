@@ -2,14 +2,11 @@ package com.honvay.cola.cloud.auth.service;
 
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthenticationContext;
-import com.honvay.cola.cloud.auth.integration.authenticator.DefaultAuthenticator;
 import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
 import com.honvay.cola.cloud.framework.security.userdetail.User;
-import com.honvay.cola.cloud.uc.client.UcClient;
 import com.honvay.cola.cloud.uc.model.UserVO;
 import com.honvay.cola.cloud.upm.client.UpmClient;
 import com.honvay.cola.cloud.upm.model.Authorize;
-import com.honvay.cola.cloud.vcc.client.VccClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;

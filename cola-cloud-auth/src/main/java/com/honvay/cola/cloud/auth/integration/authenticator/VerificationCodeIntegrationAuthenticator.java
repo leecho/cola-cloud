@@ -2,10 +2,8 @@ package com.honvay.cola.cloud.auth.integration.authenticator;
 
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
-import com.honvay.cola.cloud.uc.model.UserVO;
 import com.honvay.cola.cloud.vcc.client.VccClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.stereotype.Component;
 
