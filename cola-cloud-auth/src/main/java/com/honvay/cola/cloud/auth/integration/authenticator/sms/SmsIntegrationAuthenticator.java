@@ -1,6 +1,5 @@
 package com.honvay.cola.cloud.auth.integration.authenticator.sms;
 
-import com.honvay.cola.cloud.auth.exception.BadVerificatioinCodeException;
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
 import com.honvay.cola.cloud.auth.integration.authenticator.sms.event.SmsAuthenticateBeforeEvent;
@@ -12,17 +11,19 @@ import com.honvay.cola.cloud.vcc.client.VccClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.stereotype.Component;
 
 /**
  * 短信验证码集成认证
+ *
  * @author LIQIU
  * @date 2018-3-31
  **/
 @Component
-public class SmsIntegrationAuthenticator implements IntegrationAuthenticator,ApplicationEventPublisherAware {
+public class SmsIntegrationAuthenticator implements IntegrationAuthenticator, ApplicationEventPublisherAware {
 
     @Autowired
     private UcClient ucClient;
@@ -40,25 +41,32 @@ public class SmsIntegrationAuthenticator implements IntegrationAuthenticator,App
     @Override
     public UserVO authenticate(IntegrationAuthentication integrationAuthentication) {
 
-      String smsToken = integrationAuthentication.getAuthParameter("sms_token");
-      String smsCode = integrationAuthentication.getAuthParameter("password");
-      String username = integrationAuthentication.getUsername();
-
-      Result<Boolean> result = vccClient.validate(smsToken,smsCode,username);
-        if(!result.getData()){
-            throw new BadVerificatioinCodeException("验证码错误或已过期");
-        }
+        //获取密码，实际值是验证码
+        String password = integrationAuthentication.getAuthParameter("password");
+        //获取用户名，实际值是手机号
+        String username = integrationAuthentication.getUsername();
         //发布事件，可以监听事件进行自动注册用户
         this.applicationEventPublisher.publishEvent(new SmsAuthenticateBeforeEvent(integrationAuthentication));
         //通过手机号码查询用户
         UserVO userVo = this.ucClient.findUserByPhoneNumber(username);
-        if(userVo != null){
+        if (userVo != null) {
             //将密码设置为验证码
-            userVo.setPassword(passwordEncoder.encode(smsCode));
+            userVo.setPassword(passwordEncoder.encode(password));
             //发布事件，可以监听事件进行消息通知
             this.applicationEventPublisher.publishEvent(new SmsAuthenticateSuccessEvent(integrationAuthentication));
         }
         return userVo;
+    }
+
+    @Override
+    public void prepare(IntegrationAuthentication integrationAuthentication) {
+        String smsToken = integrationAuthentication.getAuthParameter("sms_token");
+        String smsCode = integrationAuthentication.getAuthParameter("password");
+        String username = integrationAuthentication.getUsername();
+        Result<Boolean> result = vccClient.validate(smsToken, smsCode, username);
+        if (!result.getData()) {
+            throw new OAuth2Exception("验证码错误或已过期");
+        }
     }
 
     @Override

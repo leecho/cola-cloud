@@ -6,6 +6,7 @@ import com.honvay.cola.cloud.uc.model.UserVO;
 import com.honvay.cola.cloud.vcc.client.VccClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,16 +23,14 @@ public class VerificationCodeIntegrationAuthenticator extends DefaultAuthenticat
     private VccClient vccClient;
 
     @Override
-    public UserVO authenticate(IntegrationAuthentication integrationAuthentication) {
-
+    public void prepare(IntegrationAuthentication integrationAuthentication) {
         String vcToken = integrationAuthentication.getAuthParameter("vc_token");
         String vcCode = integrationAuthentication.getAuthParameter("vc_code");
         //验证验证码
         Result<Boolean> result = vccClient.validate(vcToken, vcCode, null);
         if (!result.getData()) {
-            throw new BadCredentialsException("验证码错误");
+            throw new OAuth2Exception("验证码错误");
         }
-        return super.authenticate(integrationAuthentication);
     }
 
     @Override

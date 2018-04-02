@@ -2,6 +2,7 @@ package com.honvay.cola.cloud.auth.integration.authenticator;
 
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.uc.model.UserVO;
+import io.swagger.models.auth.In;
 
 /**
  * @author LIQIU
@@ -16,7 +17,14 @@ public interface IntegrationAuthenticator {
      */
     UserVO authenticate(IntegrationAuthentication integrationAuthentication);
 
+
     /**
+     * 进行预处理
+     * @param integrationAuthentication
+     */
+    void prepare(IntegrationAuthentication integrationAuthentication);
+
+     /**
      * 判断是否支持集成认证类型
      * @param integrationAuthentication
      * @return

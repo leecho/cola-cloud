@@ -26,6 +26,11 @@ public class DefaultAuthenticator implements IntegrationAuthenticator {
     }
 
     @Override
+    public void prepare(IntegrationAuthentication integrationAuthentication) {
+
+    }
+
+    @Override
     public boolean support(IntegrationAuthentication integrationAuthentication) {
         return StringUtils.isEmpty(integrationAuthentication.getAuthType());
     }
