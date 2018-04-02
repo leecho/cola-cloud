@@ -2,7 +2,10 @@ package com.honvay.cola.cloud.auth.integration;
 
 import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
 import com.honvay.cola.cloud.framework.util.StringUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -13,23 +16,23 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author LIQIU
  * @date 2018-3-30
  **/
 @Component
-public class IntegrationAuthenticationFilter extends GenericFilterBean {
+public class IntegrationAuthenticationFilter extends GenericFilterBean implements ApplicationContextAware {
 
     private static final String AUTH_TYPE_PARM_NAME = "auth_type";
 
-    private List<IntegrationAuthenticator> authenticators;
+    private Collection<IntegrationAuthenticator> authenticators;
 
-    @Autowired(required = false)
-    public void setIntegrationAuthenticators(List<IntegrationAuthenticator> authenticators){
-        this.authenticators = authenticators;
-    }
+    private ApplicationContext applicationContext;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -58,12 +61,30 @@ public class IntegrationAuthenticationFilter extends GenericFilterBean {
      * @param integrationAuthentication
      */
     private void prepare(IntegrationAuthentication integrationAuthentication) {
-        if(this.authenticators != null){
-            for (IntegrationAuthenticator authenticator: authenticators) {
-                if(authenticator.support(integrationAuthentication)){
-                    authenticator.prepare(integrationAuthentication);
+
+        //延迟加载认证器
+        if(this.authenticators == null){
+            synchronized (authenticators){
+                Map<String,IntegrationAuthenticator> integrationAuthenticatorMap = applicationContext.getBeansOfType(IntegrationAuthenticator.class);
+                if(integrationAuthenticatorMap != null){
+                    this.authenticators = integrationAuthenticatorMap.values();
                 }
             }
         }
+
+        if(this.authenticators == null){
+            this.authenticators = new ArrayList<>();
+        }
+
+        for (IntegrationAuthenticator authenticator: authenticators) {
+            if(authenticator.support(integrationAuthentication)){
+                authenticator.prepare(integrationAuthentication);
+            }
+        }
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }
