@@ -19,7 +19,7 @@ public class GeneratorConfig extends AbstractGeneratorConfig {
         globalConfig.setBaseResultMap(true);
         globalConfig.setBaseColumnList(true);
         globalConfig.setOpen(false);
-        globalConfig.setAuthor("fengshuonan");
+        globalConfig.setAuthor("Devloper");
     }
 
     protected void dataSourceConfig() {

@@ -8,7 +8,7 @@ import com.honvay.cola.service.attachment.entity.Attachment;
   *  Mapper 接口
  * </p>
  *
- * @author 冯硕楠
+ * @author @author SKL
  * @since 2017-12-14
  */
 public interface AttachmentMapper extends BaseMapper<Attachment> {

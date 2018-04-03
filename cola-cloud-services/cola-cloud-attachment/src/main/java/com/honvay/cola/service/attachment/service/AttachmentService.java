@@ -11,7 +11,7 @@ import java.util.List;
  *  服务类
  * </p>
  *
- * @author 冯硕楠
+ * @author @author SKL
  * @since 2017-12-14
  */
 public interface AttachmentService extends BaseService<Attachment> {
