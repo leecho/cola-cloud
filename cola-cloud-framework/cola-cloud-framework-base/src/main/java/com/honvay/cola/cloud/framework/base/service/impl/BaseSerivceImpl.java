@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ import java.util.Map;
  * @param <T>
  */
 @SuppressWarnings("rawtypes")
-public class BaseSerivceImpl <T> implements BaseService<T> {
+public class BaseSerivceImpl<T> implements BaseService<T> {
 
 	private static final Log logger = LogFactory.getLog(ServiceImpl.class);
 
@@ -79,6 +80,15 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
         return (M)mapper;
     }
 
+    /**
+     * <p>
+     * 批量操作 SqlSession
+     * </p>
+     */
+    protected SqlSession sqlSessionBatch() {
+        return SqlHelper.sqlSessionBatch(currentModelClass());
+    }
+
     
     @Override
     public T unique(String column, String value) {
@@ -90,14 +100,10 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
     public List<T> listByProperty(String column, Object value){
     	return this.selectList(new EntityWrapper<T>().eq(column, value));
     }
-    
-    /**
-     * <p>
-     * 批量操作 SqlSession
-     * </p>
-     */
-    protected SqlSession sqlSessionBatch() {
-        return SqlHelper.sqlSessionBatch(currentModelClass());
+
+    @Override
+    public List<T> selectList() {
+        return this.selectList(null);
     }
 
     /**
@@ -110,47 +116,20 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
         return SqlHelper.table(currentModelClass()).getSqlStatement(sqlMethod.getMethod());
     }
 
-    private void setAuditable(T entity){
-        if(entity instanceof BaseEntity){
-            BaseEntity baseEntity = (BaseEntity)entity;
-            User user = SecurityUtils.getPrincipal();
-            if(user != null){
-                //设置创建者信息
-                if(baseEntity.getCreateBy() == null){
-                    baseEntity.setCreateBy(SecurityUtils.getUserId());
-                    baseEntity.setCreateTime(new Date());
-                }
-                //设置修改者信息
-                baseEntity.setModifyBy(SecurityUtils.getUserId());
-                baseEntity.setModifyTime(new Date());
-            }else{
-                //设置创建日期
-                if(baseEntity.getCreateBy() == null){
-                    baseEntity.setCreateTime(new Date());
-                }
-                //设置修改日期
-                baseEntity.setModifyTime(new Date());
-            }
-            baseEntity.setModifyIp(WebUtils.getClientIp());
-        }
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean insert(T entity) {
-        this.setAuditable(entity);
         return retBool(mapper.insert(entity));
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean insertAllColumn(T entity) {
-        this.setAuditable(entity);
         return retBool(mapper.insertAllColumn(entity));
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean insertBatch(List<T> entityList) {
         return insertBatch(entityList, 30);
     }
@@ -162,17 +141,16 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
      * @param batchSize
      * @return
      */
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean insertBatch(List<T> entityList, int batchSize) {
-        if (CollectionUtils.isEmpty(entityList)) {
+        if (com.baomidou.mybatisplus.toolkit.CollectionUtils.isEmpty(entityList)) {
             throw new IllegalArgumentException("Error: entityList must not be empty");
         }
         try (SqlSession batchSqlSession = sqlSessionBatch()) {
             int size = entityList.size();
             String sqlStatement = sqlStatement(SqlMethod.INSERT_ONE);
             for (int i = 0; i < size; i++) {
-                this.setAuditable(entityList.get(i));
                 batchSqlSession.insert(sqlStatement, entityList.get(i));
                 if (i >= 1 && i % batchSize == 0) {
                     batchSqlSession.flushStatements();
@@ -180,7 +158,6 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
             }
             batchSqlSession.flushStatements();
         } catch (Throwable e) {
-            e.printStackTrace();
             throw new MybatisPlusException("Error: Cannot execute insertBatch Method. Cause", e);
         }
         return true;
@@ -194,8 +171,8 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
      * @param entity 实体对象
      * @return boolean
      */
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean insertOrUpdate(T entity) {
         if (null != entity) {
             Class<?> cls = entity.getClass();
@@ -207,7 +184,7 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
                 } else {
                     /*
                      * 更新成功直接返回，失败执行插入逻辑
-					 */
+                     */
                     return updateById(entity) || insert(entity);
                 }
             } else {
@@ -217,8 +194,8 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
         return false;
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean insertOrUpdateAllColumn(T entity) {
         if (null != entity) {
             Class<?> cls = entity.getClass();
@@ -230,7 +207,7 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
                 } else {
                     /*
                      * 更新成功直接返回，失败执行插入逻辑
-					 */
+                     */
                     return updateAllColumnById(entity) || insertAllColumn(entity);
                 }
             } else {
@@ -240,36 +217,28 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
         return false;
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean insertOrUpdateBatch(List<T> entityList) {
         return insertOrUpdateBatch(entityList, 30);
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean insertOrUpdateBatch(List<T> entityList, int batchSize) {
         return insertOrUpdateBatch(entityList, batchSize, true);
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean insertOrUpdateAllColumnBatch(List<T> entityList) {
         return insertOrUpdateBatch(entityList, 30, false);
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean insertOrUpdateAllColumnBatch(List<T> entityList, int batchSize) {
         return insertOrUpdateBatch(entityList, batchSize, false);
-    }
-
-    /**
-     * 获取新的EntityWrpper
-     * @return
-     */
-    public EntityWrapper<T> newEntityWrapper(){
-        return new EntityWrapper<T>();
     }
 
     /**
@@ -281,7 +250,7 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
      * @return boolean
      */
     private boolean insertOrUpdateBatch(List<T> entityList, int batchSize, boolean selective) {
-        if (CollectionUtils.isEmpty(entityList)) {
+        if (com.baomidou.mybatisplus.toolkit.CollectionUtils.isEmpty(entityList)) {
             throw new IllegalArgumentException("Error: entityList must not be empty");
         }
         try (SqlSession batchSqlSession = sqlSessionBatch()) {
@@ -303,74 +272,71 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
         return true;
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean deleteById(Serializable id) {
-        return retBool(mapper.deleteById(id));
+        return SqlHelper.delBool(mapper.deleteById(id));
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean deleteByMap(Map<String, Object> columnMap) {
-        if (MapUtils.isEmpty(columnMap)) {
+        if (com.baomidou.mybatisplus.toolkit.MapUtils.isEmpty(columnMap)) {
             throw new MybatisPlusException("deleteByMap columnMap is empty.");
         }
-        return retBool(mapper.deleteByMap(columnMap));
+        return SqlHelper.delBool(mapper.deleteByMap(columnMap));
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean delete(Wrapper<T> wrapper) {
-        return retBool(mapper.delete(wrapper));
+        return SqlHelper.delBool(mapper.delete(wrapper));
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean deleteBatchIds(List<? extends Serializable> idList) {
-        return retBool(mapper.deleteBatchIds(idList));
+    @Override
+    public boolean deleteBatchIds(Collection<? extends Serializable> idList) {
+        return SqlHelper.delBool(mapper.deleteBatchIds(idList));
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean updateById(T entity) {
-        this.setAuditable(entity);
         return retBool(mapper.updateById(entity));
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean updateAllColumnById(T entity) {
-        this.setAuditable(entity);
         return retBool(mapper.updateAllColumnById(entity));
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean update(T entity, Wrapper<T> wrapper) {
-        this.setAuditable(entity);
         return retBool(mapper.update(entity, wrapper));
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean updateBatchById(List<T> entityList) {
         return updateBatchById(entityList, 30);
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean updateBatchById(List<T> entityList, int batchSize) {
         return updateBatchById(entityList, batchSize, true);
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean updateAllColumnBatchById(List<T> entityList) {
         return updateAllColumnBatchById(entityList, 30);
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean updateAllColumnBatchById(List<T> entityList, int batchSize) {
         return updateBatchById(entityList, batchSize, false);
     }
@@ -384,7 +350,7 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
      * @return boolean
      */
     private boolean updateBatchById(List<T> entityList, int batchSize, boolean selective) {
-        if (CollectionUtils.isEmpty(entityList)) {
+        if (com.baomidou.mybatisplus.toolkit.CollectionUtils.isEmpty(entityList)) {
             throw new IllegalArgumentException("Error: entityList must not be empty");
         }
         try (SqlSession batchSqlSession = sqlSessionBatch()) {
@@ -393,7 +359,6 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
             String sqlStatement = sqlStatement(sqlMethod);
             for (int i = 0; i < size; i++) {
                 MapperMethod.ParamMap<T> param = new MapperMethod.ParamMap<>();
-                this.setAuditable(entityList.get(i));
                 param.put("et", entityList.get(i));
                 batchSqlSession.update(sqlStatement, param);
                 if (i >= 1 && i % batchSize == 0) {
@@ -413,7 +378,7 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
     }
 
     @Override
-    public List<T> selectBatchIds(List<? extends Serializable> idList) {
+    public List<T> selectBatchIds(Collection<? extends Serializable> idList) {
         return mapper.selectBatchIds(idList);
     }
 
@@ -424,8 +389,7 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
 
     @Override
     public T selectOne(Wrapper<T> wrapper) {
-      List<T> list=  mapper.selectList(wrapper);
-        return SqlHelper.getObject(list);
+        return SqlHelper.getObject(mapper.selectList(wrapper));
     }
 
     @Override
@@ -449,12 +413,6 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
     }
 
     @Override
-    public List<T> selectList(){
-        return mapper.selectList(null);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
     public Page<T> selectPage(Page<T> page) {
         return selectPage(page, Condition.EMPTY);
     }
@@ -470,16 +428,15 @@ public class BaseSerivceImpl <T> implements BaseService<T> {
     }
 
     @Override
-    @SuppressWarnings({"rawtypes", "unchecked"})
     public Page<Map<String, Object>> selectMapsPage(Page page, Wrapper<T> wrapper) {
-        SqlHelper.fillWrapper(page, wrapper);
+        wrapper = (Wrapper<T>) SqlHelper.fillWrapper(page,  wrapper);
         page.setRecords(mapper.selectMapsPage(page, wrapper));
         return page;
     }
 
     @Override
     public Page<T> selectPage(Page<T> page, Wrapper<T> wrapper) {
-        SqlHelper.fillWrapper(page, wrapper);
+        wrapper = (Wrapper<T>) SqlHelper.fillWrapper(page,  wrapper);
         page.setRecords(mapper.selectPage(page, wrapper));
         return page;
     }
