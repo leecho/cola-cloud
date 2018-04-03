@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @Data
 @Accessors
-@TableName("adi_attachment")
+@TableName("cola_attachment")
 public class Attachment implements Serializable {
 
     private static final long serialVersionUID = 1L;

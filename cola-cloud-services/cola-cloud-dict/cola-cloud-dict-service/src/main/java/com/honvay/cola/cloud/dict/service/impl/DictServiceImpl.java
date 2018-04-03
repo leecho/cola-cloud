@@ -54,14 +54,15 @@ public class DictServiceImpl extends BaseSerivceImpl<Dict> implements DictServic
      * @param id
      */
     private void assertHaveItem(Serializable id){
-        List<DictItem> dictItems = this.dictItemMapper.selectList(new EntityWrapper<DictItem>().eq("dict_id",id));
+        List<DictItem> dictItems = this.dictItemMapper.selectList(new EntityWrapper<DictItem>().eq("code",id));
         org.springframework.util.Assert.isTrue(dictItems.size() == 0,"数字字典含有配置项无法删除");
     }
 
     @Override
     public boolean deleteById(Serializable id) {
         //删除数据字典值
-        assertHaveItem(id);
+        Dict dict = this.selectById(id);
+        assertHaveItem(dict.getCode());
         return super.deleteById(id);
     }
 

@@ -95,7 +95,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         if(NUMBER_VRIFICATION_CODE.equals(type)){
             code = VerificationCodeUtils.generateNumberVerifyCode(size);
         }else{
-            VerificationCodeUtils.generateVerifyCode(size);
+            code = VerificationCodeUtils.generateVerifyCode(size);
         }
         String token = UUID.randomUUID().toString().replaceAll("-","");
         String realToken = token;
@@ -189,10 +189,19 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
     @Override
     public boolean validate(String token, String code, String subject,boolean ignoreCase) {
+        if(StringUtils.isEmpty(code)){
+            return false;
+        }
         if(StringUtils.isNotEmpty(subject)){
             token = subject + "@" + token;
         }
-        return this.verificationCodeCache.validate(VERIFICATION_CODE_CACHE_NAME,token,code);
+        String value = this.verificationCodeCache.get(VERIFICATION_CODE_CACHE_NAME,token);
+
+        if(StringUtils.isEmpty(value)){
+            return false;
+        }
+
+        return ignoreCase ? code.equalsIgnoreCase(value) : code.equals(value);
     }
 
     public String getCode(String token){

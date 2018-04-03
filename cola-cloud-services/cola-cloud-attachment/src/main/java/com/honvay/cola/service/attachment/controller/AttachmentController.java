@@ -38,7 +38,7 @@ public class AttachmentController extends BaseController {
     @PostMapping("/upload")
     @ApiOperation("上传附件")
     public Result<String> upload(@RequestPart("file") MultipartFile file,String bizId,String bizCode) {
-        String key;
+        Object key;
         try {
             key = this.attachmentService.save(file.getInputStream(),file.getOriginalFilename(),file.getContentType(),bizId,bizCode,file.getSize());
         } catch (IOException e) {

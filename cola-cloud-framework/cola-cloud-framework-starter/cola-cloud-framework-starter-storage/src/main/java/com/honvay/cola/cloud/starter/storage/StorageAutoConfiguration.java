@@ -96,7 +96,9 @@ public class StorageAutoConfiguration {
     public DefaultFileValidation defaultFileValidation() {
         if (fileUploadProperties != null) {
             DefaultFileValidation defaultFileValidation = new DefaultFileValidation();
-            defaultFileValidation.setMaxBytesSize(fileUploadProperties.getMaxSize());
+            if(fileUploadProperties.getMaxSize() != null){
+                defaultFileValidation.setMaxBytesSize(fileUploadProperties.getMaxSize());
+            }
             if (fileUploadProperties.getContentType() != null) {
                 defaultFileValidation.setContentTypes(Arrays.asList(fileUploadProperties.getContentType()));
             }

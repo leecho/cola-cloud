@@ -61,7 +61,7 @@ public class SmsIntegrationAuthenticator implements IntegrationAuthenticator, Ap
     public void prepare(IntegrationAuthentication integrationAuthentication) {
         String smsToken = integrationAuthentication.getAuthParameter("sms_token");
         String smsCode = integrationAuthentication.getAuthParameter("password");
-        String username = integrationAuthentication.getUsername();
+        String username = integrationAuthentication.getAuthParameter("username");
         Result<Boolean> result = vccClient.validate(smsToken, smsCode, username);
         if (!result.getData()) {
             throw new OAuth2Exception("验证码错误或已过期");
