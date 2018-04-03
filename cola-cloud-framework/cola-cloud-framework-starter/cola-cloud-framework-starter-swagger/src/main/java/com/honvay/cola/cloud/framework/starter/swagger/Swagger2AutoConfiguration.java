@@ -1,6 +1,8 @@
-package com.honvay.cola.cloud.framework.base.configuration;
+package com.honvay.cola.cloud.framework.starter.swagger;
 
 import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -24,24 +26,29 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @Profile("!prod")
-public class Swagger2Configuration {
+@EnableConfigurationProperties({Swagger2Properties.class})
+public class Swagger2AutoConfiguration {
+
+    @Autowired
+    private Swagger2Properties swagger2Properties;
+
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .securitySchemes(Lists.newArrayList(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.honvay.cola"))
+                .apis(RequestHandlerSelectors.basePackage(swagger2Properties.getBasePackage()))
                 .paths(PathSelectors.any()).build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Cola-Cloud")
-                .description("Cola cloud Restful API docs")
-                .termsOfServiceUrl("http://localhost:8081")
+                .title(swagger2Properties.getTitle())
+                .description(swagger2Properties.getDescription())
+                .termsOfServiceUrl(swagger2Properties.getTermsOfServiceUrl())
                 .contact(new Contact("", "", ""))
-                .version("1.0")
+                .version(swagger2Properties.getVersion())
                 .build();
     }
 
@@ -52,7 +59,7 @@ public class Swagger2Configuration {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("Authorization", "Authorization", ApiKeyVehicle.HEADER.getValue());
+        return new ApiKey(swagger2Properties.getApiName(), swagger2Properties.getApiKeyName(), ApiKeyVehicle.HEADER.getValue());
     }
 
 }
