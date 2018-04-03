@@ -42,7 +42,7 @@ zuul:
         sensitiveHeaders:
 
     notification-service:
-        path: /notifications/**
+        path: /notification/**
         serviceId: notification-service
         stripPrefix: false
         sensitiveHeaders:
