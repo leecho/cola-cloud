@@ -47,7 +47,7 @@ public class NotificationDispatcher implements ApplicationContextAware{
 
     public NotificationDispatcher(){
         Integer availableProcessors = Runtime.getRuntime().availableProcessors();
-        Integer numOfThreads = availableProcessors + 1;
+        Integer numOfThreads = availableProcessors * 1;
         executorService = new ThreadPoolExecutor(numOfThreads,numOfThreads,0,TimeUnit.MILLISECONDS,new LinkedBlockingDeque<>());
         log.info("Init Notification ExecutorService , numOfThread : " + numOfThreads);
     }
