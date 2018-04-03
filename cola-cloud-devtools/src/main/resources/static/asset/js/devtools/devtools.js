@@ -70,13 +70,13 @@ app.controller('GeneratorCtrl', [
             Messager.confirm("提示","确定要生成代码?").then(function(){
                 var setting = $scope.setting;
                 var params = {
-                    projectPath: setting.projectLocation,
-                    author: setting.developer,
-                    moduleName: setting.model,
-                    bizName: setting.entityName,
+                    projectLocation: setting.projectLocation,
+                    developer: setting.developer,
+                    module: setting.module,
+                    entityName: setting.entityName,
                     tableName: $scope.current.tableName,
-                    ignoreTabelPrefix: setting.tablePrefix,
-                    projectPackage: setting.projectPackage,
+                    tablePrefix: setting.tablePrefix,
+                    packageName: setting.packageName,
                     onlyGenerateEntity: setting.onlyGenerateEntity
                 };
                 $scope.generating = true;

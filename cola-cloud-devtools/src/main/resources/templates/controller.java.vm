@@ -1,0 +1,102 @@
+package ${package.Controller};
+
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.honvay.cola.cloud.framework.core.protocol.Result;
+import com.honvay.cola.cloud.service.test.entity.AutoNumber;
+import com.honvay.cola.cloud.service.test.service.AutoNumberService;
+
+import java.util.List;
+
+
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+#if(${superControllerClass})
+@Api(tags = "$!{table.comment} 接口")
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+        @Autowired
+        private ${table.serviceName} ${table.entityPath}Service;
+
+        /**
+         * 获取${table.comment}列表
+         */
+        @GetMapping(value = "/list")
+        @ApiOperation("获取${table.comment}列表")
+        public Result<List<${entity}>> list() {
+            return this.success(${table.entityPath}Service.selectList());
+        }
+
+        /**
+         * 新增${table.comment}
+         */
+        @PostMapping(value = "/add")
+        @ApiOperation("新增${table.comment}")
+        public Result<String> add(${entity} ${table.entityPath}) {
+            ${table.entityPath}Service.insert(${table.entityPath});
+            return this.success();
+        }
+
+        /**
+         * 删除${table.comment}
+         */
+        @PostMapping(value = "/delete/{id}")
+        @ApiOperation("删除${table.comment}")
+        public Result<String> delete(@PathVariable("id") Long id) {
+            ${table.entityPath}Service.deleteById(id);
+            return this.success();
+        }
+
+        /**
+         * 修改${table.comment}
+         */
+        @PostMapping(value = "/update")
+        @ApiOperation("修改${table.comment}")
+        public Result<String> update(${entity} ${table.entityPath}) {
+            ${table.entityPath}Service.updateById(${table.entityPath});
+            return this.success();
+        }
+
+        /**
+         * 获取${table.comment}
+         */
+        @GetMapping(value = "/get/{id}")
+        @ApiOperation("获取${table.comment}")
+        public Result<${entity}> get(@PathVariable("id") Long id) {
+            return this.success(${table.entityPath}Service.selectById(id));
+        }
+}
+
+#end

@@ -1,83 +1,70 @@
 <div ng-controller='GeneratorCtrl' class='app-ctrl'>
-	<!--<div class='bg-light lter b-b wrapper-md app-title-fixed'>
-		<div class='row'>
-			<div class='col-sm-6 col-xs-6'>
-				<h1 class='m-n font-thin h3'>代码生成器</h1>
-			</div>
-			&lt;!&ndash;<div class='col-sm-6 col-xs-6' style='text-align: right;'>
-				<button class='btn btn-primary' ng-disabled='settinForm.invalid || generating || !current'
-						ng-click='generate()'>生成代码
-				</button>
-				<button class='btn btn-default' ng-disabled='!settingForm.$dirty' ng-click='reset()'>重置</button>
-			</div>&ndash;&gt;
-		</div>
-	</div>-->
-	<div class='wrapper-md app-inner'>
-		<form name='form1' class='form-horizontal form-property form-validation fade-in-right' method='get'
-			  style='width: 900px;margin: 0 auto;' ng-show="setup == 0">
-			<div class='col-sm-12' >
-				<div class='panel panel-default'>
-					<div class='panel-heading font-bold'>第一步：项目配置</div>
-					<div class='panel-body'>
-						<div class='form-group'>
-							<label class='col-sm-2 control-label'>项目路径</label>
-							<div class='col-sm-10'>
-								<input type='text' name='title' required='required' ng-model='setting.projectLocation'
-									   class='form-control'>
-								<div class="help-block">生成代码的项目路径，配置到项目根目录即可</div>
-							</div>
-						</div>
+    <div class='wrapper-md app-inner'>
+        <form name='form1' class='form-horizontal form-property form-validation fade-in-right' method='get'
+              style='width: 900px;margin: 0 auto;' ng-show="setup == 0">
+            <div class='col-sm-12' >
+                <div class='panel panel-default'>
+                    <div class='panel-heading font-bold'>第一步：项目配置</div>
+                    <div class='panel-body'>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>项目路径</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' required='required' ng-model='setting.projectLocation'
+                                       class='form-control'>
+                                <div class="help-block">生成代码的项目路径，配置到项目根目录即可</div>
+                            </div>
+                        </div>
                         <div class='line line-dashed b-b line-lg'></div>
-						<div class='form-group'>
-							<label class='col-sm-2 control-label'>开发者</label>
-							<div class='col-sm-10'>
-								<input type='text' name='title' required='required' ng-model='setting.developer'
-									   class='form-control'>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>开发者</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' required='required' ng-model='setting.developer'
+                                       class='form-control'>
                                 <div class="help-block">开发人员名称</div>
-							</div>
-						</div>
+                            </div>
+                        </div>
                         <div class='line line-dashed b-b line-lg'></div>
-						<div class='form-group'>
-							<label class='col-sm-2 control-label'>数据表前缀</label>
-							<div class='col-sm-10'>
-								<input type='text' name='title' required='required' ng-model='setting.tablePrefix'
-									   class='form-control'>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>数据表前缀</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' required='required' ng-model='setting.tablePrefix'
+                                       class='form-control'>
                                 <div class="help-block">忽略的表前缀，生成后的实体类名会忽略前缀</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-sm-12 wrapper-sm text-center">
                 <button class="btn btn-primary" ng-disabled="form1.$invalid" ng-click="forward(1)">下一步</button>
             </div>
         </form>
         <form name='form2' class='form-horizontal form-property form-validation fade-in-right' method='get'
               style='width: 900px;margin: 0 auto;' ng-show="setup == 1">
-			<div class='col-sm-12'>
-				<div class='panel panel-default'>
-					<div class='panel-heading font-bold'>第二步：模块配置</div>
-					<div class='panel-body'>
-						<div class='form-group'>
-							<label class='col-sm-2 control-label'>模块包路径</label>
-							<div class='col-sm-10'>
-								<input type='text' name='title' required='required' ng-model='setting.projectPackage'
-									   class='form-control'>
+            <div class='col-sm-12'>
+                <div class='panel panel-default'>
+                    <div class='panel-heading font-bold'>第二步：模块配置</div>
+                    <div class='panel-body'>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>模块包路径</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' required='required' ng-model='setting.packageName'
+                                       class='form-control'>
                                 <div class="help-block">模块Java包路径，例如：com.honvay.cola.base</div>
-							</div>
-						</div>
+                            </div>
+                        </div>
                         <div class='line line-dashed b-b line-lg'></div>
-						<div class='form-group'>
-							<label class='col-sm-2 control-label'>所属子模块</label>
-							<div class='col-sm-10'>
-								<input type='text' name='title' required='required' ng-model='setting.model'
-									   class='form-control'>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>所属子模块</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' required='required' ng-model='setting.module'
+                                       class='form-control'>
                                 <div class="help-block">代码所属子模块</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-sm-12 wrapper-sm text-center">
                 <button class="btn btn-primary"  ng-click="forward(0)">上一步</button>
                 <button class="btn btn-primary" ng-disabled="form2.$invalid" ng-click="forward(2)">下一步</button>
@@ -95,6 +82,14 @@
                                 <input type='text' name='receiver' required ng-model='setting.entityName'
                                        class='form-control'>
                                 <div class="help-block">实体名称，例如：生产订单。注意实体名称后不要带XX表</div>
+                            </div>
+                        </div>
+                        <div class='line line-dashed b-b line-lg'></div>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>数据表</label>
+                            <div class='col-sm-10'>
+                                <input type='text' readonly ng-model='current.tableName'
+                                       class='form-control'>
                             </div>
                         </div>
                         <div class='line line-dashed b-b line-lg'></div>
@@ -143,7 +138,7 @@
                             <label class='col-sm-2 control-label'>代码包路径</label>
                             <div class='col-sm-10'>
                                 <input type='text' name='package' readonly='readonly'
-                                       value='{{setting.projectPackage}}.{{setting.model}}' class='form-control'>
+                                       value='{{setting.packageName}}.{{setting.module}}' class='form-control'>
                             </div>
                         </div>
                         <div class='line line-dashed b-b line-lg'></div>
@@ -151,7 +146,7 @@
                             <label class='col-sm-2 control-label'>实体类名</label>
                             <div class='col-sm-10'>
                                 <input type='text' name='title' readonly='readonly'
-                                       value="{{setting.projectPackage}}.{{setting.model + '.entity.' + parseEnityName(current.tableName)}}"
+                                       value="{{setting.packageName}}.{{setting.module + '.entity.' + parseEnityName(current.tableName)}}"
                                        class='form-control'>
                             </div>
                         </div>
@@ -176,5 +171,5 @@
                 </button>
             </div>
         </form>
-	</div>
+    </div>
 </div>

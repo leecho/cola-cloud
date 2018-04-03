@@ -9,10 +9,11 @@ spring:
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.mysql.jdbc.Driver
       db-name: cola-cloud
-devtools: #开发工具
-  project-location:
-  developer:
-  table-prefix:
+cola:
+  devtools: #开发工具
+    project-location: D:/repository/cola-cloud/cola-cloud-services/cola-cloud-autonumber
+    developer: LIQIU
+    table-prefix: cola_
 
 security:
   basic:

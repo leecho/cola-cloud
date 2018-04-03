@@ -1,3 +1,0 @@
-<% for(menu in sqls.menus!){ %>
-INSERT INTO `cola_sys_resource` (`perm_id`, `code`, `pid`, `pids`, `name`, `url`, `menu_flag`,`icon`, `level`, `sort`) VALUES ('${menu.permId}', '${menu.code}', '${menu.pid}', '${menu.pids}', '${menu.name}', '${menu.url}', '${menu.menuFlag}', '${menu.icon}', '${menu.level}', '${menu.sort}');
-<% } %>
