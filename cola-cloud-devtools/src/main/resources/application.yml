@@ -13,3 +13,7 @@ devtools: #开发工具
   project-location:
   developer:
   table-prefix:
+
+security:
+  basic:
+    enabled: false

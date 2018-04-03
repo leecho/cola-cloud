@@ -2,6 +2,7 @@ package com.honvay.cola.cloud.framework.starter.swagger;
 
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @Profile("!prod")
+@ConditionalOnProperty(name="cola.swagger2.enable",havingValue = "true",matchIfMissing = false)
 @EnableConfigurationProperties({Swagger2Properties.class})
 public class Swagger2AutoConfiguration {
 
