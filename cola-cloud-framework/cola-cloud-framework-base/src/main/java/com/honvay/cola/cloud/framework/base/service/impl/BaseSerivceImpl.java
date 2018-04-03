@@ -65,6 +65,10 @@ public class BaseSerivceImpl<T> implements BaseService<T> {
     protected Class<T> currentModelClass() {
         return ReflectionKit.getSuperClassGenricType(getClass(), 0);
     }
+
+    public EntityWrapper<T> newEntityWrapper(){
+        return new EntityWrapper<>();
+    }
     
     /**
      * 根据Mapper类型获取Mapper

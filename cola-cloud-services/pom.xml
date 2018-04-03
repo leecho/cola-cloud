@@ -16,6 +16,5 @@
         <module>cola-cloud-guard</module>
         <module>cola-cloud-audit</module>
         <module>cola-cloud-vcc</module>
-        <module>cola-cloud-autonumber</module>
     </modules>
 </project>
