@@ -1,4 +1,4 @@
-package com.honvay.cola.cloud.starter.storage.properties;
+package com.honvay.cola.service.attachment.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

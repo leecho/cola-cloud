@@ -14,6 +14,7 @@
         <module>cola-cloud-framework-starter-mail</module>
         <module>cola-cloud-framework-starter-sms</module>
         <module>cola-cloud-framework-starter-storage</module>
+        <module>cola-cloud-framework-starter-swagger</module>
     </modules>
     <dependencies>
         <dependency>
