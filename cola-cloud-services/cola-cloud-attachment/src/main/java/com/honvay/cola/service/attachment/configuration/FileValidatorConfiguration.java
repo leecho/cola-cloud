@@ -2,8 +2,10 @@ package com.honvay.cola.service.attachment.configuration;
 
 import com.honvay.cola.service.attachment.validator.FileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.MultipartConfigElement;
 import java.util.Arrays;
@@ -12,6 +14,8 @@ import java.util.Arrays;
  * @author LIQIU
  * @date 2018-4-3
  **/
+@Configuration
+@EnableConfigurationProperties({FileUploadProperties.class})
 public class FileValidatorConfiguration {
     private static long DEFUALT_MAX_SIZE = 1024 * 1024 * 500;
 
