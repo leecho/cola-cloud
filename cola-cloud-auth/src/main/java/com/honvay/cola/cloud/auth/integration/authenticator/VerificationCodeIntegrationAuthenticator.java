@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @date 2018-3-31
  **/
 @Component
-public class VerificationCodeIntegrationAuthenticator extends DefaultAuthenticator implements IntegrationAuthenticator {
+public class VerificationCodeIntegrationAuthenticator extends DefaultAuthenticator {
 
     private final static String VERIFICATION_CODE_AUTH_TYPE = "vc";
 

@@ -38,21 +38,21 @@ public class IntegrationAuthenticationFilter extends GenericFilterBean implement
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String authType = request.getParameter(AUTH_TYPE_PARM_NAME);
-        if (StringUtils.isNotEmpty(authType)) {
-            IntegrationAuthentication integrationAuthentication = new IntegrationAuthentication();
-            integrationAuthentication.setAuthType(authType);
-            integrationAuthentication.setAuthParameters(request.getParameterMap());
-            try{
-                //预处理
-                this.prepare(integrationAuthentication);
-                IntegrationAuthenticationContext.set(integrationAuthentication);
-                filterChain.doFilter(request,response);
-            }finally {
-                IntegrationAuthenticationContext.clear();
-            }
-        }else{
-            filterChain.doFilter(request, response);
+        //设置集成登录信息
+        IntegrationAuthentication integrationAuthentication = new IntegrationAuthentication();
+        integrationAuthentication.setAuthType(request.getParameter(AUTH_TYPE_PARM_NAME));
+        integrationAuthentication.setAuthParameters(request.getParameterMap());
+        IntegrationAuthenticationContext.set(integrationAuthentication);
+        try{
+            //预处理
+            this.prepare(integrationAuthentication);
+
+            filterChain.doFilter(request,response);
+
+            //后置处理
+            this.complete(integrationAuthentication);
+        }finally {
+            IntegrationAuthenticationContext.clear();
         }
     }
 
@@ -79,6 +79,18 @@ public class IntegrationAuthenticationFilter extends GenericFilterBean implement
         for (IntegrationAuthenticator authenticator: authenticators) {
             if(authenticator.support(integrationAuthentication)){
                 authenticator.prepare(integrationAuthentication);
+            }
+        }
+    }
+
+    /**
+     * 后置处理
+     * @param integrationAuthentication
+     */
+    private void complete(IntegrationAuthentication integrationAuthentication){
+        for (IntegrationAuthenticator authenticator: authenticators) {
+            if(authenticator.support(integrationAuthentication)){
+                authenticator.complete(integrationAuthentication);
             }
         }
     }

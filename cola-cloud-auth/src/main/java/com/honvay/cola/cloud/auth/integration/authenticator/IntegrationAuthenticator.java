@@ -30,4 +30,9 @@ public interface IntegrationAuthenticator {
      */
     boolean support(IntegrationAuthentication integrationAuthentication);
 
+    /** 认证结束后执行
+     * @param integrationAuthentication
+     */
+    void complete(IntegrationAuthentication integrationAuthentication);
+
 }
