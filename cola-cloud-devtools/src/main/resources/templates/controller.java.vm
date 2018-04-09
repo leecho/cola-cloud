@@ -7,8 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
-import com.honvay.cola.cloud.service.test.entity.AutoNumber;
-import com.honvay.cola.cloud.service.test.service.AutoNumberService;
 
 import java.util.List;
 
