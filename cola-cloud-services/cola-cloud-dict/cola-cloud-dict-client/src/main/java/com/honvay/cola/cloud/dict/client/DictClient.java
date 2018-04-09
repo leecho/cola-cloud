@@ -1,9 +1,9 @@
-package com.honvay.cola.cloud.client;
+package com.honvay.cola.cloud.dict.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.honvay.cola.cloud.client.jackson.JacksonDictJsonModifier;
+import com.honvay.cola.cloud.dict.client.jackson.JacksonDictJsonModifier;
 import com.honvay.cola.cloud.dict.model.CacheConstants;
 import com.honvay.cola.cloud.dict.model.DictVO;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
-package com.honvay.cola.cloud.client.jackson;
+package com.honvay.cola.cloud.dict.client.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.honvay.cola.cloud.client.DictClient;
+import com.honvay.cola.cloud.dict.client.DictClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;

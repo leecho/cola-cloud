@@ -1,14 +1,13 @@
-package com.honvay.cola.cloud.client.jackson;
+package com.honvay.cola.cloud.dict.client.jackson;
 
 import com.fasterxml.jackson.databind.BeanDescription;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 import com.fasterxml.jackson.databind.ser.std.BeanSerializerBase;
-import com.honvay.cola.cloud.client.DictClient;
-import com.honvay.cola.cloud.client.jackson.annotation.JsonDict;
-import com.honvay.cola.cloud.client.jackson.annotation.JsonDictName;
-import com.honvay.cola.cloud.client.jackson.serializer.JsonDictSerializer;
+import com.honvay.cola.cloud.dict.client.DictClient;
+import com.honvay.cola.cloud.dict.client.jackson.annotation.JsonDict;
+import com.honvay.cola.cloud.dict.client.jackson.serializer.JsonDictSerializer;
 
 /**
  * @author LIQIU

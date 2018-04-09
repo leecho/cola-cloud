@@ -1,17 +1,16 @@
-package com.honvay.cola.cloud.client.jackson.serializer;
+package com.honvay.cola.cloud.dict.client.jackson.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.NonTypedScalarSerializerBase;
-import com.honvay.cola.cloud.client.jackson.JacksonDictContext;
-import com.honvay.cola.cloud.client.jackson.annotation.JsonDictName;
+import com.honvay.cola.cloud.dict.client.jackson.JacksonDictContext;
+import com.honvay.cola.cloud.dict.client.jackson.annotation.JsonDictName;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author LIQIU

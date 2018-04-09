@@ -1,11 +1,11 @@
-package com.honvay.cola.cloud.client.jackson.serializer;
+package com.honvay.cola.cloud.dict.client.jackson.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.fasterxml.jackson.databind.ser.std.BeanSerializerBase;
-import com.honvay.cola.cloud.client.DictClient;
-import com.honvay.cola.cloud.client.jackson.JacksonDictContext;
+import com.honvay.cola.cloud.dict.client.DictClient;
+import com.honvay.cola.cloud.dict.client.jackson.JacksonDictContext;
 import com.honvay.cola.cloud.dict.model.DictVO;
 import lombok.extern.slf4j.Slf4j;
 

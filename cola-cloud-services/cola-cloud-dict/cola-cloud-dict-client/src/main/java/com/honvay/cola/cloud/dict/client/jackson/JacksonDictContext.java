@@ -1,4 +1,4 @@
-package com.honvay.cola.cloud.client.jackson;
+package com.honvay.cola.cloud.dict.client.jackson;
 
 import com.honvay.cola.cloud.dict.model.DictVO;
 
