@@ -1,0 +1,22 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: registry
+
+security:
+  basic:
+    enabled: true               #  开启基于HTTP basic的认证
+  user:
+    name: ${REGISTRY_SERVER_USERNAME}
+    password: ${REGISTRY_SERVER_PASSWORD}
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    server:
+      waitTimeInMsWhenSyncEmpty: 0

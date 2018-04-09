@@ -1,16 +1,12 @@
 package com.honvay.cola.cloud.dict.entity;
 
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.honvay.cola.cloud.client.jackson.annotation.JsonDict;
-import com.honvay.cola.cloud.client.jackson.annotation.JsonDictName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import java.beans.Transient;
 import java.io.Serializable;
 
 /**
@@ -51,8 +47,6 @@ public class Dict implements Serializable {
      * 是否启用
      */
     private String enable;
-
-    private String enableText;
 
     /**
      * 排序号

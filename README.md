@@ -38,19 +38,40 @@ cola-cloud-notification | notification-service | 通知中心 | 基于RabbitMQ�
 
 Spring Cloud中的每个服务都是独立部署，所有在进行服务之间调用的时候需要确定对方服务的IP，为了规避IP变化带来代码修改的风险，所以需要配置host
 ```jshelllanguage
-127.0.0.1 registry config monitor auth-service uc-service upm-service organization-serivce tenancy-service
+# 注册中心 配置中心
+127.0.0.1 registry 
+# reids rabbitmq mysql
+127.0.0.1 cola-redis cola-rabbitmq cola-mysql
 ```
 
+### 环境变量
+
+环境变量主要是配置服务的访问用户名和密码：
+
+```
+//配置服务器用户名
+CONFIG_SERVER_USERNAME
+//配置服务器密码
+CONFIG_SERVER_PASSWORD
+//注册服务器用户名
+REGISTRY_SERVER_USERNAME
+//注册服务器密码
+REGISTRY_SERVER_PASSWORD
+//监控服务器用户名
+MONITOR_SERVER_USERNAME
+//监控服务器密码
+MONITOR_SERVER_PASSWORD
+```
 
 ### 启动服务
 
-启动顺序如下：``` config registry auth-service uc-serivce upm-service organization-service gateway monitor```
+启动顺序如下：```registry config auth-service uc-serivce upm-service organization-service gateway monitor```
 
-config必须要最先启动，因为其负责提供给其他服务配置信息，如果config没有启动，其他服务则无法启动
+registry必须要最先启动，registry启动之后提供接口以供其他服务进行注册
 
-registry在config之后启动，registry启动之后提供接口以供其他服务进行注册
+config在registry之后启动，config负责提供给其他服务配置信息，如果config没有启动，其他服务则无法启动
 
-其他service在registry之后启动，如果是第一次运行项目，启动registry之后先启动uc-service进行数据初始化
+其他service在config之后启动，如果是第一次运行项目，启动config之后先启动uc-service进行数据初始化
 
 gateway在最后启动，如果gateway先于其他服务启动，可能无法代理到其他服务，不过会在一段时间后重新代理
 

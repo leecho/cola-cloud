@@ -10,25 +10,20 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 10000
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    serviceUrl:
-      defaultZone: http://registry:8761/eureka/
 security:
   oauth2:
     resource:
-      user-info-uri: http://auth-service:5000/uaa/current
+      user-info-uri: http://auth-service/uaa/current
     client:
       clientId: server
       clientSecret: server
-      accessTokenUri: http://auth-service:5000/uaa/oauth/token
+      accessTokenUri: http://auth-service/uaa/oauth/token
       grant-type: client_credentials
       scope: server
+
 spring:
   rabbitmq:
-    host: localhost
+    host: cola-rabbitmq
     port: 5672
     username: guest
     password: guest
@@ -36,14 +31,14 @@ spring:
     sampler:
       percentage: 1
   datasource:
-    url: jdbc:mysql://localhost:3306/cola-cloud?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://cola-mysql:3306/cola-cloud?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     username: root
     password: root
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     db-name: cola-cloud
   redis:
-    host: localhost
+    host: cola-redis
     port: 6379
     password:
     database: 8
@@ -57,7 +52,6 @@ spring:
 flyway:
   baselineOnMigrate: true
 
-
 cola:
   swagger2:
     enable: true
@@ -68,10 +62,6 @@ cola:
     version: 1.0
     apiName: Authorization
     apiKeyName: Authorization
-
-management:
-  security:
-    enabled: false
 
 #mybatis配置
 mybatis-plus:

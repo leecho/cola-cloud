@@ -14,9 +14,9 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
 @EnableHystrixDashboard
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-public class MonitoringApplication{
+public class MonitorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MonitoringApplication.class, args);
+		SpringApplication.run(MonitorApplication.class, args);
 	}
 }

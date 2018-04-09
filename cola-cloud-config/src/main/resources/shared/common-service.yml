@@ -6,8 +6,8 @@ cola:
   storage:
     type: aliyun
     oss:
-      access-key-id: ${ALIYUN_ACCESS_KEY_ID}
-      access-key-secret: ${ALIYUN_ACCESS_KEY_SECRET}
+      access-key-id: ${COLA_ALIYUN_ACCESS_KEY_ID}
+      access-key-secret: ${COLA_ALIYUN_ACCESS_KEY_SECRET}
       bucket-name: honvay-cola
       endpoint: oss-cn-hangzhou.aliyuncs.com
   vc:

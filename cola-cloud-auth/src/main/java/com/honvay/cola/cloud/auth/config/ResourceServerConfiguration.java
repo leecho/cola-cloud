@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 /**
  * @author LIQIU
@@ -24,6 +24,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http.authorizeRequests()
                 .antMatchers("/v2/api-docs","/sms/token").permitAll()
                 .and().authorizeRequests().anyRequest().authenticated();
-        http.addFilterAfter(integrationAuthenticationFilter,SecurityContextPersistenceFilter.class);
+        http.addFilterBefore(integrationAuthenticationFilter,AbstractPreAuthenticatedProcessingFilter.class);
     }
 }

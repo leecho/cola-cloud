@@ -1,9 +1,18 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://${REGISTRY_SERVER_USERNAME}:${REGISTRY_SERVER_PASSWORD}@registry:8761/eureka/
+
 spring:
   application:
     name: uc-service
   cloud:
     config:
-      uri: http://config:8888
       fail-fast: true
-      password: 123456
-      username: user
+      username: ${CONFIG_SERVER_USERNAME}
+      password: ${CONFIG_SERVER_PASSWORD}
+      discovery:
+        enabled: true
+        service-id: config
