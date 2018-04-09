@@ -6,10 +6,17 @@ import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.fasterxml.jackson.databind.ser.std.BeanSerializerBase;
 import com.honvay.cola.cloud.dict.client.DictClient;
 import com.honvay.cola.cloud.dict.client.jackson.JacksonDictContext;
+import com.honvay.cola.cloud.dict.client.jackson.annotation.JsonDict;
+import com.honvay.cola.cloud.dict.client.jackson.annotation.JsonDictField;
+import com.honvay.cola.cloud.dict.client.jackson.annotation.JsonDictName;
 import com.honvay.cola.cloud.dict.model.DictVO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,31 +27,42 @@ import java.util.Map;
 @Slf4j
 public class JsonDictSerializer extends BeanSerializer {
 
-    private String[] dictCodes;
+    private JsonDict jsonDict;
 
     private DictClient dictClient;
 
-    public JsonDictSerializer(BeanSerializerBase src, DictClient dictClient, String[] dictCodes) {
+    public JsonDictSerializer(BeanSerializerBase src, DictClient dictClient, JsonDict jsonDict) {
         super(src);
+        this.jsonDict = jsonDict;
         this.dictClient = dictClient;
-        this.dictCodes = dictCodes;
     }
 
     @Override
     protected void serializeFields(Object bean, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        System.out.println("加载数据字典:" + dictCodes);
         if (dictClient == null) {
             throw new IllegalArgumentException("Dict Client must not be null");
         }
-
-        //根据预设的数据字典编号从缓存中获取数据
-        Map<String, Map<String, DictVO>> dicts = new HashMap<>();
-        for (String dictCode : dictCodes) {
-            dicts.put(dictCode, dictClient.getByParent(dictCode));
-        }
-        JacksonDictContext.put(dicts);
         try {
+            //根据预设的数据字典编号从缓存中获取数据
+            Map<String, Map<String, DictVO>> dicts = new HashMap<>();
+            for (String dictCode : jsonDict.dictCodes()) {
+                dicts.put(dictCode, dictClient.getByParent(dictCode));
+            }
+            JacksonDictContext.put(dicts);
+
             super.serializeFields(bean, gen, provider);
+
+            //处理自定义的字段
+            try {
+                JsonDictField[] fields = jsonDict.dictFields();
+                for (JsonDictField dictField : fields) {
+                    Object value = PropertyUtils.getProperty(bean, dictField.valueField());
+                    gen.writeFieldName(dictField.name());
+                    gen.writeString(JacksonDictContext.getName(dictField.dictCode(), (String) value));
+                }
+            } catch (Exception e) {
+                log.error("序列化数据字典发生错误：" + e);
+            }
         } finally {
             JacksonDictContext.clear();
         }

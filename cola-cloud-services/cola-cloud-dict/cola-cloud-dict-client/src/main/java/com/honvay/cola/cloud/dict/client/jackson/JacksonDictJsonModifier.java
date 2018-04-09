@@ -22,7 +22,7 @@ public class JacksonDictJsonModifier extends BeanSerializerModifier {
                                               BeanDescription beanDesc, JsonSerializer<?> serializer) {
         JsonDict jsonDict = beanDesc.getBeanClass().getAnnotation(JsonDict.class);
         if(jsonDict != null){
-            serializer = new JsonDictSerializer((BeanSerializerBase) serializer, dictClient,jsonDict.value());
+            serializer = new JsonDictSerializer((BeanSerializerBase) serializer, dictClient,jsonDict);
         }
         return serializer;
     }
