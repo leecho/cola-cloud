@@ -37,8 +37,18 @@ public class MultiDateFormat extends DateFormat {
 
     @Override
     public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition fieldPosition) {
-        throw new UnsupportedOperationException(
-                "This custom date formatter can only be used to *parse* DateUtils.");
+        for (final DateFormat dateFormat : dateFormats) {
+            try{
+                String res;
+                if ((res = dateFormat.format(date)) != null) {
+                    toAppendTo.append(res);
+                    return toAppendTo;
+                }
+            }catch (Exception e){
+
+            }
+        }
+        return toAppendTo;
     }
 
     @Override
