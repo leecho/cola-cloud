@@ -15,6 +15,14 @@
             <groupId>com.honvay.cola</groupId>
             <artifactId>cola-cloud-dict-model</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.honvay.cola</groupId>
+            <artifactId>cola-cloud-framework-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

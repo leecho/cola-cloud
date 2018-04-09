@@ -18,4 +18,8 @@ public interface DictService extends BaseService<Dict> {
      * @param ids
      */
     void batchDelete(Long[] ids);
+
+    void enable(Long id);
+
+    void disable(Long id);
 }

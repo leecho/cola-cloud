@@ -9,11 +9,11 @@ import java.io.Serializable;
  * @date 2018-1-22
  **/
 @Data
-public class DictItemVO implements Serializable {
+public class DictVO implements Serializable {
     
     private String  code;
     private String  name;
-    private String  value;
+    private String  parent;
     private Integer orderNo;
 
 }

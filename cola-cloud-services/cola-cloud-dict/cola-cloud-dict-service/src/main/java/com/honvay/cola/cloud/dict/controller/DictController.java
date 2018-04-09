@@ -91,6 +91,4 @@ public class DictController extends BaseController {
     public Result<String> get(@PathVariable("id") Long id) {
         return this.success(dictService.selectById(id));
     }
-
-
 }
