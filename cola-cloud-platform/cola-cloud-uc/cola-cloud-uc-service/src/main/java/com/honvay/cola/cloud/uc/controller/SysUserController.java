@@ -5,8 +5,10 @@ import com.honvay.cola.cloud.framework.base.controller.BaseController;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.framework.security.userdetail.User;
 import com.honvay.cola.cloud.framework.security.utils.SecurityUtils;
+import com.honvay.cola.cloud.uc.entity.SysSocial;
 import com.honvay.cola.cloud.uc.entity.SysUser;
 import com.honvay.cola.cloud.uc.model.UserVO;
+import com.honvay.cola.cloud.uc.service.SysSocialService;
 import com.honvay.cola.cloud.uc.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +29,18 @@ public class SysUserController extends BaseController {
 
     @Autowired
     private SysUserService sysUserService;
+
+    @Autowired
+    private SysSocialService sysSocialService;
+
+    @GetMapping("/findUserBySocial/{type}/{token}")
+    public UserVO findUserBySocial(@PathVariable("type") String type,@PathVariable("token") String token){
+        SysSocial sysSocial = this.sysSocialService.getSocialByTokenAndType(token, type);
+        if (sysSocial != null) {
+            return this.sysUserService.findUserById(sysSocial.getSysUserId());
+        }
+        return null;
+    }
 
     /**
      * 通过用户名查询用户及其角色信息

@@ -235,6 +235,11 @@ public class SysUserServiceImpl extends BaseSerivceImpl<SysUser> implements SysU
     }
 
     @Override
+    public UserVO findUserById(Long id) {
+        return this.getUser(this.selectById(id));
+    }
+
+    @Override
     public UserVO findUserByPhoneNumber(String phoneNumber) {
         SysUser sysUser = this.unique("phone_number",phoneNumber);
         return this.getUser(sysUser);

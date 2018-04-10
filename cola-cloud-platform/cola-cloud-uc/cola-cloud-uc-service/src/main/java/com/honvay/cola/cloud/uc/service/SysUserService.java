@@ -74,6 +74,8 @@ public interface SysUserService extends BaseService<SysUser> {
 
     UserVO findUserByUsername(String username);
 
+    UserVO findUserById(Long id);
+
     UserVO findUserByPhoneNumber(String phoneNumber);
     
     boolean deleteSysUser(String username);

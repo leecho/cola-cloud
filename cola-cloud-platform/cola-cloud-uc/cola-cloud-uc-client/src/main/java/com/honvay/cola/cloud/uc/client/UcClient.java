@@ -31,11 +31,12 @@ public interface UcClient {
 
     /**
      * 根据OpenId查询用户信息
-     * @param openId openId
+     * @param type
+     * @param token
      * @return UserVo
      */
-    @GetMapping("/findUserByOpenId/{openId}")
-    UserVO findUserByOpenId(@PathVariable("openId") String openId);
+    @GetMapping("/uc/user/findUserBySocial/{type}/{token}")
+    UserVO findUserBySocial(@PathVariable("type") String type, @PathVariable("token") String token);
 
     /**
      * @param phoneNumber

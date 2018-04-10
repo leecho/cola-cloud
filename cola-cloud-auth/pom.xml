@@ -6,10 +6,7 @@
     <groupId>com.honvay.cola</groupId>
     <artifactId>cola-cloud-auth</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
     <name>cola-cloud-auth</name>
-
     <parent>
         <groupId>com.honvay.cola</groupId>
         <artifactId>cola-cloud</artifactId>
@@ -90,6 +87,10 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.honvay.cola</groupId>
+            <artifactId>cola-cloud-framework-starter-miniapp</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

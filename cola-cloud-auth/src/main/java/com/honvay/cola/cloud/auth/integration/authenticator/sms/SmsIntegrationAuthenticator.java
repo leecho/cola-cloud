@@ -2,7 +2,6 @@ package com.honvay.cola.cloud.auth.integration.authenticator.sms;
 
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.auth.integration.authenticator.AbstractPreparableIntegrationAuthenticator;
-import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
 import com.honvay.cola.cloud.auth.integration.authenticator.sms.event.SmsAuthenticateBeforeEvent;
 import com.honvay.cola.cloud.auth.integration.authenticator.sms.event.SmsAuthenticateSuccessEvent;
 import com.honvay.cola.cloud.framework.core.protocol.Result;

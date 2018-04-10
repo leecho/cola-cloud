@@ -5,3 +5,9 @@ server:
 management:
   security:
     enabled: false
+
+cola:
+  wechat:
+    miniapp:
+      appid: ${COLA_WECHAT_MINIAPP_APPID}
+      secret: ${COLA_WECHAT_MINIAPP_SECRET}

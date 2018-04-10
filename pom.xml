@@ -94,6 +94,11 @@
                 <artifactId>cola-cloud-framework-starter-swagger</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.honvay.cola</groupId>
+                <artifactId>cola-cloud-framework-starter-miniapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!--权限系统-->
             <dependency>
                 <groupId>com.honvay.cola</groupId>

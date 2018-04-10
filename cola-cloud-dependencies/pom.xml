@@ -126,7 +126,6 @@
                 <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
                 <version>1.1.0</version>
             </dependency>
-
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-miniapp</artifactId>
@@ -146,11 +145,6 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>4.1</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.subchen</groupId>
-                <artifactId>jetbrick-template</artifactId>
-                <version>2.1.2</version>
             </dependency>
             <dependency>
                 <groupId>joda-time</groupId>

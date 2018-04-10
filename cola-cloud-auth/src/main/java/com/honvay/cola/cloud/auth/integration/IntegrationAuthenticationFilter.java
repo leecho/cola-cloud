@@ -1,9 +1,7 @@
 package com.honvay.cola.cloud.auth.integration;
 
 import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
-import com.honvay.cola.cloud.framework.util.StringUtils;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -21,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -55,6 +55,7 @@ public class CommonConstant {
     public static final String USER_STATUS_ENABLED = "1";
     public static final String USER_STATUS_DISABLED = "0";
     public static final String USER_STATUS_LOCKED = "-1";
+
     public static final Integer TENANT_STATUS_ENABLED = 1;
     public static final Integer TENANT_STATUS_DISABLE = 0;
 }

@@ -52,5 +52,12 @@ zuul:
         serviceId: common-service
         stripPrefix: false
         sensitiveHeaders:
+#server:
+  #port: 80
+
 server:
-  port: 4000
+  port: 443
+  ssl:
+    key-store: D:/tmp/tomcat.keystore
+    key-store-password: 123456
+    key-password: 123456
