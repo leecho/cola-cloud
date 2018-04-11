@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 @Primary
-public class DefaultAuthenticator extends AbstractPreparableIntegrationAuthenticator {
+public class UsernamePasswordAuthenticator extends AbstractPreparableIntegrationAuthenticator {
 
     @Autowired
     private UcClient ucClient;
