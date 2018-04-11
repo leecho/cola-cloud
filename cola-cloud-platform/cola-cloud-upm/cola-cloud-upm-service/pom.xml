@@ -29,10 +29,6 @@
         </dependency>
         <dependency>
             <groupId>com.honvay.cola</groupId>
-            <artifactId>cola-cloud-framework-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.honvay.cola</groupId>
             <artifactId>cola-cloud-framework-oauth2</artifactId>
         </dependency>
         <dependency>
