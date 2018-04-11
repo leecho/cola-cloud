@@ -3,7 +3,7 @@ package com.honvay.cola.cloud.upm.controller;
 import com.honvay.cola.cloud.framework.base.audit.EnableAudit;
 import com.honvay.cola.cloud.framework.base.controller.BaseController;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
-import com.honvay.cola.cloud.upm.cache.UpmCacheService;
+import com.honvay.cola.cloud.upm.cache.SysResourceCacheService;
 import com.honvay.cola.cloud.upm.entity.SysResource;
 import com.honvay.cola.cloud.upm.model.SysMenuVO;
 import com.honvay.cola.cloud.upm.service.SysResourceService;
@@ -29,7 +29,7 @@ public class SysResourceController extends BaseController {
     private SysResourceService sysResourceService;
 
     @Autowired
-    private UpmCacheService upmCacheService;
+    private SysResourceCacheService upmCacheService;
 
     @GetMapping("/menu")
     @ApiOperation("获取当前用户已授权的菜单")

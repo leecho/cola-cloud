@@ -1,5 +1,6 @@
 package com.honvay.cola.cloud.common;
 
+import com.honvay.cola.cloud.framework.security.access.EnableSecurityAccess;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,6 +25,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @ComponentScan(basePackages = {"com.honvay.cola"})
 @MapperScan(basePackages = { "com.honvay.cola.**.mapper" })
 @EnableCircuitBreaker
+@EnableSecurityAccess
 public class CommonApplication extends ResourceServerConfigurerAdapter{
 
     @Override

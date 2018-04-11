@@ -23,10 +23,6 @@
         </dependency>
         <dependency>
             <groupId>com.honvay.cola</groupId>
-            <artifactId>cola-cloud-framework-feign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.honvay.cola</groupId>
             <artifactId>cola-cloud-framework-util</artifactId>
         </dependency>
         <dependency>

@@ -1,7 +1,8 @@
 package com.honvay.cola.cloud.organization;
 
-import com.honvay.cola.cloud.framework.feign.EnableOAuth2ClientFeign;
-import com.honvay.cola.cloud.framework.oauth2.EnableCustomTokenService;
+import com.honvay.cola.cloud.framework.oauth2.feign.EnableOAuth2ClientFeign;
+import com.honvay.cola.cloud.framework.oauth2.token.EnableCustomTokenService;
+import com.honvay.cola.cloud.framework.security.access.EnableSecurityAccess;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -28,6 +29,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @ComponentScan("com.honvay")
 @EnableCircuitBreaker
 @EnableCaching
+@EnableSecurityAccess
 public class OrganizationApplication  extends ResourceServerConfigurerAdapter {
 
     public static void main(String[] args){

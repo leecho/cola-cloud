@@ -21,7 +21,5 @@
         <module>cola-cloud-framework-storage</module>
         <module>cola-cloud-framework-util</module>
         <module>cola-cloud-framework-starter</module>
-        <module>cola-cloud-framework-feign</module>
-        <module>cola-cloud-framework-auth</module>
     </modules>
 </project>

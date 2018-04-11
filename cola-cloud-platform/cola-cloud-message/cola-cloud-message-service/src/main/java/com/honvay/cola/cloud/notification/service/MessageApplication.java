@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.notification.service;
 
-import com.honvay.cola.cloud.framework.feign.EnableOAuth2ClientFeign;
-import com.honvay.cola.cloud.framework.oauth2.EnableCustomTokenService;
+import com.honvay.cola.cloud.framework.oauth2.feign.EnableOAuth2ClientFeign;
+import com.honvay.cola.cloud.framework.oauth2.token.EnableCustomTokenService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

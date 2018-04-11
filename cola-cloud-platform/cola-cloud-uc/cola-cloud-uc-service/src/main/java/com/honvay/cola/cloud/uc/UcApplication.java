@@ -1,6 +1,7 @@
 package com.honvay.cola.cloud.uc;
 
-import com.honvay.cola.cloud.framework.oauth2.EnableCustomTokenService;
+import com.honvay.cola.cloud.framework.oauth2.token.EnableCustomTokenService;
+import com.honvay.cola.cloud.framework.security.access.EnableSecurityAccess;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -25,6 +26,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @EnableFeignClients
 @EnableCircuitBreaker
 @ComponentScan("com.honvay")
+@EnableSecurityAccess
 @EnableCaching
 public class UcApplication extends ResourceServerConfigurerAdapter {
 

@@ -36,11 +36,6 @@
             </dependency>
             <dependency>
                 <groupId>com.honvay.cola</groupId>
-                <artifactId>cola-cloud-framework-feign</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.honvay.cola</groupId>
                 <artifactId>cola-cloud-framework-core</artifactId>
                 <version>${project.version}</version>
             </dependency>

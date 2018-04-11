@@ -1,4 +1,4 @@
-package com.honvay.cola.cloud.framework.oauth2;
+package com.honvay.cola.cloud.framework.oauth2.token;
 
 import com.honvay.cola.cloud.framework.oauth2.token.UserInfoTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
  * @author LIQIU
  * @date 2018-3-26
  **/
-@Configuration
 public class TokenServiceConfiguration {
 
     @Autowired

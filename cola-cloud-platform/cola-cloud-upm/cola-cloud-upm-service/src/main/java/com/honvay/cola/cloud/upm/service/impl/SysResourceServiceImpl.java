@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
 import com.honvay.cola.cloud.framework.security.utils.SecurityUtils;
 import com.honvay.cola.cloud.framework.util.Assert;
-import com.honvay.cola.cloud.upm.cache.UpmCacheService;
+import com.honvay.cola.cloud.upm.cache.SysResourceCacheService;
 import com.honvay.cola.cloud.upm.entity.SysAuthority;
 import com.honvay.cola.cloud.upm.entity.SysResource;
 import com.honvay.cola.cloud.upm.model.SysMenuVO;
@@ -40,7 +40,7 @@ public class SysResourceServiceImpl extends BaseSerivceImpl<SysResource> impleme
     private SysAuthorizeService sysAuthorizeService;
 
 	@Autowired
-    private UpmCacheService upmCacheService;
+    private SysResourceCacheService sysResourceCacheService;
 
     @Override
     public List<SysMenuVO> getResourceListByPid(Long id) {
@@ -120,7 +120,7 @@ public class SysResourceServiceImpl extends BaseSerivceImpl<SysResource> impleme
 
     private List<SysMenuVO> getAuthorizedResource(Long pid){
         List<SysMenuVO> menus = new ArrayList<SysMenuVO>();
-        List<SysResource> children = this.upmCacheService.getChildrenCacheByResourceId(pid);
+        List<SysResource> children = this.sysResourceCacheService.getChildrenCacheByResourceId(pid);
         for (SysResource child : children){
             //判断是否有权限
             if(SecurityUtils.hasResource(child.getCode()) ){

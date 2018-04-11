@@ -1,6 +1,4 @@
 logging:
-  level:
-    org.springframework.security: INFO
   path: ../logs
 
 hystrix:

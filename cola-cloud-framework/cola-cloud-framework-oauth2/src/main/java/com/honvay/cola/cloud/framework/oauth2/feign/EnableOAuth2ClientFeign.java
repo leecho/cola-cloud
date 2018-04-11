@@ -1,4 +1,4 @@
-package com.honvay.cola.cloud.framework.feign;
+package com.honvay.cola.cloud.framework.oauth2.feign;
 
 import org.springframework.context.annotation.Import;
 

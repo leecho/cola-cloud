@@ -23,5 +23,14 @@
             <groupId>com.honvay.cola</groupId>
             <artifactId>cola-cloud-framework-util</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.honvay.cola</groupId>
+            <artifactId>cola-cloud-upm-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

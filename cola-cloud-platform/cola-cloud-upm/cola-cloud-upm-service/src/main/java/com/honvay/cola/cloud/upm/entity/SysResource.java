@@ -84,7 +84,12 @@ public class SysResource implements Serializable {
     private String description;
 
     /**
-     * 组件URL
+     * 路由
      */
-    private String portalUrl;
+    private String route;
+
+    /**
+     * 所属服务
+     */
+    private String serviceId;
 }

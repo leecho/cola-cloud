@@ -1,4 +1,4 @@
-package com.honvay.cola.cloud.framework.oauth2;
+package com.honvay.cola.cloud.framework.oauth2.token;
 
 import org.springframework.context.annotation.Import;
 

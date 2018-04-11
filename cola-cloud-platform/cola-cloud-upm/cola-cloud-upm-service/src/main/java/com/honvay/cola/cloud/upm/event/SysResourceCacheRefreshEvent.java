@@ -7,9 +7,9 @@ import org.springframework.context.ApplicationEvent;
  * @author LIQIU
  * @date 2018-1-8
  **/
-public class SysCacheRefreshEvent extends ApplicationEvent{
+public class SysResourceCacheRefreshEvent extends ApplicationEvent{
 
-    public SysCacheRefreshEvent(Object source) {
+    public SysResourceCacheRefreshEvent(Object source) {
         super(source);
     }
 }

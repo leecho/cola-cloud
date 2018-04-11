@@ -1,6 +1,6 @@
 package com.honvay.cola.cloud.auth;
 
-import com.honvay.cola.cloud.framework.feign.EnableOAuth2ClientFeign;
+import com.honvay.cola.cloud.framework.oauth2.feign.EnableOAuth2ClientFeign;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;

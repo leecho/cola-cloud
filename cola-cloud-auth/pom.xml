@@ -25,12 +25,11 @@
         </dependency>
         <dependency>
             <groupId>com.honvay.cola</groupId>
-            <artifactId>cola-cloud-framework-feign</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <artifactId>cola-cloud-uc-client</artifactId>
         </dependency>
         <dependency>
             <groupId>com.honvay.cola</groupId>
-            <artifactId>cola-cloud-uc-client</artifactId>
+            <artifactId>cola-cloud-framework-oauth2</artifactId>
         </dependency>
         <dependency>
             <groupId>com.honvay.cola</groupId>
