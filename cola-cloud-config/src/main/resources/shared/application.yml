@@ -42,9 +42,9 @@ spring:
     database: 8
     timeout: 0
     pool:
-      max-active: 8
+      max-active: 100
       max-wait: 1
-      max-idle: 8
+      max-idle: 50
       min-idle: 0
 
 flyway:
