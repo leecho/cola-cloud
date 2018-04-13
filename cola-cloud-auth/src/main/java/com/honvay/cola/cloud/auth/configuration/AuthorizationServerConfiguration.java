@@ -49,26 +49,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // TODO persist clients details
         clients.withClientDetails(redisClientDetailsService);
-        /*clients.inMemory()
-                //Web端
-                .withClient("browser")
-                .authorizedGrantTypes("refresh_token", "password")
-                .scopes("ui")
-                .and()
-                //IOS端
-                .withClient("ios")
-                .authorizedGrantTypes("refresh_token", "password")
-                .scopes("client")
-                .and()
-                //服务器端
-                .withClient("server")
-                .secret("server")
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server")
-                .and()
-                .withClient("open").secret("open")
-                .authorizedGrantTypes("authorization_code")
-                .scopes("ui");*/
     }
 
     @Override
