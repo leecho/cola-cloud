@@ -2,6 +2,7 @@ package com.honvay.cola.cloud.auth.configuration;
 
 import com.honvay.cola.cloud.auth.exception.WebResponseExceptionTranslator;
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthenticationFilter;
+import com.honvay.cola.cloud.auth.service.DatabaseCachableClientDetailsService;
 import com.honvay.cola.cloud.auth.service.IntegrationUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -41,11 +42,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private IntegrationAuthenticationFilter integrationAuthenticationFilter;
 
+    @Autowired
+    private DatabaseCachableClientDetailsService redisClientDetailsService;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
         // TODO persist clients details
-        clients.inMemory()
+        clients.withClientDetails(redisClientDetailsService);
+        /*clients.inMemory()
                 //Web端
                 .withClient("browser")
                 .authorizedGrantTypes("refresh_token", "password")
@@ -64,7 +68,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .and()
                 .withClient("open").secret("open")
                 .authorizedGrantTypes("authorization_code")
-                .scopes("ui");
+                .scopes("ui");*/
     }
 
     @Override

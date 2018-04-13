@@ -24,8 +24,6 @@ public class GenerateService {
 
     private DataSourceConfig dataSourceConfig;
 
-    private AutoGenerator autoGenerator;
-
     @Autowired
     private DataSourceProperties dataSourceProperties;
 
@@ -92,7 +90,6 @@ public class GenerateService {
         packageConfig.setMapper("mapper");
         packageConfig.setService("service");
         packageConfig.setServiceImpl("service.impl");
-        autoGenerator.setPackageInfo(packageConfig);
 
         entityNameRewriter = new EntityNameRewriter();
 

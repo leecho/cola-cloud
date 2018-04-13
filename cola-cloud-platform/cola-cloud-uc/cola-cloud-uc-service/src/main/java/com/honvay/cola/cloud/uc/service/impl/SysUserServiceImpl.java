@@ -230,7 +230,7 @@ public class SysUserServiceImpl extends BaseSerivceImpl<SysUser> implements SysU
 
     @Override
     public UserVO findUserByUsername(String username) {
-        SysUser sysUser = this.unique("username",username);
+        SysUser sysUser = this.findOneByColumn("username",username);
         return this.getUser(sysUser);
     }
 
@@ -241,7 +241,7 @@ public class SysUserServiceImpl extends BaseSerivceImpl<SysUser> implements SysU
 
     @Override
     public UserVO findUserByPhoneNumber(String phoneNumber) {
-        SysUser sysUser = this.unique("phone_number",phoneNumber);
+        SysUser sysUser = this.findOneByColumn("phone_number",phoneNumber);
         return this.getUser(sysUser);
     }
 

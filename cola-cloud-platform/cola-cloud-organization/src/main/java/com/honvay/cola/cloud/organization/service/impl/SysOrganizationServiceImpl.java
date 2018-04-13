@@ -76,7 +76,7 @@ public class SysOrganizationServiceImpl extends TenancyServiceImpl<SysOrganizati
      * @return
      */
 	private void assertHasChild(Serializable id) {
-		Assert.isTrue(CollectionUtils.isEmpty(this.listByProperty("pid", id)),"存在子部门无法删除");
+		Assert.isTrue(CollectionUtils.isEmpty(this.selectListByColumn("pid", id)),"存在子部门无法删除");
 	}
 
     /**
@@ -85,7 +85,7 @@ public class SysOrganizationServiceImpl extends TenancyServiceImpl<SysOrganizati
      * @return
      */
     private void assertHasEmployee(Serializable id) {
-        Assert.isTrue(CollectionUtils.isEmpty(this.sysEmployeeService.listByProperty("sys_org_id", id)),"存在员工无法删除");
+        Assert.isTrue(CollectionUtils.isEmpty(this.sysEmployeeService.selectListByColumn("sys_org_id", id)),"存在员工无法删除");
 	}
 
 

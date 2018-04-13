@@ -95,13 +95,13 @@ public class BaseSerivceImpl<T> implements BaseService<T> {
 
     
     @Override
-    public T unique(String column, String value) {
+    public T findOneByColumn(String column, String value) {
      T t   =this.selectOne(new EntityWrapper<T>().eq(column, value));
     	return t;
     }
     
     @Override
-    public List<T> listByProperty(String column, Object value){
+    public List<T> selectListByColumn(String column, Object value){
     	return this.selectList(new EntityWrapper<T>().eq(column, value));
     }
 

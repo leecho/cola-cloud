@@ -12,7 +12,7 @@ public interface BaseService<T> extends IService<T>{
      * @param value
      * @return
      */
-    public T unique(String column, String value);
+    public T findOneByColumn(String column, String value);
 
     /**
      * 根据列获取列表
@@ -20,7 +20,7 @@ public interface BaseService<T> extends IService<T>{
      * @param value
      * @return
      */
-    public List<T> listByProperty(String column, Object value);
+    public List<T> selectListByColumn(String column, Object value);
 
     public List<T> selectList();
 }

@@ -101,7 +101,7 @@ public class AttachmentServiceImpl extends BaseSerivceImpl<Attachment> implement
 
     @Override
     public Attachment getByKey(String key){
-        return this.unique("attachment_key",key);
+        return this.findOneByColumn("attachment_key",key);
     }
 
     @Override

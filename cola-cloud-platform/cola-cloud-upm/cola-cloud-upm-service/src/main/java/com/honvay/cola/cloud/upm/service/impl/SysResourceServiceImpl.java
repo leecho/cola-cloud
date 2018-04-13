@@ -108,7 +108,7 @@ public class SysResourceServiceImpl extends BaseSerivceImpl<SysResource> impleme
 
     @Override
     public void delete(Long id) {
-    	Assert.isTrue(CollectionUtils.isEmpty(this.listByProperty("pid", id)),"存在子资源无法删除");
+    	Assert.isTrue(CollectionUtils.isEmpty(this.selectListByColumn("pid", id)),"存在子资源无法删除");
     	this.deleteById(id);
     	this.sysAuthorityService.delete(new EntityWrapper<SysAuthority>().eq("sys_resource_id", id));
     }
