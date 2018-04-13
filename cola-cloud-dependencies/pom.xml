@@ -25,7 +25,7 @@
         <beetl.version>2.7.15</beetl.version>
         <swagger.version>2.7.0</swagger.version>
         <commons-lang3.version>3.6</commons-lang3.version>
-        <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
+        <mysql-connector-java.version>5.1.45</mysql-connector-java.version>
         <servlet-api.version>3.1.0</servlet-api.version>
     </properties>
 

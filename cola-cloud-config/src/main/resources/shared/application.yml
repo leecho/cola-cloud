@@ -11,11 +11,11 @@ hystrix:
 security:
   oauth2:
     resource:
-      user-info-uri: http://auth-service:5000/uaa/current
+      user-info-uri: http://api-gateway/uaa/current
     client:
       clientId: server
       clientSecret: server
-      accessTokenUri: http://auth-service:5000/uaa/oauth/token
+      accessTokenUri: http://api-gateway/uaa/oauth/token
       grant-type: client_credentials
       scope: server
 

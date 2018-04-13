@@ -13,9 +13,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  * @date 2018-3-27
  **/
 @ComponentScan("com.honvay")
-@EnableAutoConfiguration
-@SpringBootApplication
 @EnableResourceServer
+@SpringBootApplication
 public class NotificationApplication extends ResourceServerConfigurerAdapter {
 
     public static void main(String[] args) {

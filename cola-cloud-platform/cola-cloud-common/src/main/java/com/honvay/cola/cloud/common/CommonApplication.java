@@ -4,6 +4,7 @@ import com.honvay.cola.cloud.framework.security.access.EnableSecurityAccess;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,14 +19,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  * @date 2018-3-13
  **/
 @Configuration
-@SpringBootApplication
-@EnableEurekaClient
 @EnableResourceServer
 @EnableOAuth2Client
 @ComponentScan(basePackages = {"com.honvay.cola"})
 @MapperScan(basePackages = { "com.honvay.cola.**.mapper" })
-@EnableCircuitBreaker
 @EnableSecurityAccess
+@SpringCloudApplication
 public class CommonApplication extends ResourceServerConfigurerAdapter{
 
     @Override
