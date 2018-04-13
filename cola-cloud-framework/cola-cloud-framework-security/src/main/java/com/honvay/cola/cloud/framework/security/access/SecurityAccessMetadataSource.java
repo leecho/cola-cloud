@@ -17,24 +17,23 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 可刷新的元数据，通过RabbitMQ实时同步UPM中的缓存
- *
+ * 安全访问的数据源
  * @author LIQIU
  * @date 2018-4-10
  **/
-public class ServiceIdBasedSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+public class SecurityAccessMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-    private Map<String, Collection<ConfigAttribute>> urlRoleMapping;
+    private Map<String, Collection<ConfigAttribute>> metadata;
 
     private CacheManager cacheManager;
 
     private String serviceId;
 
     public void loadUrlRoleMapping() {
-        if(urlRoleMapping != null){
-            urlRoleMapping.clear();
+        if(metadata != null){
+            metadata.clear();
         }else{
-            this.urlRoleMapping = new HashMap<>();
+            this.metadata = new HashMap<>();
         }
         //从缓存中获取数据
         Cache cache = cacheManager.getCache(ResourceCacheConstant.URL_ROLE_MAPPING_CACHE);
@@ -48,7 +47,7 @@ public class ServiceIdBasedSecurityMetadataSource implements FilterInvocationSec
             for (Map.Entry<String, Set<String>> entry : urlRoleMapping.entrySet()) {
                 Set<String> roleCodes = entry.getValue();
                 Collection<ConfigAttribute> configs = CollectionUtils.collect(roleCodes.iterator(), input -> new SecurityConfig(input));
-                this.urlRoleMapping.put(entry.getKey(), configs);
+                this.metadata.put(entry.getKey(), configs);
             }
         }
     }
@@ -64,17 +63,17 @@ public class ServiceIdBasedSecurityMetadataSource implements FilterInvocationSec
          * 3、使用消息队列异步通知，资源的缓存刷新之后，通知各个节点刷新本地缓存。这样可以保证缓存的最终一致性，但是这样也会造成系统的复杂度会上升
          * */
 
-        if(this.urlRoleMapping == null){
+        if(this.metadata == null){
             loadUrlRoleMapping();
         }
         //object 中包含用户请求的request 信息
         HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
         AntPathRequestMatcher matcher;
         String resUrl;
-        for (Map.Entry<String, Collection<ConfigAttribute>> entry : urlRoleMapping.entrySet()) {
+        for (Map.Entry<String, Collection<ConfigAttribute>> entry : metadata.entrySet()) {
             matcher = new AntPathRequestMatcher(entry.getKey());
             if (matcher.matches(request)) {
-                return urlRoleMapping.get(entry.getValue());
+                return metadata.get(entry.getValue());
             }
         }
         return null;

@@ -8,12 +8,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * @author LIQIU
  * @date 2018-3-8
  **/
-public class User implements UserDetails,CredentialsContainer {
+public class User implements UserDetails, CredentialsContainer {
 
     private Long id;
     private String username;
@@ -29,14 +30,9 @@ public class User implements UserDetails,CredentialsContainer {
     private Long tenantId;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
-        if(grantedAuthorities == null){
-            grantedAuthorities = new ArrayList<>();
-            if(roles != null){
-                for (String role : roles) {
-                    grantedAuthorities.add(new SimpleGrantedAuthority(role));
-                }
-            }
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (grantedAuthorities == null) {
+            this.grantedAuthorities = this.getRoles().stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
         }
         return grantedAuthorities;
     }
@@ -150,6 +146,7 @@ public class User implements UserDetails,CredentialsContainer {
     public void setName(String name) {
         this.name = name;
     }
+
     @Override
     public void eraseCredentials() {
         this.password = null;

@@ -3,6 +3,7 @@ package com.honvay.cola.cloud.auth;
 import com.honvay.cola.cloud.framework.oauth2.feign.EnableOAuth2ClientFeign;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -14,13 +15,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 /** 
  * @author LIQIU
  */
-@SpringBootApplication
+@SpringCloudApplication
 @EnableResourceServer
 @EnableOAuth2Client
 @EnableDiscoveryClient
 @EnableOAuth2ClientFeign
-@EnableEurekaClient
-@EnableCircuitBreaker
 @EnableFeignClients("com.honvay")
 @ComponentScan("com.honvay")
 public class AuthApplication    {

@@ -23,7 +23,7 @@ public class SecurityAccessAutoConfiguration extends WebSecurityConfigurerAdapte
 
     @Bean
     public FilterInvocationSecurityMetadataSource securityMetadataSource(){
-        ServiceIdBasedSecurityMetadataSource securityMetadataSource = new ServiceIdBasedSecurityMetadataSource();
+        SecurityAccessMetadataSource securityMetadataSource = new SecurityAccessMetadataSource();
         securityMetadataSource.setCacheManager(cacheManager);
         securityMetadataSource.setServiceId(serviceId);
         return securityMetadataSource;

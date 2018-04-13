@@ -14,9 +14,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 集成认证用户服务
+ *
  * @author LIQIU
  * @date 2018-3-7
  **/
@@ -29,48 +31,46 @@ public class IntegrationUserDetailsService implements UserDetailsService {
     private List<IntegrationAuthenticator> authenticators;
 
     @Autowired(required = false)
-    public void setIntegrationAuthenticators(List<IntegrationAuthenticator> authenticators){
+    public void setIntegrationAuthenticators(List<IntegrationAuthenticator> authenticators) {
         this.authenticators = authenticators;
     }
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        UserVO userVo = null;
         IntegrationAuthentication integrationAuthentication = IntegrationAuthenticationContext.get();
         //判断是否是集成登录
-        if(integrationAuthentication == null){
+        if (integrationAuthentication == null) {
             integrationAuthentication = new IntegrationAuthentication();
-
         }
-
         integrationAuthentication.setUsername(username);
-        userVo = this.authenticate(integrationAuthentication);
+        UserVO userVO = this.authenticate(integrationAuthentication);
 
-        if(userVo == null){
+        if(userVO == null){
             throw new UsernameNotFoundException("用户名或密码错误");
         }
 
         User user = new User();
-        BeanUtils.copyProperties(userVo,user);
+        BeanUtils.copyProperties(userVO, user);
         this.setAuthorize(user);
         return user;
+
     }
 
     /**
      * 设置授权信息
+     *
      * @param user
      */
-    public void setAuthorize(User user){
+    public void setAuthorize(User user) {
         Authorize authorize = this.upmClient.getAuthorize(user.getId());
         user.setRoles(authorize.getRoles());
         user.setResources(authorize.getResources());
     }
 
-    private  UserVO authenticate(IntegrationAuthentication integrationAuthentication){
-        if(this.authenticators != null){
-            for (IntegrationAuthenticator authenticator: authenticators) {
-                if(authenticator.support(integrationAuthentication)){
+    private UserVO authenticate(IntegrationAuthentication integrationAuthentication) {
+        if (this.authenticators != null) {
+            for (IntegrationAuthenticator authenticator : authenticators) {
+                if (authenticator.support(integrationAuthentication)) {
                     return authenticator.authenticate(integrationAuthentication);
                 }
             }

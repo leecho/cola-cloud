@@ -1,6 +1,7 @@
-package com.honvay.cola.cloud.auth.config;
+package com.honvay.cola.cloud.auth.configuration;
 
 import com.honvay.cola.cloud.auth.exception.WebResponseExceptionTranslator;
+import com.honvay.cola.cloud.auth.integration.IntegrationAuthenticationFilter;
 import com.honvay.cola.cloud.auth.service.IntegrationUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private WebResponseExceptionTranslator webResponseExceptionTranslator;
 
+    @Autowired
+    private IntegrationAuthenticationFilter integrationAuthenticationFilter;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
@@ -56,7 +60,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .withClient("server")
                 .secret("server")
                 .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server");
+                .scopes("server")
+                .and()
+                .withClient("open").secret("open")
+                .authorizedGrantTypes("authorization_code")
+                .scopes("ui");
     }
 
     @Override
@@ -72,10 +80,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security
-                .allowFormAuthenticationForClients()
+        security.allowFormAuthenticationForClients()
                 .tokenKeyAccess("isAuthenticated()")
-                .checkTokenAccess("permitAll()");
+                .checkTokenAccess("permitAll()")
+                .addTokenEndpointAuthenticationFilter(integrationAuthenticationFilter);
     }
 
     @Bean
