@@ -23,6 +23,9 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * 基于数据库可缓存的客户端服务
+ */
 @Service
 public class DatabaseCachableClientDetailsService implements ClientDetailsService, ClientRegistrationService {
 
@@ -38,16 +41,20 @@ public class DatabaseCachableClientDetailsService implements ClientDetailsServic
     private ScopeService scopeService;
 
     @Override
-    @Cacheable(value = OAUTH_CLINET_DETAILS_CACHE ,key = "#clientId")
+    @Cacheable(value = OAUTH_CLINET_DETAILS_CACHE, key = "#clientId")
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
         Optional<Client> clientOptional = Optional.of(this.clientService.findOneByColumn("client_id", clientId));
         return clientOptional.map(entityToDomain).<ClientRegistrationException>orElseThrow(() -> new NoSuchClientException("Client ID not found"));
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    @CachePut(value = OAUTH_CLINET_DETAILS_CACHE ,key = "#clientDetails.clientId")
     public void addClientDetails(ClientDetails clientDetails) throws ClientAlreadyExistsException {
+        this.addClientDetailsWithCache(clientDetails);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @CachePut(value = OAUTH_CLINET_DETAILS_CACHE, key = "#clientDetails.clientId")
+    public ClientDetails addClientDetailsWithCache(ClientDetails clientDetails) throws ClientAlreadyExistsException {
         if (this.clientService.findOneByColumn("client_id", clientDetails.getClientId()) != null) {
             throw new ClientAlreadyExistsException("Client ID already exists");
         }
@@ -68,12 +75,12 @@ public class DatabaseCachableClientDetailsService implements ClientDetailsServic
                 Scope.builder().clientId(client.getId()).autoApprove(false).scope(scope).build()).collect(Collectors.toList());
 
         this.scopeService.insertBatch(clientScopes);
-
+        return clientDetails;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @CachePut(value = OAUTH_CLINET_DETAILS_CACHE ,key = "#clientDetails.clientId")
-    public ClientDetails updateCachedClientDetail(ClientDetails clientDetails) throws NoSuchClientException{
+    @CachePut(value = OAUTH_CLINET_DETAILS_CACHE, key = "#clientDetails.clientId")
+    public ClientDetails updateCachedClientDetail(ClientDetails clientDetails) throws NoSuchClientException {
         Optional<Client> clientOptional = Optional.of(this.clientService.findOneByColumn("client_id", clientDetails.getClientId()));
         clientOptional.orElseThrow(() -> new NoSuchClientException("Client ID not found"));
 
@@ -112,9 +119,9 @@ public class DatabaseCachableClientDetailsService implements ClientDetailsServic
         this.clientService.updateById(clientOptional.get());
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
-    @CacheEvict(value = OAUTH_CLINET_DETAILS_CACHE ,key = "#clientId")
+    @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = OAUTH_CLINET_DETAILS_CACHE, key = "#clientId")
     public void removeClientDetails(String clientId) throws NoSuchClientException {
         EntityWrapper<Client> wrapper = new EntityWrapper<>();
         wrapper.eq("client_id", clientId);
@@ -137,16 +144,16 @@ public class DatabaseCachableClientDetailsService implements ClientDetailsServic
 
         clientDetails.setAuthorizedGrantTypes(Arrays.asList(entity.getGrantType().split(",")));
 
-        List<Scope> clientScopes = this.scopeService.selectListByColumn("client_id",entity.getId());
+        List<Scope> clientScopes = this.scopeService.selectListByColumn("client_id", entity.getId());
 
         clientDetails.setScope(clientScopes.stream().map(clientScope -> clientScope.getScope()).collect(Collectors.toList()));
 
         clientDetails.setAutoApproveScopes(clientScopes.stream().filter(Scope::getAutoApprove).map(clientScope -> clientScope.getScope()).collect(Collectors.toList()));
 
-        if(StringUtils.isNotEmpty(entity.getResourceIds())){
+        if (StringUtils.isNotEmpty(entity.getResourceIds())) {
             clientDetails.setResourceIds(Arrays.stream(StringUtils.split(entity.getResourceIds(), ",")).collect(Collectors.toList()));
         }
-        if(StringUtils.isNotEmpty(entity.getResourceIds())){
+        if (StringUtils.isNotEmpty(entity.getRedirectUri())) {
             clientDetails.setRegisteredRedirectUri(Arrays.stream(StringUtils.split(entity.getRedirectUri(), ",")).collect(Collectors.toSet()));
         }
 
