@@ -22,9 +22,9 @@ DROP TABLE IF EXISTS `cola_oauth_client`;
 CREATE TABLE `cola_oauth_client` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `created_by` bigint(20) DEFAULT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ,
   `last_modified_by` bigint(20) DEFAULT NULL,
-  `last_modified_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `last_modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `access_token_validity_seconds` int(11) DEFAULT NULL,
   `client_id` varchar(200) DEFAULT NULL,
   `client_secret` varchar(255) DEFAULT NULL,
