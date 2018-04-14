@@ -6,6 +6,11 @@ management:
   security:
     enabled: false
 
+security:
+  oauth2:
+    resource:
+      id: auth-service
+
 cola:
   wechat:
     miniapp:

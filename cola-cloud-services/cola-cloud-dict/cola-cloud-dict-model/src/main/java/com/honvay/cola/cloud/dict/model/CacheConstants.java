@@ -6,5 +6,5 @@ package com.honvay.cola.cloud.dict.model;
  **/
 public class CacheConstants {
 
-    public static  final String DICT_ITEM_CACHE_NAME = "dictItemCache";
+    public static  final String DICT_ITEM_CACHE_NAME = "dict";
 }

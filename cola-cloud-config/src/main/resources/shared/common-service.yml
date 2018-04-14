@@ -15,3 +15,8 @@ cola:
       template-code: SMS_115750106
       code-param-name: code
       sign-name: Cola云平台
+
+security:
+  oauth2:
+    resource:
+      id: common-service

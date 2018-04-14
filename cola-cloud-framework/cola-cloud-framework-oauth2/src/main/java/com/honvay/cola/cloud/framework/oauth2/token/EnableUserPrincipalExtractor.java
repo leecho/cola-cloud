@@ -5,14 +5,14 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * 客户端获取认证信息时匹配协议
+ * 提取OAuth2中返回的数据转成User对象
  * @author LIQIU
  * @date 2018-3-26
  **/
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(TokenServiceConfiguration.class)
-public @interface EnableCustomTokenService {
+@Import(UserPrincipalExtractorConfiguration.class)
+public @interface EnableUserPrincipalExtractor {
 
 }

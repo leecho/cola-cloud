@@ -1,13 +1,10 @@
 package com.honvay.cola.cloud.notification.service;
 
 import com.honvay.cola.cloud.framework.oauth2.feign.EnableOAuth2ClientFeign;
-import com.honvay.cola.cloud.framework.oauth2.token.EnableCustomTokenService;
+import com.honvay.cola.cloud.framework.oauth2.token.EnableUserPrincipalExtractor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -28,7 +25,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableOAuth2Client
 @EnableFeignClients("com.honvay.cola")
 @EnableScheduling
-@EnableCustomTokenService
+@EnableUserPrincipalExtractor
 @EnableSwagger2
 @EnableOAuth2ClientFeign
 @MapperScan(basePackages = {"com.honvay.cola.**.mapper"})
