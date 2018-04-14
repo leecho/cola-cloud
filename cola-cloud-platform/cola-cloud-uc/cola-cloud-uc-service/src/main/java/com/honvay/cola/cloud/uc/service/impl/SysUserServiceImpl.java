@@ -252,6 +252,7 @@ public class SysUserServiceImpl extends BaseSerivceImpl<SysUser> implements SysU
 	public boolean deleteSysUser(String username) {
 		EntityWrapper<SysUser> wrapper =this.newEntityWrapper();
 		wrapper.setSqlSelect("username",username);
+		Assert.hasText(username,"用户名不能为空");
 		return this.delete(wrapper);
 	}
 }
