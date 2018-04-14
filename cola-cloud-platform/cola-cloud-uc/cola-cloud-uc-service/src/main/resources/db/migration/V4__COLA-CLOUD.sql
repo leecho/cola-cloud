@@ -40,8 +40,8 @@ CREATE TABLE `cola_oauth_client` (
 -- ----------------------------
 -- Records of cola_oauth_client
 -- ----------------------------
-INSERT INTO `cola_oauth_client` VALUES ('1', '-1', '2018-04-13 13:47:49', '-1', '0000-00-00 00:00:00', null, 'browser', null, null, 'refresh_token,password', null, null, '');
-INSERT INTO `cola_oauth_client` VALUES ('2', '-1', '2018-04-13 14:14:12', '-1', '0000-00-00 00:00:00', null, 'server', 'server', null, 'refresh_token,client_credentials', null, null, '');
+INSERT INTO `cola_oauth_client` VALUES ('1', '-1', '2018-04-13 13:47:49', '-1', '2018-04-13 13:47:49', null, 'browser', null, null, 'refresh_token,password', null, null, '');
+INSERT INTO `cola_oauth_client` VALUES ('2', '-1', '2018-04-13 14:14:12', '-1', '2018-04-13 14:14:12', null, 'server', 'server', null, 'refresh_token,client_credentials', null, null, '');
 
 -- ----------------------------
 -- Table structure for cola_oauth_client_scope
