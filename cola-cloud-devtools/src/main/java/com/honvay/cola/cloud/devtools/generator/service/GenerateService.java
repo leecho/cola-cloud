@@ -82,6 +82,7 @@ public class GenerateService {
         strategyConfig.setSuperControllerClass("com.honvay.cola.cloud.framework.base.controller.BaseController");
         strategyConfig.setEntityLombokModel(true);
         strategyConfig.setRestControllerStyle(true);
+        strategyConfig.setEntityBuilderModel(true);
 
 
         packageConfig = new PackageConfig();
