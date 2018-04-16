@@ -47,9 +47,6 @@ spring:
       max-idle: 50
       min-idle: 0
 
-flyway:
-  baselineOnMigrate: true
-
 cola:
   swagger2:
     enable: true
@@ -73,3 +70,14 @@ mybatis-plus:
     lazyLoadingEnabled: true #延时加载的开关
     multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
+
+management:
+  security:
+    enabled: false
+
+eureka:
+  instance:
+    health-check-url-path: /health
+    status-page-url-path: /info
+    metadata-map:
+      management.context-path: ${server.context-path:}

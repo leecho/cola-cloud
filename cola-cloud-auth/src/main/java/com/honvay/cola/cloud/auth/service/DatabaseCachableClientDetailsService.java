@@ -67,8 +67,6 @@ public class DatabaseCachableClientDetailsService implements ClientDetailsServic
 
         client.setGrantType(clientDetails.getAuthorizedGrantTypes().stream().collect(Collectors.joining(",")));
         client.setRedirectUri(clientDetails.getRegisteredRedirectUri().stream().collect(Collectors.joining(",")));
-
-
         clientService.insert(client);
 
         List<Scope> clientScopes = clientDetails.getScope().stream().map(scope ->
@@ -142,13 +140,13 @@ public class DatabaseCachableClientDetailsService implements ClientDetailsServic
         clientDetails.setAccessTokenValiditySeconds(entity.getAccessTokenValiditySeconds());
         clientDetails.setRefreshTokenValiditySeconds(entity.getRefreshTokenValiditySeconds());
 
-        clientDetails.setAuthorizedGrantTypes(Arrays.asList(entity.getGrantType().split(",")));
+        clientDetails.setAuthorizedGrantTypes(Arrays.asList(StringUtils.split(entity.getGrantType(),",")));
 
-        List<Scope> clientScopes = this.scopeService.selectListByColumn("client_id", entity.getId());
+        List<Scope> scopes = this.scopeService.selectListByColumn("client_id", entity.getId());
 
-        clientDetails.setScope(clientScopes.stream().map(clientScope -> clientScope.getScope()).collect(Collectors.toList()));
+        clientDetails.setScope(scopes.stream().map(scope -> scope.getScope()).collect(Collectors.toList()));
 
-        clientDetails.setAutoApproveScopes(clientScopes.stream().filter(Scope::getAutoApprove).map(clientScope -> clientScope.getScope()).collect(Collectors.toList()));
+        clientDetails.setAutoApproveScopes(scopes.stream().filter(Scope::getAutoApprove).map(scope -> scope.getScope()).collect(Collectors.toList()));
 
         if (StringUtils.isNotEmpty(entity.getResourceIds())) {
             clientDetails.setResourceIds(Arrays.stream(StringUtils.split(entity.getResourceIds(), ",")).collect(Collectors.toList()));

@@ -20,10 +20,6 @@
             <artifactId>cola-cloud-framework-util</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.ibeetl</groupId>
-            <artifactId>beetl</artifactId>
-        </dependency>
-        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>

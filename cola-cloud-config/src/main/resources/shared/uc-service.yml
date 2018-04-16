@@ -5,4 +5,7 @@ server:
 security:
   oauth2:
     resource:
-      id: uc-service
+      id: ${spring.application.name}
+
+flyway:
+  baselineOnMigrate: true
