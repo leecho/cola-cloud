@@ -2,10 +2,5 @@ server:
   context-path: /uc
   port: 6000
 
-security:
-  oauth2:
-    resource:
-      id: ${spring.application.name}
-
 flyway:
   baselineOnMigrate: true

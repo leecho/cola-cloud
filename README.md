@@ -39,7 +39,7 @@ cola-cloud-notification | notification-service | 通知中心 | 基于RabbitMQ�
 Spring Cloud中的每个服务都是独立部署，所有在进行服务之间调用的时候需要确定对方服务的IP，为了规避IP变化带来代码修改的风险，所以需要配置host
 ```jshelllanguage
 # 注册中心 配置中心
-127.0.0.1 registry auth-service
+127.0.0.1 registry api-gateway
 # reids rabbitmq mysql
 127.0.0.1 cola-redis cola-rabbitmq cola-mysql
 ```
@@ -80,7 +80,7 @@ monitor，在config启动之后即可启动
 ### 访问
 ```js
 
-http://localhost:4000/ 服务网关，已经聚合了所有服务的Swagger
+http://localhost:80/ 服务网关，已经聚合了所有服务的Swagger
 http://localhost:8761/ 注册中心，可以查看服务注册情况
 http://localhost:8080/ 监控中心，可以查看服务运行状态
 

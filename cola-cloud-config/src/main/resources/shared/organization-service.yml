@@ -1,8 +1,3 @@
 server:
   context-path: /organization
   port: 8000
-
-security:
-  oauth2:
-    resource:
-      id: orgnizaition-service

@@ -12,13 +12,13 @@ security:
   oauth2:
     resource:
       user-info-uri: http://api-gateway/uaa/current
+      id: ${spring.application.name:}
     client:
       clientId: server
       clientSecret: server
       accessTokenUri: http://api-gateway/uaa/oauth/token
       grant-type: client_credentials
       scope: server
-
 spring:
   rabbitmq:
     host: cola-rabbitmq

@@ -1,8 +1,3 @@
 server:
   context-path: /message
   port: 8002
-
-security:
-  oauth2:
-    resource:
-      id: message-service

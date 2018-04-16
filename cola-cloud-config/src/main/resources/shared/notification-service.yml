@@ -8,8 +8,3 @@ cola:
     aliyun:
       access-key-id: ${COLA_ALIYUN_ACCESS_KEY_ID}
       access-key-secret: ${COLA_ALIYUN_ACCESS_KEY_SECRET}
-
-security:
-  oauth2:
-    resource:
-      id: notification-service
