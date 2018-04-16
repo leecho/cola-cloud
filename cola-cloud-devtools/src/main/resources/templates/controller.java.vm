@@ -1,23 +1,17 @@
-package ${package.Controller};
-
-
-import io.swagger.annotations.Api;
+package import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import com.honvay.cola.cloud.framework.core.protocol.Result;
-
-import java.util.List;
-
-
-#if(${restControllerStyle})
-import org.springframework.web.bind.annotation.RestController;
-#else
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+${package.Controller}
+        ;
+#if(${restControllerStyle})
+#else
 #end
 #if(${superControllerClassPackage})
-import ${superControllerClassPackage};
+    ${superControllerClassPackage}
+        ;
 #end
 
 /**

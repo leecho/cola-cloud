@@ -1,7 +1,6 @@
 package com.honvay.cola.cloud.auth.client.service.impl;
 
 import com.honvay.cola.cloud.auth.client.entity.Scope;
-import com.honvay.cola.cloud.auth.client.mapper.ScopeMapper;
 import com.honvay.cola.cloud.auth.client.service.ScopeService;
 import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
 import org.springframework.stereotype.Service;

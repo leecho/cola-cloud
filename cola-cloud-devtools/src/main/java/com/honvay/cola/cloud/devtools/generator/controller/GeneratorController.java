@@ -1,9 +1,9 @@
 package com.honvay.cola.cloud.devtools.generator.controller;
 
-import com.honvay.cola.cloud.devtools.generator.task.GenerateTask;
 import com.honvay.cola.cloud.devtools.generator.properties.DevtoolsProperties;
 import com.honvay.cola.cloud.devtools.generator.service.GenerateService;
 import com.honvay.cola.cloud.devtools.generator.service.TableService;
+import com.honvay.cola.cloud.devtools.generator.task.GenerateTask;
 import com.honvay.cola.cloud.framework.base.controller.BaseController;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import io.swagger.annotations.Api;

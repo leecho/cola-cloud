@@ -8,15 +8,11 @@ import com.honvay.cola.cloud.dict.client.DictClient;
 import com.honvay.cola.cloud.dict.client.jackson.JacksonDictContext;
 import com.honvay.cola.cloud.dict.client.jackson.annotation.JsonDict;
 import com.honvay.cola.cloud.dict.client.jackson.annotation.JsonDictField;
-import com.honvay.cola.cloud.dict.client.jackson.annotation.JsonDictName;
 import com.honvay.cola.cloud.dict.model.DictVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 

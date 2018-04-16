@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.auth.client.mapper;
 
-import com.honvay.cola.cloud.auth.client.entity.Scope;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.honvay.cola.cloud.auth.client.entity.Scope;
 
 /**
  * <p>

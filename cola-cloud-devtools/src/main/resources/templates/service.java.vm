@@ -1,7 +1,10 @@
-package ${package.Service};
+package
 
-import ${package.Entity}.${entity};
-import ${superServiceClassPackage};
+    ${package.Service}
+        ;
+    ${package.Entity}.${entity};
+    ${superServiceClassPackage}
+        ;
 
 /**
  * <p>

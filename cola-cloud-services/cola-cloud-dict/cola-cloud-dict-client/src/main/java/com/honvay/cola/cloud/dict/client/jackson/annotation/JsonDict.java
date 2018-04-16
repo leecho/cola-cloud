@@ -1,7 +1,6 @@
 package com.honvay.cola.cloud.dict.client.jackson.annotation;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
-import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -3,18 +3,14 @@ package com.honvay.cola.cloud.auth.client.controller;
 
 import com.honvay.cola.cloud.auth.client.entity.Scope;
 import com.honvay.cola.cloud.auth.client.service.ScopeService;
+import com.honvay.cola.cloud.framework.base.controller.BaseController;
+import com.honvay.cola.cloud.framework.core.protocol.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.honvay.cola.cloud.framework.core.protocol.Result;
 
 import java.util.List;
-
-
-import org.springframework.web.bind.annotation.RestController;
-import com.honvay.cola.cloud.framework.base.controller.BaseController;
 
 /**
  * <p>
