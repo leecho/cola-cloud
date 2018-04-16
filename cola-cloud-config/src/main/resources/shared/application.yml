@@ -23,22 +23,23 @@ spring:
   rabbitmq:
     host: cola-rabbitmq
     port: 5672
-    username: guest
-    password: guest
+    username: ${RABBITMQ_SERVER_USERNAME}
+    password: ${RABBITMQ_SERVER_PASSWORD}
   sleuth:
     sampler:
       percentage: 1
   datasource:
     url: jdbc:mysql://cola-mysql:3306/cola-cloud?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-    username: root
-    password: root
+    username: ${MYSQL_SERVER_USERNAME}
+    password: ${MYSQL_SERVER_PASSWORD}
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     db-name: cola-cloud
   redis:
     host: cola-redis
     port: 6379
-    password:
+    username: ${REDIS_SERVER_USERNAME}
+    password: ${REDIS_SERVER_PASSWORD}
     database: 8
     timeout: 0
     pool:
