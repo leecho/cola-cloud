@@ -38,8 +38,8 @@ spring:
   redis:
     host: cola-redis
     port: 6379
-    username: ${REDIS_SERVER_USERNAME}
-    password: ${REDIS_SERVER_PASSWORD}
+    username: ${REDIS_SERVER_USERNAME:}
+    password: ${REDIS_SERVER_PASSWORD:}
     database: 8
     timeout: 0
     pool:
