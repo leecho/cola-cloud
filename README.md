@@ -100,7 +100,7 @@ http://localhost:8080/ 监控中心，可以查看服务运行状态
 ### 获取ACCESS_TOKEN
 ```js
 curl -X POST \
-  http://localhost:4000/uaa/oauth/token \
+  http://api-gateway/uaa/oauth/token \
   -H 'Cache-Control: no-cache' \
   -H 'Postman-Token: 40aa591e-8518-4c1f-9e2d-f0c0e6151a40' \
   -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
@@ -197,7 +197,7 @@ cola:
 
 ## 系统截图
 ### 获取Token
-![](images/token.jpg)
+![](images/token.png)
 
 ### 注册中心
 ![](images/registry.png)
