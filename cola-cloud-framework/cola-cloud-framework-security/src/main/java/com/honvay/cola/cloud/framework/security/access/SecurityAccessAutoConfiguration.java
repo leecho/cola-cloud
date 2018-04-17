@@ -1,17 +1,14 @@
 package com.honvay.cola.cloud.framework.security.access;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfiguration;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
@@ -20,6 +17,7 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
  * @author LIQIU
  * @date 2018-4-10
  **/
+@Slf4j
 public class SecurityAccessAutoConfiguration {
 
     @Autowired
@@ -45,8 +43,7 @@ public class SecurityAccessAutoConfiguration {
     }
 
     @Configuration
-    @ConditionalOnClass(ResourceServerConfiguration.class)
-    @ConditionalOnBean(ResourceServerConfiguration.class)
+    @Conditional(EnableResourceServerCondition.class)
     private class ResourceServerSecurityAccessConfiguration extends ResourceServerConfigurerAdapter {
 
         public ResourceServerSecurityAccessConfiguration() {
@@ -59,14 +56,13 @@ public class SecurityAccessAutoConfiguration {
             http.authorizeRequests().antMatchers("/v2/api-docs").permitAll().and().csrf().disable()
                     .authorizeRequests().anyRequest().authenticated().filterSecurityInterceptorOncePerRequest(false)
                     .and().addFilterAfter(securityAccessInterceptor(), FilterSecurityInterceptor.class);
+            log.info("Security Access Control is enabled on Resource Server Application");
         }
 
     }
 
     @Configuration
-    @ConditionalOnClass(WebSecurityConfiguration.class)
-    @ConditionalOnMissingBean(ResourceServerConfiguration.class)
-    @ConditionalOnBean(WebSecurityConfiguration.class)
+    @Conditional(EnableWebSecurityCondition.class)
     private class WebSecurityAccessConfiguration extends WebSecurityConfigurerAdapter {
 
         public WebSecurityAccessConfiguration() {
@@ -79,6 +75,7 @@ public class SecurityAccessAutoConfiguration {
             http.authorizeRequests().antMatchers("/v2/api-docs").permitAll().and().csrf().disable()
                     .authorizeRequests().anyRequest().authenticated().filterSecurityInterceptorOncePerRequest(false)
                     .and().addFilterAfter(securityAccessInterceptor(), FilterSecurityInterceptor.class);
+            log.info("Security Access Control is enabled on Web Application");
         }
     }
 
