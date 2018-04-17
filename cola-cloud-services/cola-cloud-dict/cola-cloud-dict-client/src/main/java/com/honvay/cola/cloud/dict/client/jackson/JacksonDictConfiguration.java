@@ -29,7 +29,7 @@ public class JacksonDictConfiguration extends WebMvcConfigurerAdapter {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         if(mappingJackson2HttpMessageConverter != null){
             ObjectMapper objectMapper = mappingJackson2HttpMessageConverter.getObjectMapper();
-            SimpleModule module = new SimpleModule();
+            SimpleModule module = new SimpleModule("JacksonDictModule");
             JacksonDictJsonModifier jacksonDictJsonModifier = new JacksonDictJsonModifier();
             jacksonDictJsonModifier.setDictClient(dictClient);
             module.setSerializerModifier(jacksonDictJsonModifier);
