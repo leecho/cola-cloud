@@ -1,8 +1,6 @@
 package com.honvay.cloud.framework.criteria;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.honvay.cloud.framework.criteria.annotation.*;
-import com.honvay.cloud.framework.criteria.observer.CriteriaObserver;
 import lombok.Data;
 
 import java.util.Date;

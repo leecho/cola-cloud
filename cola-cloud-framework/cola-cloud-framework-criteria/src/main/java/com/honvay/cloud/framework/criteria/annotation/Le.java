@@ -1,6 +1,5 @@
 package com.honvay.cloud.framework.criteria.annotation;
 
-import com.honvay.cloud.framework.criteria.annotation.group.GeGroup;
 import com.honvay.cloud.framework.criteria.annotation.group.LeGroup;
 
 import java.lang.annotation.*;

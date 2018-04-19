@@ -2,17 +2,8 @@ package com.honvay.cola.cloud.framework.base.pagination;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.honvay.cola.cloud.framework.util.StringUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
  * @author LIQIU

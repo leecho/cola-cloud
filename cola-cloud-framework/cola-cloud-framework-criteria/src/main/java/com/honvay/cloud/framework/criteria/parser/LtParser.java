@@ -2,7 +2,6 @@ package com.honvay.cloud.framework.criteria.parser;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.honvay.cloud.framework.criteria.CriteriaContext;
-import com.honvay.cloud.framework.criteria.annotation.Le;
 import com.honvay.cloud.framework.criteria.annotation.Lt;
 import com.honvay.cola.cloud.framework.util.StringUtils;
 

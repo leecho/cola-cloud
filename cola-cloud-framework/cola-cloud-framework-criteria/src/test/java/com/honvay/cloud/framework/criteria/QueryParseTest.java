@@ -1,9 +1,6 @@
 package com.honvay.cloud.framework.criteria;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.honvay.cloud.framework.criteria.parser.BetweenAndParser;
-import com.honvay.cloud.framework.criteria.parser.EqParser;
-import com.honvay.cloud.framework.criteria.parser.LikeParser;
 import com.honvay.cloud.framework.criteria.parser.CriteriaParser;
 import org.junit.Test;
 
