@@ -3,7 +3,7 @@ package com.honvay.cola.cloud.auth.integration.authenticator;
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.framework.util.StringUtils;
 import com.honvay.cola.cloud.uc.client.UcClient;
-import com.honvay.cola.cloud.uc.model.UserVO;
+import com.honvay.cola.cloud.uc.model.SysUserDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class UsernamePasswordAuthenticator extends AbstractPreparableIntegration
     private UcClient ucClient;
 
     @Override
-    public UserVO authenticate(IntegrationAuthentication integrationAuthentication) {
+    public SysUserDO authenticate(IntegrationAuthentication integrationAuthentication) {
         return ucClient.findUserByUsername(integrationAuthentication.getUsername());
     }
 

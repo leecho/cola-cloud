@@ -4,7 +4,7 @@ import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthenticationContext;
 import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
 import com.honvay.cola.cloud.framework.security.userdetail.User;
-import com.honvay.cola.cloud.uc.model.UserVO;
+import com.honvay.cola.cloud.uc.model.SysUserDO;
 import com.honvay.cola.cloud.upm.client.UpmClient;
 import com.honvay.cola.cloud.upm.model.Authorize;
 import org.springframework.beans.BeanUtils;
@@ -42,14 +42,14 @@ public class IntegrationUserDetailsService implements UserDetailsService {
             integrationAuthentication = new IntegrationAuthentication();
         }
         integrationAuthentication.setUsername(username);
-        UserVO userVO = this.authenticate(integrationAuthentication);
+        SysUserDO sysUserDO = this.authenticate(integrationAuthentication);
 
-        if(userVO == null){
+        if(sysUserDO == null){
             throw new UsernameNotFoundException("用户名或密码错误");
         }
 
         User user = new User();
-        BeanUtils.copyProperties(userVO, user);
+        BeanUtils.copyProperties(sysUserDO, user);
         this.setAuthorize(user);
         return user;
 
@@ -66,7 +66,7 @@ public class IntegrationUserDetailsService implements UserDetailsService {
         user.setResources(authorize.getResources());
     }
 
-    private UserVO authenticate(IntegrationAuthentication integrationAuthentication) {
+    private SysUserDO authenticate(IntegrationAuthentication integrationAuthentication) {
         if (this.authenticators != null) {
             for (IntegrationAuthenticator authenticator : authenticators) {
                 if (authenticator.support(integrationAuthentication)) {

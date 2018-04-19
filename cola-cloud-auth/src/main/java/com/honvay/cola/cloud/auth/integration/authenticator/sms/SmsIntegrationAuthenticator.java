@@ -6,7 +6,7 @@ import com.honvay.cola.cloud.auth.integration.authenticator.sms.event.SmsAuthent
 import com.honvay.cola.cloud.auth.integration.authenticator.sms.event.SmsAuthenticateSuccessEvent;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.uc.client.UcClient;
-import com.honvay.cola.cloud.uc.model.UserVO;
+import com.honvay.cola.cloud.uc.model.SysUserDO;
 import com.honvay.cola.cloud.vcc.client.VccClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -38,7 +38,7 @@ public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAu
     private final static String SMS_AUTH_TYPE = "sms";
 
     @Override
-    public UserVO authenticate(IntegrationAuthentication integrationAuthentication) {
+    public SysUserDO authenticate(IntegrationAuthentication integrationAuthentication) {
 
         //获取密码，实际值是验证码
         String password = integrationAuthentication.getAuthParameter("password");
@@ -47,14 +47,14 @@ public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAu
         //发布事件，可以监听事件进行自动注册用户
         this.applicationEventPublisher.publishEvent(new SmsAuthenticateBeforeEvent(integrationAuthentication));
         //通过手机号码查询用户
-        UserVO userVo = this.ucClient.findUserByPhoneNumber(username);
-        if (userVo != null) {
+        SysUserDO sysUserDO = this.ucClient.findUserByPhoneNumber(username);
+        if (sysUserDO != null) {
             //将密码设置为验证码
-            userVo.setPassword(passwordEncoder.encode(password));
+            sysUserDO.setPassword(passwordEncoder.encode(password));
             //发布事件，可以监听事件进行消息通知
             this.applicationEventPublisher.publishEvent(new SmsAuthenticateSuccessEvent(integrationAuthentication));
         }
-        return userVo;
+        return sysUserDO;
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
 import com.honvay.cola.cloud.uc.client.UcClient;
 import com.honvay.cola.cloud.uc.client.UcClientConstant;
-import com.honvay.cola.cloud.uc.model.UserVO;
+import com.honvay.cola.cloud.uc.model.SysUserDO;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -33,7 +33,7 @@ public class MiniAppIntegrationAuthenticator implements IntegrationAuthenticator
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public UserVO authenticate(IntegrationAuthentication integrationAuthentication) {
+    public SysUserDO authenticate(IntegrationAuthentication integrationAuthentication) {
         WxMaJscode2SessionResult session = null;
         String password = integrationAuthentication.getAuthParameter("password");
         try {
@@ -47,11 +47,11 @@ public class MiniAppIntegrationAuthenticator implements IntegrationAuthenticator
             throw new InternalAuthenticationServiceException("获取微信小程序用户信息失败",e);
         }
         String openId = session.getOpenid();
-        UserVO userVO = ucClient.findUserBySocial(UcClientConstant.SOCIAL_TYPE_WECHAT_MINIAP, openId);
-        if(userVO != null){
-            userVO.setPassword(passwordEncoder.encode(password));
+        SysUserDO sysUserDO = ucClient.findUserBySocial(UcClientConstant.SOCIAL_TYPE_WECHAT_MINIAP, openId);
+        if(sysUserDO != null){
+            sysUserDO.setPassword(passwordEncoder.encode(password));
         }
-        return userVO;
+        return sysUserDO;
     }
 
     @Override

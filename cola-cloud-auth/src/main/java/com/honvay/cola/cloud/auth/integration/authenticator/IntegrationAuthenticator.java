@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.auth.integration.authenticator;
 
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
-import com.honvay.cola.cloud.uc.model.UserVO;
+import com.honvay.cola.cloud.uc.model.SysUserDO;
 
 /**
  * @author LIQIU
@@ -14,7 +14,7 @@ public interface IntegrationAuthenticator {
      * @param integrationAuthentication
      * @return
      */
-    UserVO authenticate(IntegrationAuthentication integrationAuthentication);
+    SysUserDO authenticate(IntegrationAuthentication integrationAuthentication);
 
 
     /**
