@@ -1,14 +1,10 @@
-package
+package ${package.ServiceImpl};
 
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
 import org.springframework.stereotype.Service;
-
-${package.ServiceImpl}
-        ;
-    ${package.Entity}.${entity};
-    ${package.Mapper}.${table.mapperName};
-    ${package.Service}.${table.serviceName};
-    ${superServiceImplClassPackage}
-        ;
 
 /**
  * <p>
