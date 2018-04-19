@@ -77,7 +77,7 @@ public class GenerateService {
         // 自定义 service 父类
         strategyConfig.setSuperServiceClass("com.honvay.cola.cloud.framework.base.service.BaseService");
         // 自定义 service 实现类父类
-        strategyConfig.setSuperServiceImplClass("com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl");
+        strategyConfig.setSuperServiceImplClass("com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl");
         // 自定义 controller 父类
         strategyConfig.setSuperControllerClass("com.honvay.cola.cloud.framework.base.controller.BaseController");
         strategyConfig.setEntityLombokModel(true);
