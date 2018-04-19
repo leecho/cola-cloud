@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.honvay.cola.cloud.framework.base.entity.UserEntity;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -45,10 +46,12 @@ public class SysUser implements UserEntity {
     /**
      * 密码
      */
+    @JsonIgnore
 	private String password;
     /**
      * 密码盐
      */
+    @JsonIgnore
 	private String salt;
     /**
      * 电话号码
@@ -67,16 +70,19 @@ public class SysUser implements UserEntity {
     /**
      * 创建时间
      */
+    @JsonIgnore
 	@TableField("create_time")
 	private Date createTime;
     /**
      * 修改时间
      */
+    @JsonIgnore
 	@TableField("update_time")
 	private Date updateTime;
     /**
      * 删除状态: Y-已删除,N-未删除
      */
+    @JsonIgnore
 	private String deleted;
 	private String avatar;
 

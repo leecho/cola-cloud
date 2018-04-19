@@ -3,7 +3,7 @@ package com.honvay.cola.cloud.upm.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.honvay.cola.cloud.framework.base.mapper.CommonMapper;
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import com.honvay.cola.cloud.framework.core.constant.CommonConstant;
 import com.honvay.cola.cloud.framework.security.utils.SecurityUtils;
 import com.honvay.cola.cloud.framework.util.ValidationUtils;
@@ -29,7 +29,7 @@ import java.util.List;
  * @date 2017-12-20
  */
 @Service
-public class SysAuthorizeServiceImpl extends BaseSerivceImpl<SysAuthorize> implements SysAuthorizeService {
+public class SysAuthorizeServiceImpl extends BaseServiceImpl<SysAuthorize> implements SysAuthorizeService {
 
     @Autowired
     private SysRoleMapper sysRoleMapper;

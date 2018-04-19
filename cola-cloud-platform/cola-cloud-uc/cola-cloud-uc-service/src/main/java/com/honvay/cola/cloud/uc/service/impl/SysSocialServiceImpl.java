@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.uc.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import com.honvay.cola.cloud.uc.entity.SysSocial;
 import com.honvay.cola.cloud.uc.service.SysSocialService;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @date 2018-01-04
  */
 @Service
-public class SysSocialServiceImpl extends BaseSerivceImpl<SysSocial> implements SysSocialService {
+public class SysSocialServiceImpl extends BaseServiceImpl<SysSocial> implements SysSocialService {
 
     @Override
     public SysSocial getSocialByTokenAndType(String token, String type) {

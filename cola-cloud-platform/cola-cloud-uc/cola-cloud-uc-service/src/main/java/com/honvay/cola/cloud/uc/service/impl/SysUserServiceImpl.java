@@ -2,23 +2,30 @@ package com.honvay.cola.cloud.uc.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import com.honvay.cola.cloud.framework.core.constant.CommonConstant;
 import com.honvay.cola.cloud.framework.security.utils.SecurityUtils;
 import com.honvay.cola.cloud.framework.util.Assert;
 import com.honvay.cola.cloud.framework.util.BeanUtils;
 import com.honvay.cola.cloud.framework.util.StringUtils;
-import com.honvay.cola.cloud.framework.util.ValidationUtils;
 import com.honvay.cola.cloud.uc.entity.SysUser;
-import com.honvay.cola.cloud.uc.model.UserVO;
+import com.honvay.cola.cloud.uc.model.SysUserDO;
+import com.honvay.cola.cloud.uc.model.SysUserDTO;
+import com.honvay.cola.cloud.uc.model.SysUserCriteria;
+import com.honvay.cola.cloud.uc.model.SysUserVO;
 import com.honvay.cola.cloud.uc.password.PasswordStrategy;
 import com.honvay.cola.cloud.uc.password.PasswordValidateResult;
 import com.honvay.cola.cloud.uc.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -29,22 +36,52 @@ import java.util.List;
  * @since 2017-12-11
  */
 @Service
-public class SysUserServiceImpl extends BaseSerivceImpl<SysUser> implements SysUserService {
+public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysUserService {
 
     @Autowired
     private PasswordStrategy passwordStrategy;
+
+    @Autowired
+    private Validator validator;
 
     private String geSysUserBizCode() {
         return StringUtils.camelCaseToUnderline(SysUser.class.getSimpleName()).toUpperCase();
     }
 
-    private UserVO getUser(SysUser sysUser){
-        if(sysUser == null){
+    /**
+     * 查询分页用户
+     * @param page
+     * @param sysUserCriteria
+     * @return
+     */
+    @Override
+    public Page<SysUser> list(Page page, SysUserCriteria sysUserCriteria){
+        return this.selectPage(page, sysUserCriteria);
+    }
+
+    private SysUserDO getSysUserDO(SysUser sysUser) {
+        if (sysUser == null) {
             return null;
         }
-        UserVO userVO = new UserVO();
-        BeanUtils.copy(sysUser,userVO);
-        return userVO;
+        SysUserDO sysUserDO = new SysUserDO();
+        BeanUtils.copy(sysUser, sysUserDO);
+        return sysUserDO;
+    }
+
+
+    @Override
+    public void insert(SysUserDTO sysUserDTO) {
+        SysUser sysUser = new SysUser();
+        BeanUtils.copyProperties(sysUserDTO, sysUser);
+        this.insert(sysUser);
+    }
+
+    @Override
+    public void update(SysUserDTO sysUserDTO) {
+        SysUser sysUser = this.selectById(sysUserDTO.getId());
+        BeanUtils.copyProperties(sysUserDTO, sysUser);
+        this.checkUser(sysUser);
+        this.updateById(sysUser);
     }
 
     @Override
@@ -60,7 +97,7 @@ public class SysUserServiceImpl extends BaseSerivceImpl<SysUser> implements SysU
         if (StringUtils.isEmpty(user.getAvatar())) {
             user.setAvatar("asset/img/avatar.png");
         }
-       //user.setDeleted(CommonConstant.COMMON_NO);
+        user.setDeleted(CommonConstant.COMMON_NO);
         user.setCreateTime(new Date());
         user.setUpdateTime(new Date());
         return super.insert(user);
@@ -125,17 +162,10 @@ public class SysUserServiceImpl extends BaseSerivceImpl<SysUser> implements SysU
         Assert.isTrue(checkEmail, "邮箱已存在");
         Assert.isTrue(checkPhoneNumber, "手机号已存在");
         //验证用户数据
-        ValidationUtils.validate(user, true);
-    }
-
-    @Override
-    public void update(SysUser user) {
-        SysUser sysUser = this.selectById(user.getId());
-        Assert.notNull(sysUser, "用户不能存在");
-        sysUser.setName(user.getName());
-        sysUser.setEmail(user.getEmail());
-        sysUser.setPhoneNumber(user.getPhoneNumber());
-        this.updateById(sysUser);
+        Set<ConstraintViolation<SysUser>> constraintViolations = validator.validate(user);
+        if(constraintViolations.size() > 0){
+            throw new ConstraintViolationException(constraintViolations);
+        }
     }
 
     @Override
@@ -229,30 +259,30 @@ public class SysUserServiceImpl extends BaseSerivceImpl<SysUser> implements SysU
     }
 
     @Override
-    public UserVO findUserByUsername(String username) {
-        SysUser sysUser = this.findOneByColumn("username",username);
-        return this.getUser(sysUser);
+    public SysUserDO findUserByUsername(String username) {
+        SysUser sysUser = this.findOneByColumn("username", username);
+        return this.getSysUserDO(sysUser);
     }
 
     @Override
-    public UserVO findUserById(Long id) {
-        return this.getUser(this.selectById(id));
+    public SysUserDO findUserById(Long id) {
+        return this.getSysUserDO(this.selectById(id));
     }
 
     @Override
-    public UserVO findUserByPhoneNumber(String phoneNumber) {
-        SysUser sysUser = this.findOneByColumn("phone_number",phoneNumber);
-        return this.getUser(sysUser);
+    public SysUserDO findUserByPhoneNumber(String phoneNumber) {
+        SysUser sysUser = this.findOneByColumn("phone_number", phoneNumber);
+        return this.getSysUserDO(sysUser);
     }
 
-	/**
-	 * 物理删除用户信息
-	 */
-	@Override
-	public boolean deleteSysUser(String username) {
-		EntityWrapper<SysUser> wrapper =this.newEntityWrapper();
-		wrapper.setSqlSelect("username",username);
-		Assert.hasText(username,"用户名不能为空");
-		return this.delete(wrapper);
-	}
+    /**
+     * 物理删除用户信息
+     */
+    @Override
+    public boolean deleteSysUser(String username) {
+        EntityWrapper<SysUser> wrapper = this.newEntityWrapper();
+        wrapper.setSqlSelect("username", username);
+        Assert.hasText(username, "用户名不能为空");
+        return this.delete(wrapper);
+    }
 }

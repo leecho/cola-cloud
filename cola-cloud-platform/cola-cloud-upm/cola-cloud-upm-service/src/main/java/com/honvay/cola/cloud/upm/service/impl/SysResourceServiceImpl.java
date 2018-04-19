@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.upm.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import com.honvay.cola.cloud.framework.security.utils.SecurityUtils;
 import com.honvay.cola.cloud.framework.util.Assert;
 import com.honvay.cola.cloud.upm.cache.SysResourceCacheService;
@@ -29,7 +29,7 @@ import java.util.List;
  * @since 2017-12-11
  */
 @Service
-public class SysResourceServiceImpl extends BaseSerivceImpl<SysResource> implements SysResourceService {
+public class SysResourceServiceImpl extends BaseServiceImpl<SysResource> implements SysResourceService {
 
     private Logger logger = Logger.getLogger(this.getClass());
 

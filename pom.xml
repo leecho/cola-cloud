@@ -66,6 +66,11 @@
             </dependency>
             <dependency>
                 <groupId>com.honvay.cola</groupId>
+                <artifactId>cola-cloud-framework-criteria</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.honvay.cola</groupId>
                 <artifactId>cola-cloud-framework-storage</artifactId>
                 <version>${project.version}</version>
             </dependency>

@@ -1,9 +1,12 @@
 package com.honvay.cola.cloud.uc.service;
 
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.honvay.cola.cloud.framework.base.service.BaseService;
 import com.honvay.cola.cloud.uc.entity.SysUser;
-import com.honvay.cola.cloud.uc.model.UserVO;
+import com.honvay.cola.cloud.uc.model.SysUserDTO;
+import com.honvay.cola.cloud.uc.model.SysUserDO;
+import com.honvay.cola.cloud.uc.model.SysUserCriteria;
 
 import java.util.List;
 
@@ -19,16 +22,17 @@ public interface SysUserService extends BaseService<SysUser> {
 
 
     /**
+     * 修改用户信息
+     * @param sysUserDTO
+     */
+    void update(SysUserDTO sysUserDTO);
+
+    /**
      * 查询系统用户
      *
      * @return
      */
     List<SysUser> list();
-
-    /**
-     * 更新用户
-     */
-    void update(SysUser user);
 
     /**
      * 重置用户密码
@@ -70,13 +74,42 @@ public interface SysUserService extends BaseService<SysUser> {
      */
     SysUser doUnlock(Long id);
 
+    /**
+     * 修改密码
+     * @param id
+     * @param oldPassword
+     * @param newPassword
+     */
     void updatePassword(Long id, String oldPassword, String newPassword);
 
-    UserVO findUserByUsername(String username);
+    /**
+     * 通过用户名获取用户
+     * @param username
+     * @return
+     */
+    SysUserDO findUserByUsername(String username);
 
-    UserVO findUserById(Long id);
+    /**
+     * 通过用户ID获取用户
+     * @param id
+     * @return
+     */
+    SysUserDO findUserById(Long id);
 
-    UserVO findUserByPhoneNumber(String phoneNumber);
+    /**
+     * 通过手机号获取用户
+     * @param phoneNumber
+     * @return
+     */
+    SysUserDO findUserByPhoneNumber(String phoneNumber);
     
     boolean deleteSysUser(String username);
+
+    Page<SysUser> list(Page page, SysUserCriteria sysUserCriteria);
+
+    /**
+     * 创建用户
+     * @param sysUserDTO
+     */
+    void insert(SysUserDTO sysUserDTO);
 }

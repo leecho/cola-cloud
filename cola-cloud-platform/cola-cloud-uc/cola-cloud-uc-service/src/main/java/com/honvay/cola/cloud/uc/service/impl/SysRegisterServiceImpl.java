@@ -1,6 +1,6 @@
 package com.honvay.cola.cloud.uc.service.impl;
 
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import com.honvay.cola.cloud.uc.entity.SysRegister;
 import com.honvay.cola.cloud.uc.entity.SysUser;
 import com.honvay.cola.cloud.uc.model.SysRegisterDTO;
@@ -19,7 +19,7 @@ import java.util.Date;
  * @date 2018-03-14
  */
 @Service
-public class SysRegisterServiceImpl extends BaseSerivceImpl<SysRegister> implements
+public class SysRegisterServiceImpl extends BaseServiceImpl<SysRegister> implements
         SysRegisterService {
 
     @Autowired
