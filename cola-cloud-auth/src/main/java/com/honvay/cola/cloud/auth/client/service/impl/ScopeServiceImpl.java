@@ -2,7 +2,7 @@ package com.honvay.cola.cloud.auth.client.service.impl;
 
 import com.honvay.cola.cloud.auth.client.entity.Scope;
 import com.honvay.cola.cloud.auth.client.service.ScopeService;
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Service;
  * @since 2018-04-13
  */
 @Service
-public class ScopeServiceImpl extends BaseSerivceImpl<Scope> implements ScopeService {
+public class ScopeServiceImpl extends BaseServiceImpl<Scope> implements ScopeService {
 
 }

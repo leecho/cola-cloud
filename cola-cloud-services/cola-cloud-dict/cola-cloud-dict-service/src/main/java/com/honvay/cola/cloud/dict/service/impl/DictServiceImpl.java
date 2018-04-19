@@ -6,7 +6,7 @@ import com.honvay.cola.cloud.dict.entity.Dict;
 import com.honvay.cola.cloud.dict.model.CacheConstants;
 import com.honvay.cola.cloud.dict.model.DictVO;
 import com.honvay.cola.cloud.dict.service.DictService;
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import com.honvay.cola.cloud.framework.core.constant.CommonConstant;
 import com.honvay.cola.cloud.framework.util.Assert;
 import com.honvay.cola.cloud.framework.util.StringUtils;
@@ -30,7 +30,7 @@ import java.util.*;
  * @since 2017-12-22
  */
 @Service
-public class DictServiceImpl extends BaseSerivceImpl<Dict> implements DictService {
+public class DictServiceImpl extends BaseServiceImpl<Dict> implements DictService {
 
     @Autowired
     private CacheManager cacheManager;

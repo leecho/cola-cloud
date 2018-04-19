@@ -3,7 +3,7 @@ package com.honvay.cola.cloud.tenancy.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import com.honvay.cola.cloud.framework.core.constant.CommonConstant;
 import com.honvay.cola.cloud.framework.security.utils.SecurityUtils;
 import com.honvay.cola.cloud.framework.util.StringUtils;
@@ -31,7 +31,7 @@ import java.util.List;
  * @since 2017-12-11
  */
 @Service
-public class SysTenantServiceImpl extends BaseSerivceImpl<SysTenant> implements SysTenantService {
+public class SysTenantServiceImpl extends BaseServiceImpl<SysTenant> implements SysTenantService {
 
    /* @Autowired
     private SysUserService sysUserService;*/

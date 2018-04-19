@@ -1,7 +1,7 @@
 package com.honvay.cola.service.attachment.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import com.honvay.cola.cloud.framework.security.utils.SecurityUtils;
 import com.honvay.cola.cloud.framework.util.CryptUtils;
 import com.honvay.cola.framework.storage.FileStorage;
@@ -27,7 +27,7 @@ import java.util.UUID;
  * @since 2017-12-14
  */
 @Service
-public class AttachmentServiceImpl extends BaseSerivceImpl<Attachment> implements AttachmentService {
+public class AttachmentServiceImpl extends BaseServiceImpl<Attachment> implements AttachmentService {
 
     @Autowired
     FileValidator fileValidator;

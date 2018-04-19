@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.uc.client;
 
 import com.honvay.cola.cloud.framework.core.protocol.Result;
-import com.honvay.cola.cloud.uc.model.UserVO;
+import com.honvay.cola.cloud.uc.model.SysUserDO;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ public interface UcClient {
      * @return UserVo
      */
     @GetMapping("/uc/user/findUserByUsername/{username}")
-    UserVO findUserByUsername(@PathVariable("username") String username);
+    SysUserDO findUserByUsername(@PathVariable("username") String username);
 
     /**
      * 通过手机号查询用户、角色信息
@@ -27,7 +27,7 @@ public interface UcClient {
      * @return UserVo
      */
     @GetMapping("/uc/user/findUserByPhoneNumber/{phoneNumber}")
-    UserVO findUserByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber);
+    SysUserDO findUserByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber);
 
     /**
      * 根据OpenId查询用户信息
@@ -36,7 +36,7 @@ public interface UcClient {
      * @return UserVo
      */
     @GetMapping("/uc/user/findUserBySocial/{type}/{token}")
-    UserVO findUserBySocial(@PathVariable("type") String type, @PathVariable("token") String token);
+    SysUserDO findUserBySocial(@PathVariable("type") String type, @PathVariable("token") String token);
 
     /**
      * @param phoneNumber
@@ -51,13 +51,13 @@ public interface UcClient {
      * 添加用户
      */
     @PostMapping("/uc/user/save")
-    Result save(@RequestBody UserVO user);
+    Result save(@RequestBody SysUserDO user);
 
     /**
      * 添加用户
      */
     @PostMapping("/uc/user/update")
-    Result update(UserVO user);
+    Result update(SysUserDO user);
 
     /**
      *
@@ -65,9 +65,9 @@ public interface UcClient {
      * Result<Boolean> 返回类型 @throws
      */
     @PostMapping("/uc/user/save")
-    UserVO createSysUser(@RequestParam("username") String username, @RequestParam("name") String name,
-                         @RequestParam("password") String password, @RequestParam("phoneNumber") String phoneNumber,
-                         @RequestParam("email") String email);
+    SysUserDO createSysUser(@RequestParam("username") String username, @RequestParam("name") String name,
+                            @RequestParam("password") String password, @RequestParam("phoneNumber") String phoneNumber,
+                            @RequestParam("email") String email);
 
 
 
@@ -75,5 +75,5 @@ public interface UcClient {
     Result<Boolean> deleteSysUser(@PathVariable("username") String username);
 
     @GetMapping("/uc/user/{id}")
-    UserVO findUserById(@PathVariable("id") Long id);
+    SysUserDO findUserById(@PathVariable("id") Long id);
 }

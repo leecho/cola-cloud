@@ -12,10 +12,9 @@ import java.io.Serializable;
  * @date 2017-12-20
  */
 @Data
-public class UserVO implements Serializable {
+public class SysUserDO implements Serializable {
 
     private Long id;
-
 
     private String username;
 

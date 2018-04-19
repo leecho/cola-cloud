@@ -20,7 +20,7 @@ public class PaginationUtils {
     /**
      * 当前页
      */
-    private static final String CURRENT_PAGE = "current";
+    private static final String CURRENT_PAGE = "pageNumber";
 
     /**
      * 排序字段

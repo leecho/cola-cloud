@@ -3,7 +3,7 @@ package com.honvay.cola.cloud.organization.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.honvay.cola.cloud.framework.base.mapper.CommonMapper;
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.framework.security.utils.SecurityUtils;
 import com.honvay.cola.cloud.framework.util.Assert;
@@ -20,7 +20,7 @@ import com.honvay.cola.cloud.organization.model.SysEmployeeDTO;
 import com.honvay.cola.cloud.organization.model.SysEmployeeVO;
 import com.honvay.cola.cloud.organization.service.SysEmployeeService;
 import com.honvay.cola.cloud.uc.client.UcClient;
-import com.honvay.cola.cloud.uc.model.UserVO;
+import com.honvay.cola.cloud.uc.model.SysUserDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +38,7 @@ import java.util.Objects;
  * @date 2018-01-04
  */
 @Service
-public class SysEmployeeServiceImpl extends BaseSerivceImpl<SysEmployee> implements SysEmployeeService {
+public class SysEmployeeServiceImpl extends BaseServiceImpl<SysEmployee> implements SysEmployeeService {
 
     @Autowired
     private UcClient ucClient;
@@ -212,7 +212,7 @@ public class SysEmployeeServiceImpl extends BaseSerivceImpl<SysEmployee> impleme
         }
 
         //新增用户记录
-        UserVO user = new UserVO();
+        SysUserDO user = new SysUserDO();
         BeanUtils.copyProperties(sysEmployeeDTO, user);
         Result rs = this.ucClient.save(user);
 
@@ -256,9 +256,9 @@ public class SysEmployeeServiceImpl extends BaseSerivceImpl<SysEmployee> impleme
             this.validatePost(tenantId, sysEmployeeDTO.getPostId());
         }
 
-        UserVO userVo = new UserVO();
-        BeanUtils.copyProperties(sysEmployeeDTO,userVo);
-        this.ucClient.update(userVo);
+        SysUserDO sysUserDO = new SysUserDO();
+        BeanUtils.copyProperties(sysEmployeeDTO, sysUserDO);
+        this.ucClient.update(sysUserDO);
 
         SysEmployee employee = this.selectById(sysEmployeeDTO.getId());
         //需改员工信息

@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.toolkit.StringUtils;
 import com.baomidou.mybatisplus.toolkit.TableInfoHelper;
+import com.honvay.cloud.framework.criteria.Criteria;
+import com.honvay.cloud.framework.criteria.parser.CriteriaParser;
 import com.honvay.cola.cloud.framework.base.service.BaseService;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.logging.Log;
@@ -28,12 +30,14 @@ import java.util.Map;
  * @param <T>
  */
 @SuppressWarnings("rawtypes")
-public class BaseSerivceImpl<T> implements BaseService<T> {
+public class BaseServiceImpl<T> implements BaseService<T> {
 
 	private static final Log logger = LogFactory.getLog(ServiceImpl.class);
 
     @Autowired
     protected BaseMapper<T> mapper;
+
+    protected CriteriaParser criteriaParser = new CriteriaParser();
 
     /**
      * <p>
@@ -100,7 +104,7 @@ public class BaseSerivceImpl<T> implements BaseService<T> {
 
     @Override
     public List<T> selectList() {
-        return this.selectList(null);
+        return this.selectList(Condition.EMPTY);
     }
 
     /**
@@ -390,8 +394,37 @@ public class BaseSerivceImpl<T> implements BaseService<T> {
     }
 
     @Override
+    public T selectOne(EntityWrapper<T> wrapper, Criteria<T> criteria,String group){
+        return (T) this.selectOne(this.criteriaParser.parse(criteria,wrapper,group));
+    }
+
+    @Override
+    public T selectOne(EntityWrapper<T> wrapper, Criteria<T> criteria){
+        return this.selectOne(wrapper,criteria,null);
+    }
+
+    @Override
+    public T selectOne(Criteria<T> criteria){
+        return this.selectOne(new EntityWrapper<>(),criteria,null);
+    }
+    @Override
     public Map<String, Object> selectMap(Wrapper<T> wrapper) {
         return SqlHelper.getObject(mapper.selectMaps(wrapper));
+    }
+
+
+    public Map<String, Object> selectMap(EntityWrapper<T> wrapper, Criteria<T> criteria,String group){
+        return this.selectMap(criteriaParser.parse(criteria,wrapper,group));
+    }
+
+    @Override
+    public Map<String, Object> selectMap(EntityWrapper<T> wrapper, Criteria<T> criteria){
+        return this.selectMap(wrapper,criteria,null);
+    }
+
+    @Override
+    public Map<String, Object> selectMap(Criteria<T> criteria){
+        return this.selectMap(new EntityWrapper<>(),criteria,null);
     }
 
     @Override
@@ -400,18 +433,38 @@ public class BaseSerivceImpl<T> implements BaseService<T> {
     }
 
     @Override
+    public Object selectObj(EntityWrapper<T> wrapper, Criteria<T> criteria, String group){
+        return this.selectObj(criteriaParser.parse(criteria,wrapper,group));
+    }
+
+    @Override
+    public Object selectObj(EntityWrapper<T> wrapper, Criteria<T> criteria){
+        return this.selectObj(wrapper,criteria,null);
+    }
+
+    @Override
+    public Object selectObj(Criteria<T> criteria){
+        return this.selectObj(new EntityWrapper<>(),criteria,null);
+    }
+
+    @Override
     public int selectCount(Wrapper<T> wrapper) {
         return SqlHelper.retCount(mapper.selectCount(wrapper));
     }
 
     @Override
-    public List<T> selectList(Wrapper<T> wrapper) {
-        return mapper.selectList(wrapper);
+    public int selectCount(EntityWrapper<T> wrapper, Criteria<T> criteria, String group){
+        return this.selectCount(criteriaParser.parse(criteria,wrapper,group));
     }
 
     @Override
-    public Page<T> selectPage(Page<T> page) {
-        return selectPage(page, Condition.EMPTY);
+    public int selectCount(EntityWrapper<T> wrapper, Criteria<T> criteria){
+        return this.selectCount(wrapper,criteria,null);
+    }
+
+    @Override
+    public int selectCount(Criteria<T> criteria){
+        return this.selectCount(new EntityWrapper<>(),criteria,null);
     }
 
     @Override
@@ -425,6 +478,21 @@ public class BaseSerivceImpl<T> implements BaseService<T> {
     }
 
     @Override
+    public List<Object> selectObjs(EntityWrapper<T> wrapper, Criteria<T> criteria, String group){
+        return this.selectObjs(criteriaParser.parse(criteria,wrapper,group));
+    }
+
+    @Override
+    public List<Object> selectObjs(EntityWrapper<T> wrapper, Criteria<T> criteria){
+        return this.selectObjs(wrapper,criteria,null);
+    }
+
+    @Override
+    public List<Object> selectObjs(Criteria<T> criteria){
+        return this.selectObjs(new EntityWrapper<>(),criteria,null);
+    }
+
+    @Override
     public Page<Map<String, Object>> selectMapsPage(Page page, Wrapper<T> wrapper) {
         wrapper = (Wrapper<T>) SqlHelper.fillWrapper(page,  wrapper);
         page.setRecords(mapper.selectMapsPage(page, wrapper));
@@ -432,9 +500,65 @@ public class BaseSerivceImpl<T> implements BaseService<T> {
     }
 
     @Override
+    public Page<Map<String, Object>> selectMapsPage(Page page, EntityWrapper<T> wrapper, Criteria<T> criteria, String group){
+        return this.selectMapsPage(page,criteriaParser.parse(criteria,wrapper,group));
+    }
+
+    @Override
+    public Page<Map<String, Object>> selectMapsPage(Page page,EntityWrapper<T> wrapper, Criteria<T> criteria){
+        return this.selectMapsPage(page,wrapper,criteria,null);
+    }
+
+    @Override
+    public Page<Map<String, Object>> selectMapsPage(Page page,Criteria<T> criteria){
+        return this.selectMapsPage(page,new EntityWrapper<T>(),criteria,null);
+    }
+
+
+    @Override
+    public List<T> selectList(Wrapper<T> wrapper) {
+        return mapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<T> selectList(EntityWrapper<T> wrapper, Criteria<T> criteria,String group){
+        return this.selectList(criteriaParser.parse(criteria,wrapper,group));
+    }
+
+    @Override
+    public List<T> selectList(EntityWrapper<T> wrapper, Criteria<T> criteria){
+        return this.selectList(wrapper,criteria,null);
+    }
+
+    @Override
+    public List<T> selectList(Criteria<T> criteria){
+        return this.selectList(new EntityWrapper<>(),criteria,null);
+    }
+
+    @Override
+    public Page<T> selectPage(Page<T> page) {
+        return selectPage(page, Condition.EMPTY);
+    }
+
+    @Override
     public Page<T> selectPage(Page<T> page, Wrapper<T> wrapper) {
         wrapper = (Wrapper<T>) SqlHelper.fillWrapper(page,  wrapper);
         page.setRecords(mapper.selectPage(page, wrapper));
         return page;
+    }
+
+    @Override
+    public Page<T> selectPage(Page<T> page, EntityWrapper<T> wrapper, Criteria<T> criteria, String group){
+        return this.selectPage(page,criteriaParser.parse(criteria,wrapper,group));
+    }
+
+    @Override
+    public Page<T> selectPage(Page<T> page, EntityWrapper<T> wrapper, Criteria<T> criteria){
+        return this.selectPage(page,wrapper,criteria,null);
+    }
+
+    @Override
+    public Page<T> selectPage(Page<T> page, Criteria<T> criteria){
+        return this.selectPage(page,new EntityWrapper<>(),criteria,null);
     }
 }

@@ -21,5 +21,6 @@
         <module>cola-cloud-framework-storage</module>
         <module>cola-cloud-framework-util</module>
         <module>cola-cloud-framework-starter</module>
+        <module>cola-cloud-framework-criteria</module>
     </modules>
 </project>

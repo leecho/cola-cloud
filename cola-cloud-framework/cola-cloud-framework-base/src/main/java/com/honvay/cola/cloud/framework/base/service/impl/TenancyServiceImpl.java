@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @date 2018-1-3
  * @param <T>
  */
-public class TenancyServiceImpl<T extends TenancyEntity> extends BaseSerivceImpl<T>{
+public class TenancyServiceImpl<T extends TenancyEntity> extends BaseServiceImpl<T> {
 
 	@Override
 	public boolean insert(T entity) {

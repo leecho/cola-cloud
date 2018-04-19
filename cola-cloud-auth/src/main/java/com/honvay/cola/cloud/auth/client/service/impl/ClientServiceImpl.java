@@ -2,7 +2,7 @@ package com.honvay.cola.cloud.auth.client.service.impl;
 
 import com.honvay.cola.cloud.auth.client.entity.Client;
 import com.honvay.cola.cloud.auth.client.service.ClientService;
-import com.honvay.cola.cloud.framework.base.service.impl.BaseSerivceImpl;
+import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Service;
  * @since 2018-04-13
  */
 @Service
-public class ClientServiceImpl extends BaseSerivceImpl<Client> implements ClientService {
+public class ClientServiceImpl extends BaseServiceImpl<Client> implements ClientService {
 
 }
