@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.honvay.cola.cloud.framework.base.audit.EnableAudit;
 import com.honvay.cola.cloud.framework.base.controller.BaseController;
+import com.honvay.cola.cloud.framework.base.pagination.Pagination;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.upm.entity.SysRole;
+import com.honvay.cola.cloud.upm.model.SysRoleCriteria;
 import com.honvay.cola.cloud.upm.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,12 +39,8 @@ public class SysRoleController extends BaseController {
      */
     @ApiOperation("获取角色列表")
     @GetMapping("/list")
-    public Result<Page<List<SysRole>>> list(String code, String name,String status) {
-        EntityWrapper wrapper = new EntityWrapper();
-        wrapper.like("code",code);
-        wrapper.like("name",name);
-        wrapper.like("status",status);
-        return this.success(this.sysRoleService.selectPage(this.getPagination(),wrapper));
+    public Result<Page<SysRole>> list(Pagination pagination, SysRoleCriteria sysRoleCriteria) {
+        return this.success(this.sysRoleService.selectPage(pagination.getPage(),sysRoleCriteria));
     }
 
     /**
