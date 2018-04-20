@@ -4,8 +4,9 @@ import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthenticationContext;
 import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
 import com.honvay.cola.cloud.framework.security.userdetail.User;
-import com.honvay.cola.cloud.uc.model.SysUserDO;
-import com.honvay.cola.cloud.upm.client.UpmClient;
+import com.honvay.cola.cloud.uc.model.SysUserAuthentication;
+import com.honvay.cola.cloud.uc.model.SysUserDTO;
+import com.honvay.cola.cloud.upm.client.SysAuthorizeClient;
 import com.honvay.cola.cloud.upm.model.Authorize;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import java.util.List;
 public class IntegrationUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UpmClient upmClient;
+    private SysAuthorizeClient sysAuthorizeClient;
 
     private List<IntegrationAuthenticator> authenticators;
 
@@ -42,14 +43,14 @@ public class IntegrationUserDetailsService implements UserDetailsService {
             integrationAuthentication = new IntegrationAuthentication();
         }
         integrationAuthentication.setUsername(username);
-        SysUserDO sysUserDO = this.authenticate(integrationAuthentication);
+        SysUserAuthentication sysUserAuthentication = this.authenticate(integrationAuthentication);
 
-        if(sysUserDO == null){
+        if(sysUserAuthentication == null){
             throw new UsernameNotFoundException("用户名或密码错误");
         }
 
         User user = new User();
-        BeanUtils.copyProperties(sysUserDO, user);
+        BeanUtils.copyProperties(sysUserAuthentication, user);
         this.setAuthorize(user);
         return user;
 
@@ -61,12 +62,12 @@ public class IntegrationUserDetailsService implements UserDetailsService {
      * @param user
      */
     public void setAuthorize(User user) {
-        Authorize authorize = this.upmClient.getAuthorize(user.getId());
+        Authorize authorize = this.sysAuthorizeClient.getAuthorize(user.getId());
         user.setRoles(authorize.getRoles());
         user.setResources(authorize.getResources());
     }
 
-    private SysUserDO authenticate(IntegrationAuthentication integrationAuthentication) {
+    private SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication) {
         if (this.authenticators != null) {
             for (IntegrationAuthenticator authenticator : authenticators) {
                 if (authenticator.support(integrationAuthentication)) {

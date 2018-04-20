@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.auth.integration.authenticator;
 
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
-import com.honvay.cola.cloud.uc.model.SysUserDO;
+import com.honvay.cola.cloud.uc.model.SysUserAuthentication;
 
 /**
  * @author LIQIU
@@ -10,7 +10,7 @@ import com.honvay.cola.cloud.uc.model.SysUserDO;
 public abstract class AbstractPreparableIntegrationAuthenticator implements IntegrationAuthenticator{
 
     @Override
-    public abstract SysUserDO authenticate(IntegrationAuthentication integrationAuthentication);
+    public abstract SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication);
 
     @Override
     public abstract void prepare(IntegrationAuthentication integrationAuthentication);

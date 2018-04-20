@@ -5,8 +5,8 @@ import com.honvay.cola.cloud.auth.integration.authenticator.AbstractPreparableIn
 import com.honvay.cola.cloud.auth.integration.authenticator.sms.event.SmsAuthenticateBeforeEvent;
 import com.honvay.cola.cloud.auth.integration.authenticator.sms.event.SmsAuthenticateSuccessEvent;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
-import com.honvay.cola.cloud.uc.client.UcClient;
-import com.honvay.cola.cloud.uc.model.SysUserDO;
+import com.honvay.cola.cloud.uc.client.SysUserClient;
+import com.honvay.cola.cloud.uc.model.SysUserAuthentication;
 import com.honvay.cola.cloud.vcc.client.VccClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAuthenticator implements  ApplicationEventPublisherAware {
 
     @Autowired
-    private UcClient ucClient;
+    private SysUserClient sysUserClient;
 
     @Autowired
     private VccClient vccClient;
@@ -38,7 +38,7 @@ public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAu
     private final static String SMS_AUTH_TYPE = "sms";
 
     @Override
-    public SysUserDO authenticate(IntegrationAuthentication integrationAuthentication) {
+    public SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication) {
 
         //获取密码，实际值是验证码
         String password = integrationAuthentication.getAuthParameter("password");
@@ -47,14 +47,14 @@ public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAu
         //发布事件，可以监听事件进行自动注册用户
         this.applicationEventPublisher.publishEvent(new SmsAuthenticateBeforeEvent(integrationAuthentication));
         //通过手机号码查询用户
-        SysUserDO sysUserDO = this.ucClient.findUserByPhoneNumber(username);
-        if (sysUserDO != null) {
+        SysUserAuthentication sysUserAuthentication = this.sysUserClient.findUserByPhoneNumber(username);
+        if (sysUserAuthentication != null) {
             //将密码设置为验证码
-            sysUserDO.setPassword(passwordEncoder.encode(password));
+            sysUserAuthentication.setPassword(passwordEncoder.encode(password));
             //发布事件，可以监听事件进行消息通知
             this.applicationEventPublisher.publishEvent(new SmsAuthenticateSuccessEvent(integrationAuthentication));
         }
-        return sysUserDO;
+        return sysUserAuthentication;
     }
 
     @Override

@@ -4,9 +4,9 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.honvay.cola.cloud.auth.integration.IntegrationAuthentication;
 import com.honvay.cola.cloud.auth.integration.authenticator.IntegrationAuthenticator;
-import com.honvay.cola.cloud.uc.client.UcClient;
+import com.honvay.cola.cloud.uc.client.SysUserClient;
 import com.honvay.cola.cloud.uc.client.UcClientConstant;
-import com.honvay.cola.cloud.uc.model.SysUserDO;
+import com.honvay.cola.cloud.uc.model.SysUserAuthentication;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class MiniAppIntegrationAuthenticator implements IntegrationAuthenticator {
 
     @Autowired
-    private UcClient ucClient;
+    private SysUserClient sysUserClient;
 
     @Autowired
     private WxMaService wxMaService;
@@ -33,7 +33,7 @@ public class MiniAppIntegrationAuthenticator implements IntegrationAuthenticator
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public SysUserDO authenticate(IntegrationAuthentication integrationAuthentication) {
+    public SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication) {
         WxMaJscode2SessionResult session = null;
         String password = integrationAuthentication.getAuthParameter("password");
         try {
@@ -47,11 +47,11 @@ public class MiniAppIntegrationAuthenticator implements IntegrationAuthenticator
             throw new InternalAuthenticationServiceException("获取微信小程序用户信息失败",e);
         }
         String openId = session.getOpenid();
-        SysUserDO sysUserDO = ucClient.findUserBySocial(UcClientConstant.SOCIAL_TYPE_WECHAT_MINIAP, openId);
-        if(sysUserDO != null){
-            sysUserDO.setPassword(passwordEncoder.encode(password));
+        SysUserAuthentication sysUserAuthentication = sysUserClient.findUserBySocial(UcClientConstant.SOCIAL_TYPE_WECHAT_MINIAP, openId);
+        if(sysUserAuthentication != null){
+            sysUserAuthentication.setPassword(passwordEncoder.encode(password));
         }
-        return sysUserDO;
+        return sysUserAuthentication;
     }
 
     @Override
