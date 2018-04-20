@@ -38,10 +38,9 @@ public class Pagination {
         Integer pageNumber = this.pageNumber != null ? this.pageNumber : 1;
         Page<T> page = new Page<T>(pageNumber, pageSize);
         if (StringUtils.isNotEmpty(orderBy)) {
-            page.setOpenSort(false);
+            page.setOpenSort(true);
             page.setOrderByField(orderBy);
             page.setAsc(!DESC.equals(orderDirection));
-            return page;
         }
         return page;
     }
