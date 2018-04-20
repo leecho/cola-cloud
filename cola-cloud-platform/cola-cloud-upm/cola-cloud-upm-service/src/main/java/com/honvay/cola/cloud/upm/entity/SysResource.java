@@ -74,11 +74,14 @@ public class SysResource implements Serializable {
      */
     private String  deleted;
     /**
-     * 加载类型
+     * 加载类型 0：普通加载，1、IFRAME加载
      */
     @TableField("load_type")
     private String  loadType;
 
+    /**
+     * 类型 0：目录，1：菜单，2：功能
+     */
     private Integer type;
 
     private String description;
