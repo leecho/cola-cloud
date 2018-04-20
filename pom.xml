@@ -131,6 +131,33 @@
                 <artifactId>cola-cloud-uc-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!-- 组织架构 -->
+            <dependency>
+                <groupId>com.honvay.cola</groupId>
+                <artifactId>cola-cloud-organization-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.honvay.cola</groupId>
+                <artifactId>cola-cloud-organization-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.honvay.cola</groupId>
+                <artifactId>cola-cloud-organization-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- 租户管理 -->
+            <dependency>
+                <groupId>com.honvay.cola</groupId>
+                <artifactId>cola-cloud-tenancy-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.honvay.cola</groupId>
+                <artifactId>cola-cloud-tenancy-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- 消息通知 -->
             <dependency>
                 <groupId>com.honvay.cola</groupId>
