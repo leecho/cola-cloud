@@ -4,8 +4,8 @@ package com.honvay.cola.cloud.uc.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.honvay.cola.cloud.framework.base.service.BaseService;
 import com.honvay.cola.cloud.uc.entity.SysUser;
+import com.honvay.cola.cloud.uc.model.SysUserAuthentication;
 import com.honvay.cola.cloud.uc.model.SysUserCriteria;
-import com.honvay.cola.cloud.uc.model.SysUserDO;
 import com.honvay.cola.cloud.uc.model.SysUserDTO;
 
 import java.util.List;
@@ -87,21 +87,21 @@ public interface SysUserService extends BaseService<SysUser> {
      * @param username
      * @return
      */
-    SysUserDO findUserByUsername(String username);
+    SysUserAuthentication findUserByUsername(String username);
 
     /**
      * 通过用户ID获取用户
      * @param id
      * @return
      */
-    SysUserDO findUserById(Long id);
+    SysUserAuthentication findUserById(Long id);
 
     /**
      * 通过手机号获取用户
      * @param phoneNumber
      * @return
      */
-    SysUserDO findUserByPhoneNumber(String phoneNumber);
+    SysUserAuthentication findUserByPhoneNumber(String phoneNumber);
     
     boolean deleteSysUser(String username);
 

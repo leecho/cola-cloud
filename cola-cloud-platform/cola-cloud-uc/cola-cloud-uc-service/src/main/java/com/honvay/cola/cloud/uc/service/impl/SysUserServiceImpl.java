@@ -10,8 +10,8 @@ import com.honvay.cola.cloud.framework.util.Assert;
 import com.honvay.cola.cloud.framework.util.BeanUtils;
 import com.honvay.cola.cloud.framework.util.StringUtils;
 import com.honvay.cola.cloud.uc.entity.SysUser;
+import com.honvay.cola.cloud.uc.model.SysUserAuthentication;
 import com.honvay.cola.cloud.uc.model.SysUserCriteria;
-import com.honvay.cola.cloud.uc.model.SysUserDO;
 import com.honvay.cola.cloud.uc.model.SysUserDTO;
 import com.honvay.cola.cloud.uc.password.PasswordStrategy;
 import com.honvay.cola.cloud.uc.password.PasswordValidateResult;
@@ -58,13 +58,13 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
         return this.selectPage(page, sysUserCriteria);
     }
 
-    private SysUserDO getSysUserDO(SysUser sysUser) {
+    private SysUserAuthentication getSysUserAuthentication(SysUser sysUser) {
         if (sysUser == null) {
             return null;
         }
-        SysUserDO sysUserDO = new SysUserDO();
-        BeanUtils.copy(sysUser, sysUserDO);
-        return sysUserDO;
+        SysUserAuthentication sysUserAuthentication = new SysUserAuthentication();
+        BeanUtils.copy(sysUser, sysUserAuthentication);
+        return sysUserAuthentication;
     }
 
 
@@ -73,6 +73,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(sysUserDTO, sysUser);
         this.insert(sysUser);
+        sysUserDTO.setId(sysUser.getId());
     }
 
     @Override
@@ -258,20 +259,20 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
     }
 
     @Override
-    public SysUserDO findUserByUsername(String username) {
+    public SysUserAuthentication findUserByUsername(String username) {
         SysUser sysUser = this.findOneByColumn("username", username);
-        return this.getSysUserDO(sysUser);
+        return this.getSysUserAuthentication(sysUser);
     }
 
     @Override
-    public SysUserDO findUserById(Long id) {
-        return this.getSysUserDO(this.selectById(id));
+    public SysUserAuthentication findUserById(Long id) {
+        return this.getSysUserAuthentication(this.selectById(id));
     }
 
     @Override
-    public SysUserDO findUserByPhoneNumber(String phoneNumber) {
+    public SysUserAuthentication findUserByPhoneNumber(String phoneNumber) {
         SysUser sysUser = this.findOneByColumn("phone_number", phoneNumber);
-        return this.getSysUserDO(sysUser);
+        return this.getSysUserAuthentication(sysUser);
     }
 
     /**

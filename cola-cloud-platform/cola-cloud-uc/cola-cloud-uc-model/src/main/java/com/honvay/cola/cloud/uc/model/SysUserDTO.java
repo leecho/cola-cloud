@@ -1,17 +1,21 @@
 package com.honvay.cola.cloud.uc.model;
 
+
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
+ * 认证主体
+ *
  * @author LIQIU
- * @date 2018-4-17
- **/
+ * @date 2017-12-20
+ */
 @Data
-public class SysUserDTO {
+public class SysUserDTO implements Serializable {
 
     private Long id;
     /**

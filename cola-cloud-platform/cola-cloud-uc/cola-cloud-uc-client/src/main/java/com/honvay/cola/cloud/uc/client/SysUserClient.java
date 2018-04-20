@@ -1,7 +1,8 @@
 package com.honvay.cola.cloud.uc.client;
 
 import com.honvay.cola.cloud.framework.core.protocol.Result;
-import com.honvay.cola.cloud.uc.model.SysUserDO;
+import com.honvay.cola.cloud.uc.model.SysUserAuthentication;
+import com.honvay.cola.cloud.uc.model.SysUserDTO;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2017/10/31
  */
 @FeignClient(name = "uc-service")
-public interface UcClient {
+public interface SysUserClient {
     /**
      * 通过用户名查询用户、角色信息
      *
@@ -18,7 +19,7 @@ public interface UcClient {
      * @return UserVo
      */
     @GetMapping("/uc/user/findUserByUsername/{username}")
-    SysUserDO findUserByUsername(@PathVariable("username") String username);
+    SysUserAuthentication findUserByUsername(@PathVariable("username") String username);
 
     /**
      * 通过手机号查询用户、角色信息
@@ -27,7 +28,7 @@ public interface UcClient {
      * @return UserVo
      */
     @GetMapping("/uc/user/findUserByPhoneNumber/{phoneNumber}")
-    SysUserDO findUserByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber);
+    SysUserAuthentication findUserByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber);
 
     /**
      * 根据OpenId查询用户信息
@@ -36,7 +37,7 @@ public interface UcClient {
      * @return UserVo
      */
     @GetMapping("/uc/user/findUserBySocial/{type}/{token}")
-    SysUserDO findUserBySocial(@PathVariable("type") String type, @PathVariable("token") String token);
+    SysUserAuthentication findUserBySocial(@PathVariable("type") String type, @PathVariable("token") String token);
 
     /**
      * @param phoneNumber
@@ -49,15 +50,19 @@ public interface UcClient {
 
     /**
      * 添加用户
+     * @param user
+     * @return
      */
     @PostMapping("/uc/user/save")
-    Result save(@RequestBody SysUserDO user);
+    Result<SysUserDTO> save(@RequestBody SysUserDTO user);
 
     /**
      * 添加用户
+     * @param user
+     * @return
      */
     @PostMapping("/uc/user/update")
-    Result update(SysUserDO user);
+    Result<SysUserDTO> update(SysUserDTO user);
 
     /**
      *
@@ -65,9 +70,9 @@ public interface UcClient {
      * Result<Boolean> 返回类型 @throws
      */
     @PostMapping("/uc/user/save")
-    SysUserDO createSysUser(@RequestParam("username") String username, @RequestParam("name") String name,
-                            @RequestParam("password") String password, @RequestParam("phoneNumber") String phoneNumber,
-                            @RequestParam("email") String email);
+    SysUserDTO createSysUser(@RequestParam("username") String username, @RequestParam("name") String name,
+                             @RequestParam("password") String password, @RequestParam("phoneNumber") String phoneNumber,
+                             @RequestParam("email") String email);
 
 
 
@@ -75,5 +80,5 @@ public interface UcClient {
     Result<Boolean> deleteSysUser(@PathVariable("username") String username);
 
     @GetMapping("/uc/user/{id}")
-    SysUserDO findUserById(@PathVariable("id") Long id);
+    SysUserDTO findUserById(@PathVariable("id") Long id);
 }

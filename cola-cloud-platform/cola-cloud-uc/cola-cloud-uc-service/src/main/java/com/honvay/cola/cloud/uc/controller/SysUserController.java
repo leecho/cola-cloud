@@ -8,8 +8,8 @@ import com.honvay.cola.cloud.framework.security.userdetail.User;
 import com.honvay.cola.cloud.framework.security.utils.SecurityUtils;
 import com.honvay.cola.cloud.uc.entity.SysSocial;
 import com.honvay.cola.cloud.uc.entity.SysUser;
+import com.honvay.cola.cloud.uc.model.SysUserAuthentication;
 import com.honvay.cola.cloud.uc.model.SysUserCriteria;
-import com.honvay.cola.cloud.uc.model.SysUserDO;
 import com.honvay.cola.cloud.uc.model.SysUserDTO;
 import com.honvay.cola.cloud.uc.service.SysSocialService;
 import com.honvay.cola.cloud.uc.service.SysUserService;
@@ -37,7 +37,7 @@ public class SysUserController extends BaseController {
     private SysSocialService sysSocialService;
 
     @GetMapping("/findUserBySocial/{type}/{token}")
-    public SysUserDO findUserBySocial(@PathVariable("type") String type, @PathVariable("token") String token){
+    public SysUserAuthentication findUserBySocial(@PathVariable("type") String type, @PathVariable("token") String token){
         SysSocial sysSocial = this.sysSocialService.getSocialByTokenAndType(token, type);
         if (sysSocial != null) {
             return this.sysUserService.findUserById(sysSocial.getSysUserId());
@@ -52,7 +52,7 @@ public class SysUserController extends BaseController {
      * @return UseVo 对象
      */
     @GetMapping("/findUserByUsername/{username}")
-    public SysUserDO findUserByUsername(@PathVariable String username) {
+    public SysUserAuthentication findUserByUsername(@PathVariable String username) {
         return this.sysUserService.findUserByUsername(username);
     }
 
@@ -64,7 +64,7 @@ public class SysUserController extends BaseController {
      * @return UseVo 对象
      */
     @GetMapping("/findUserByPhoneNumber/{phoneNumber}")
-    public SysUserDO findUserByPhoneNumber(@PathVariable String phoneNumber) {
+    public SysUserAuthentication findUserByPhoneNumber(@PathVariable String phoneNumber) {
         return this.sysUserService.findUserByPhoneNumber(phoneNumber);
     }
 
@@ -96,7 +96,7 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/save")
     @ApiOperation("添加用户")
-    public Result<SysUser> save(@RequestBody SysUserDTO sysUserDTO) {
+    public Result<SysUserDTO> save(@RequestBody SysUserDTO sysUserDTO) {
         this.sysUserService.insert(sysUserDTO);
         return this.success(sysUserDTO);
     }
@@ -149,7 +149,6 @@ public class SysUserController extends BaseController {
 
     /**
      * 禁用用户
-     *
      * @param id
      * @return
      */
@@ -160,7 +159,6 @@ public class SysUserController extends BaseController {
 
     /**
      * 启用用户
-     *
      * @param id
      * @return
      */

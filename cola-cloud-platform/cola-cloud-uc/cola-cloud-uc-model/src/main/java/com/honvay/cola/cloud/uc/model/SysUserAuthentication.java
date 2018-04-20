@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @date 2017-12-20
  */
 @Data
-public class SysUserDO implements Serializable {
+public class SysUserAuthentication implements Serializable {
 
     private Long id;
 

@@ -1,6 +1,5 @@
 package com.honvay.cola.cloud.uc;
 
-import com.honvay.cola.cloud.framework.oauth2.token.EnableUserPrincipalExtractor;
 import com.honvay.cola.cloud.framework.security.access.EnableSecurityAccess;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -17,7 +16,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @SpringCloudApplication
 @EnableOAuth2Client
 @EnableResourceServer
-@EnableUserPrincipalExtractor
 @EnableFeignClients
 @ComponentScan("com.honvay")
 @EnableSecurityAccess
