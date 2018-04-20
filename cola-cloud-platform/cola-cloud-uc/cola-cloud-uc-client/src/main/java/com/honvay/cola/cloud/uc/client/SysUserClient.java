@@ -3,6 +3,7 @@ package com.honvay.cola.cloud.uc.client;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.uc.model.SysUserAuthentication;
 import com.honvay.cola.cloud.uc.model.SysUserDTO;
+import com.honvay.cola.cloud.uc.model.SysUserVO;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -80,5 +81,5 @@ public interface SysUserClient {
     Result<Boolean> deleteSysUser(@PathVariable("username") String username);
 
     @GetMapping("/uc/user/{id}")
-    SysUserDTO findUserById(@PathVariable("id") Long id);
+    SysUserVO findUserById(@PathVariable("id") Long id);
 }

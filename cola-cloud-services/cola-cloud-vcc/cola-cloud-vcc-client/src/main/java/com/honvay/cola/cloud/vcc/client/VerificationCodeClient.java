@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * @author fyk
  */
-@FeignClient(name = VccClient.SERVICE_ID)
-public interface VccClient {
+@FeignClient(name = VerificationCodeClient.SERVICE_ID)
+public interface VerificationCodeClient {
     /**
      * eureka service name
      */

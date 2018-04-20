@@ -7,7 +7,7 @@ import com.honvay.cola.cloud.auth.integration.authenticator.sms.event.SmsAuthent
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.uc.client.SysUserClient;
 import com.honvay.cola.cloud.uc.model.SysUserAuthentication;
-import com.honvay.cola.cloud.vcc.client.VccClient;
+import com.honvay.cola.cloud.vcc.client.VerificationCodeClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
@@ -28,7 +28,7 @@ public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAu
     private SysUserClient sysUserClient;
 
     @Autowired
-    private VccClient vccClient;
+    private VerificationCodeClient verificationCodeClient;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -62,7 +62,7 @@ public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAu
         String smsToken = integrationAuthentication.getAuthParameter("sms_token");
         String smsCode = integrationAuthentication.getAuthParameter("password");
         String username = integrationAuthentication.getAuthParameter("username");
-        Result<Boolean> result = vccClient.validate(smsToken, smsCode, username);
+        Result<Boolean> result = verificationCodeClient.validate(smsToken, smsCode, username);
         if (!result.getData()) {
             throw new OAuth2Exception("验证码错误或已过期");
         }

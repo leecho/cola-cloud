@@ -1,7 +1,7 @@
 package com.honvay.cola.cloud.auth.controller;
 
 import com.honvay.cola.cloud.framework.core.protocol.Result;
-import com.honvay.cola.cloud.vcc.client.VccClient;
+import com.honvay.cola.cloud.vcc.client.VerificationCodeClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.security.Principal;
 public class AuthController {
 
     @Autowired
-    private VccClient vccClient;
+    private VerificationCodeClient verificationCodeClient;
 
     @GetMapping("/current")
     @ApiOperation("获取当前用户信息")
@@ -31,6 +31,6 @@ public class AuthController {
     @PostMapping("/sms/token")
     @ApiOperation("获取短信登录Token")
     public Result<String> getToken(String phoneNumber){
-        return vccClient.getToken(6,null,"0",phoneNumber,true);
+        return verificationCodeClient.getToken(6,null,"0",phoneNumber,true);
     }
 }
