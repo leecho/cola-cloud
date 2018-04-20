@@ -12,7 +12,6 @@ import lombok.Data;
 @Data
 public class Pagination {
 
-
     /**
      * 升序
      */
@@ -21,7 +20,6 @@ public class Pagination {
      * 降序
      */
     public final static String DESC = "desc";
-
 
     @ApiModelProperty("每页数据条数")
     private Integer pageSize;
@@ -33,7 +31,6 @@ public class Pagination {
     private String orderDirection ;
 
     public <T> Page getPage() {
-
         Integer pageSize = this.pageSize != null ? this.pageSize : 20;
         Integer pageNumber = this.pageNumber != null ? this.pageNumber : 1;
         Page<T> page = new Page<T>(pageNumber, pageSize);
