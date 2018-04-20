@@ -22,8 +22,8 @@ import java.util.List;
  * @author hamst
  * @date 2018-04-05
  */
-@EnableWebMvc  
-@Configuration  
+@EnableWebMvc
+@Configuration
 public class JacksonConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean

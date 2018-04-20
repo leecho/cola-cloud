@@ -1,7 +1,6 @@
 package com.honvay.cola.cloud.common;
 
 import com.honvay.cola.cloud.framework.security.access.EnableSecurityAccess;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,7 +18,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @EnableResourceServer
 @EnableOAuth2Client
 @ComponentScan(basePackages = {"com.honvay.cola"})
-@MapperScan(basePackages = { "com.honvay.cola.**.mapper" })
 @EnableSecurityAccess
 @SpringCloudApplication
 public class CommonApplication extends ResourceServerConfigurerAdapter{

@@ -2,7 +2,6 @@ package com.honvay.cola.cloud.auth;
 
 import com.honvay.cola.cloud.framework.oauth2.feign.EnableOAuth2ClientFeign;
 import com.honvay.cola.cloud.framework.security.access.EnableSecurityAccess;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -22,7 +21,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableFeignClients("com.honvay")
 @ComponentScan("com.honvay")
 @EnableSecurityAccess
-@MapperScan(basePackages = { "com.honvay.cola.**.mapper" })
 public class AuthApplication    {
 
     public static void main(String[] args) {
