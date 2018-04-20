@@ -6,6 +6,7 @@ import com.honvay.cola.cloud.framework.base.controller.BaseController;
 import com.honvay.cola.cloud.framework.base.pagination.Pagination;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.tenancy.entity.SysTenant;
+import com.honvay.cola.cloud.tenancy.model.SysTenantDTO;
 import com.honvay.cola.cloud.tenancy.model.SysTenantVO;
 import com.honvay.cola.cloud.tenancy.service.SysTenantService;
 import io.swagger.annotations.Api;
@@ -38,8 +39,8 @@ public class SysTenantController extends BaseController {
      */
     @PostMapping("/save")
     @ApiOperation("创建租户")
-    public Result<String> save(SysTenantVO sysTenantVO) {
-        this.sysTenantService.save(sysTenantVO);
+    public Result<String> save(SysTenantDTO sysTenantDTO) {
+        this.sysTenantService.save(sysTenantDTO);
         return this.success();
     }
 
