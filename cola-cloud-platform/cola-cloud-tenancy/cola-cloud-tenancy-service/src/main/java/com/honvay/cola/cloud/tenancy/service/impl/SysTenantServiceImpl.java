@@ -5,13 +5,22 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.honvay.cola.cloud.framework.base.service.impl.BaseServiceImpl;
 import com.honvay.cola.cloud.framework.core.constant.CommonConstant;
+import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.framework.security.utils.SecurityUtils;
 import com.honvay.cola.cloud.framework.util.StringUtils;
+import com.honvay.cola.cloud.organization.client.SysEmployeeClient;
+import com.honvay.cola.cloud.organization.client.SysOrganizationClient;
+import com.honvay.cola.cloud.organization.model.SysEmployeeAddDTO;
+import com.honvay.cola.cloud.organization.model.SysOrganizationDTO;
+import com.honvay.cola.cloud.tenancy.entity.SysMember;
 import com.honvay.cola.cloud.tenancy.entity.SysTenant;
 import com.honvay.cola.cloud.tenancy.mapper.SysTenantMapper;
+import com.honvay.cola.cloud.tenancy.model.SysTenantDTO;
 import com.honvay.cola.cloud.tenancy.model.SysTenantVO;
 import com.honvay.cola.cloud.tenancy.service.SysMemberService;
 import com.honvay.cola.cloud.tenancy.service.SysTenantService;
+import com.honvay.cola.cloud.uc.client.SysUserClient;
+import com.honvay.cola.cloud.uc.model.SysUserDTO;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +42,17 @@ import java.util.List;
 @Service
 public class SysTenantServiceImpl extends BaseServiceImpl<SysTenant> implements SysTenantService {
 
-   /* @Autowired
-    private SysUserService sysUserService;*/
+   @Autowired
+   private SysUserClient sysUserClient;
 
     @Autowired
     private SysMemberService sysMemberService;
 
-    /*@Autowired
-    private SysOrganizationService sysOrganizationService;
+    @Autowired
+    private SysOrganizationClient sysOrganizationClient;
 
     @Autowired
-    private SysEmployeeService sysEmployeeService;*/
+    private SysEmployeeClient sysEmployeeClient;
 
     @Override
     public Page<List<SysTenantVO>> getTenantList(Page page, String code, String name){
@@ -66,40 +75,44 @@ public class SysTenantServiceImpl extends BaseServiceImpl<SysTenant> implements 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void save(SysTenantVO sysTenantVO){
+    public void save(SysTenantDTO sysTenantDTO){
+
         //创建管理员账号
-        /*SysUser sysUser = new SysUser();
-        sysUser.setName(sysTenantVO.getName() + "管理员");
-        sysUser.setUsername(sysTenantVO.getAdministrator());
-        this.sysUserService.insert(sysUser);
+        SysUserDTO sysUserDTO = new SysUserDTO();
+        sysUserDTO.setName(sysTenantDTO.getName() + "管理员");
+        sysUserDTO.setUsername(sysTenantDTO.getAdministrator());
+        Result<SysUserDTO> userResult = this.sysUserClient.save(sysUserDTO);
+        Assert.isTrue(userResult.getSuccess(),userResult.getMsg());
+        if(userResult.getSuccess()){
+            sysUserDTO = userResult.getData();
+        }
 
         //创建租户
         SysTenant sysTenant = new SysTenant();
-        BeanUtils.copyProperties(sysTenantVO,sysTenant);
-        sysTenant.setAdministrator(sysUser.getId());
+        BeanUtils.copyProperties(sysTenantDTO,sysTenant);
+        sysTenant.setAdministrator(sysUserDTO.getId());
         this.insert(sysTenant);
 
         //创建成员
         SysMember sysMember = new SysMember();
         sysMember.setTenantId(sysTenant.getId());
-        sysMember.setSysUserId(sysUser.getId());
+        sysMember.setSysUserId(sysUserDTO.getId());
         this.sysMemberService.insert(sysMember);
 
         //创建组织
-        SysOrganization sysOrganization = new SysOrganization();
+        SysOrganizationDTO sysOrganization = new SysOrganizationDTO();
         sysOrganization.setCode(sysTenant.getCode());
         sysOrganization.setName(sysTenant.getName());
-        sysOrganization.setPid(null);
-        sysOrganization.setDeleted(CommonConstant.NO);
+        sysOrganization.setParent(null);
+        sysOrganization.setDeleted(CommonConstant.COMMON_NO);
         sysOrganization.setTenantId(sysTenant.getId());
-        sysOrganizationService.insert(sysOrganization);
+        this.sysOrganizationClient.add(sysOrganization);
 
         //创建员工
-        SysEmployee sysEmployee = new SysEmployee();
-        sysEmployee.setSysOrgId(sysOrganization.getId());
-        sysEmployee.setSysUserId(sysUser.getId());
-        sysEmployeeService.insert(sysEmployee);*/
-
+        SysEmployeeAddDTO sysEmployee = new SysEmployeeAddDTO();
+        sysEmployee.setOrgId(sysOrganization.getId());
+        sysEmployee.setUserId(sysUserDTO.getId());
+        sysEmployeeClient.add(sysEmployee);
     }
 
     @Override

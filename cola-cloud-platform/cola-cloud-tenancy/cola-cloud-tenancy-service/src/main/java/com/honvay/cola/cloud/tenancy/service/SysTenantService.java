@@ -4,7 +4,9 @@ package com.honvay.cola.cloud.tenancy.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.honvay.cola.cloud.framework.base.service.BaseService;
 import com.honvay.cola.cloud.tenancy.entity.SysTenant;
+import com.honvay.cola.cloud.tenancy.model.SysTenantDTO;
 import com.honvay.cola.cloud.tenancy.model.SysTenantVO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,11 +20,12 @@ import java.util.List;
  */
 public interface SysTenantService extends BaseService<SysTenant> {
 
+
     /**
      * 保存租户
-     * @param sysTenantVO
+     * @param sysTenantDTO
      */
-    void save(SysTenantVO sysTenantVO);
+    void save(SysTenantDTO sysTenantDTO);
 
     /**
      * 修改租户

@@ -1,5 +1,6 @@
 package com.honvay.cola.cloud.tenancy.controller;
 
+import com.honvay.cola.cloud.client.SysMemberDTO;
 import com.honvay.cola.cloud.framework.base.audit.EnableAudit;
 import com.honvay.cola.cloud.framework.base.controller.BaseController;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
@@ -49,10 +50,10 @@ public class SysMemberController extends BaseController {
     /**
      * 删除租户成员
      */
-    @PostMapping(value = "/delete/{id}")
+    @PostMapping(value = "/delete")
     @ApiOperation("删除租户成员")
-    public Result<String> delete(@PathVariable("id") Long id) {
-        sysMemberService.deleteById(id);
+    public Result<String> delete(SysMemberDTO sysMemberDTO) {
+        sysMemberService.delete(sysMemberDTO);
         return this.success();
     }
 

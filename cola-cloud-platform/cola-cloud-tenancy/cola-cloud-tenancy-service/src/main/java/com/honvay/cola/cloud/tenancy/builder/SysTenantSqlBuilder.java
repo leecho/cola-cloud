@@ -9,7 +9,7 @@ import java.util.Objects;
  * @author LIQIU
  * @date 2018-1-10
  **/
-public class SysSqlBuilder {
+public class SysTenantSqlBuilder {
 
     public String buildTenantListSql(Map<String,Object> params){
        return new SQL(){{

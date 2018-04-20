@@ -1,5 +1,6 @@
 package com.honvay.cola.cloud.tenancy.service;
 
+import com.honvay.cola.cloud.client.SysMemberDTO;
 import com.honvay.cola.cloud.framework.base.service.BaseService;
 import com.honvay.cola.cloud.tenancy.entity.SysMember;
 
@@ -24,9 +25,14 @@ public interface SysMemberService extends BaseService<SysMember> {
 
     /**
      * 根据租户ID和用户ID获取成员
-     * @param tenantId
-     * @param userId
+     * @param sysMemberDTO
      * @return
      */
-   SysMember getMemberByTenantIdAndUserId(Long tenantId, Long userId);
+   SysMember getMembers(SysMemberDTO sysMemberDTO);
+
+    /**
+     * 根据租户ID和用户ID删除用户
+     * @param sysMemberDTO
+     */
+    void delete(SysMemberDTO sysMemberDTO);
 }

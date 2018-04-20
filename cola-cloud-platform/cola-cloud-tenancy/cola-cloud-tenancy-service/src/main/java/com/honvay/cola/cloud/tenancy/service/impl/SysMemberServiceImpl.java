@@ -1,6 +1,7 @@
 package com.honvay.cola.cloud.tenancy.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.honvay.cola.cloud.client.SysMemberDTO;
 import com.honvay.cola.cloud.framework.base.service.impl.TenancyServiceImpl;
 import com.honvay.cola.cloud.tenancy.entity.SysMember;
 import com.honvay.cola.cloud.tenancy.service.SysMemberService;
@@ -27,10 +28,18 @@ public class SysMemberServiceImpl extends TenancyServiceImpl<SysMember> implemen
     }
 
     @Override
-    public SysMember getMemberByTenantIdAndUserId(Long tenantId, Long userId) {
+    public SysMember getMembers(SysMemberDTO sysMemberDTO) {
         EntityWrapper<SysMember> wrapper = this.newEntityWrapper();
-        wrapper.eq("sys_user_id",userId);
-        wrapper.eq("tenant_id",tenantId);
+        wrapper.eq("sys_user_id",sysMemberDTO.getSysUserId());
+        wrapper.eq("tenant_id",sysMemberDTO.getTenantId());
         return this.selectOne(wrapper);
+    }
+
+    @Override
+    public void delete(SysMemberDTO sysMemberDTO) {
+        EntityWrapper<SysMember> wrapper = this.newEntityWrapper();
+        wrapper.eq("sys_user_id",sysMemberDTO.getSysUserId());
+        wrapper.eq("tenant_id",sysMemberDTO.getTenantId());
+        this.delete(wrapper);
     }
 }

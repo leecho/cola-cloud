@@ -2,7 +2,7 @@ package com.honvay.cola.cloud.tenancy.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.honvay.cola.cloud.tenancy.builder.SysSqlBuilder;
+import com.honvay.cola.cloud.tenancy.builder.SysTenantSqlBuilder;
 import com.honvay.cola.cloud.tenancy.entity.SysTenant;
 import com.honvay.cola.cloud.tenancy.model.SysTenantVO;
 import org.apache.ibatis.annotations.Param;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface SysTenantMapper extends BaseMapper<SysTenant> {
 
-    @SelectProvider(type = SysSqlBuilder.class, method = "buildTenantListSql")
+    @SelectProvider(type = SysTenantSqlBuilder.class, method = "buildTenantListSql")
     List<SysTenantVO> findTenantList(Page page, @Param("code") String code, @Param("name") String name);
 
 }
