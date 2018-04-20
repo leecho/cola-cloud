@@ -20,10 +20,9 @@ import java.util.List;
  */
 @EnableAudit
 @RestController
-@RequestMapping("/sys/member")
-@Api(value = "/sys/member",tags = "租户成员管理")
+@RequestMapping("/member")
+@Api(value = "/member",tags = "租户成员管理")
 public class SysMemberController extends BaseController {
-
 
     @Autowired
     private SysMemberService sysMemberService;

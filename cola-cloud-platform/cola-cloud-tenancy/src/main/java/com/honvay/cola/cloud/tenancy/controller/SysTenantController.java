@@ -25,8 +25,8 @@ import java.util.List;
  */
 @EnableAudit
 @RestController
-@RequestMapping("/sys/tenant")
-@Api(value = "/sys/tenant/", tags = "系统租户管理")
+@RequestMapping("/tenant")
+@Api(value = "/tenant/", tags = "系统租户管理")
 public class SysTenantController extends BaseController {
 
     @Autowired
