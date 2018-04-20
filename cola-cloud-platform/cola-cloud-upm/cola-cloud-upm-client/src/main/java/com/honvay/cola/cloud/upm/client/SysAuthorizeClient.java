@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @date 2018-3-8
  **/
 @FeignClient(serviceId = "upm-service")
-public interface UpmClient {
+public interface SysAuthorizeClient {
 
     /**
      * 获取授权用户

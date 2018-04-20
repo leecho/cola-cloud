@@ -28,10 +28,6 @@
             <artifactId>cola-cloud-framework-base</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.honvay.cola</groupId>
-            <artifactId>cola-cloud-framework-oauth2</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
         </dependency>
