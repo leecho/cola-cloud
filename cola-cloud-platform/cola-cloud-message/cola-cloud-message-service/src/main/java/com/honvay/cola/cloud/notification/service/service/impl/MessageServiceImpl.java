@@ -10,8 +10,8 @@ import com.honvay.cola.cloud.notification.model.EmailNotification;
 import com.honvay.cola.cloud.notification.model.SmsNotification;
 import com.honvay.cola.cloud.notification.service.entity.Message;
 import com.honvay.cola.cloud.notification.service.service.MessageService;
-import com.honvay.cola.cloud.uc.client.UcClient;
-import com.honvay.cola.cloud.uc.model.SysUserDO;
+import com.honvay.cola.cloud.uc.client.SysUserClient;
+import com.honvay.cola.cloud.uc.model.SysUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class MessageServiceImpl extends BaseServiceImpl<Message> implements Mess
     private static String STATUS_OK = "OK";
 
     @Autowired
-    private UcClient ucClient;
+    private SysUserClient sysUserClient;
 
     @Autowired
     private NotificationClient notificationClient;
@@ -63,25 +63,25 @@ public class MessageServiceImpl extends BaseServiceImpl<Message> implements Mess
 
     @Override
     public boolean add(MessageDTO messageDTO){
-        SysUserDO sysUserDO = null;
+        SysUserDTO sysUserDTO = null;
         Message message = new Message();
         BeanUtils.copy(messageDTO,message);
         message.setSmsStatus(NO_SEND_STATUS);
         message.setEmailStatus(NO_SEND_STATUS);
         //发送邮件,发送短信
         if (messageDTO.getSendSms() || messageDTO.getSendEmail()) {
-            sysUserDO = ucClient.findUserById(messageDTO.getSysUserId());
+            sysUserDTO = sysUserClient.findUserById(messageDTO.getSysUserId());
             if(messageDTO.getSendSms()){
                 message.setSmsStatus(WAIT_SEND_STATUS);
                 Assert.hasText(message.getTemplateCode(), "站内信的参数是发送短信，短信模板不能为空");
-                if (sendSms(messageDTO, sysUserDO)) {
+                if (sendSms(messageDTO, sysUserDTO)) {
                     message.setSmsStatus(FINISH_SEND_STATUS);
                 }
             }
 
             if(messageDTO.getSendEmail()){
                 message.setEmailStatus(WAIT_SEND_STATUS);
-                if (sendMail(messageDTO, sysUserDO)) {
+                if (sendMail(messageDTO, sysUserDTO)) {
                     message.setEmailStatus(FINISH_SEND_STATUS);
                 }
             }
@@ -113,19 +113,19 @@ public class MessageServiceImpl extends BaseServiceImpl<Message> implements Mess
         return super.updateById(message);
     }
 
-    public boolean sendMail(MessageDTO messageDTO, SysUserDO sysUserDO) {
+    public boolean sendMail(MessageDTO messageDTO, SysUserDTO sysUserDTO) {
         EmailNotification emailNotification = new EmailNotification();
         emailNotification.setContent(messageDTO.getContent());
-        emailNotification.setReceiver(sysUserDO.getEmail());
+        emailNotification.setReceiver(sysUserDTO.getEmail());
         emailNotification.setTitle(messageDTO.getTitle());
         notificationClient.send(emailNotification);
         //TODO 邮件发送异常未捕获
         return true;
     }
 
-    public boolean sendSms(MessageDTO messageDTO, SysUserDO sysUserDO) {
+    public boolean sendSms(MessageDTO messageDTO, SysUserDTO sysUserDTO) {
         SmsNotification smsNotification = new SmsNotification();
-        smsNotification.setPhoneNumber(sysUserDO.getPhoneNumber());
+        smsNotification.setPhoneNumber(sysUserDTO.getPhoneNumber());
         smsNotification.setSignName(messageDTO.getSignName());
         smsNotification.setParams(messageDTO.getSmsParams());
         smsNotification.setTemplateCode(messageDTO.getTemplateCode());
