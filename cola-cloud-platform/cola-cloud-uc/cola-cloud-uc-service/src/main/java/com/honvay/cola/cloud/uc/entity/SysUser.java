@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.honvay.cola.cloud.framework.base.entity.UserEntity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Email;
@@ -25,7 +24,7 @@ import java.util.Date;
 @Data
 @Accessors
 @TableName("cola_sys_user")
-public class SysUser implements UserEntity {
+public class SysUser {
 
     private static final long serialVersionUID = 1L;
 
