@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.toolkit.StringUtils;
 import com.baomidou.mybatisplus.toolkit.TableInfoHelper;
 import com.honvay.cloud.framework.criteria.Criteria;
 import com.honvay.cloud.framework.criteria.parser.CriteriaParser;
+import com.honvay.cola.cloud.framework.base.pagination.PageableCriteria;
 import com.honvay.cola.cloud.framework.base.service.BaseService;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.logging.Log;
@@ -96,11 +97,6 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      T t   =this.selectOne(new EntityWrapper<T>().eq(column, value));
     	return t;
     }
-    
-    @Override
-    public List<T> selectListByColumn(String column, Object value){
-    	return this.selectList(new EntityWrapper<T>().eq(column, value));
-    }
 
     @Override
     public List<T> selectList() {
@@ -117,18 +113,33 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         return SqlHelper.table(currentModelClass()).getSqlStatement(sqlMethod.getMethod());
     }
 
+    /**
+     * 插入实体
+     * @param entity
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean insert(T entity) {
         return retBool(mapper.insert(entity));
     }
 
+    /**
+     * 插入实体中所有的列
+     * @param entity
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean insertAllColumn(T entity) {
         return retBool(mapper.insertAllColumn(entity));
     }
 
+    /**
+     * 批量查询
+     * @param entityList
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean insertBatch(List<T> entityList) {
@@ -521,6 +532,11 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
+    public List<T> selectList(String column, Object value) {
+        return this.selectList(new EntityWrapper<T>().eq(column, value));
+    }
+
+    @Override
     public List<T> selectList(EntityWrapper<T> wrapper, Criteria<T> criteria,String group){
         return this.selectList(criteriaParser.parse(criteria,wrapper,group));
     }
@@ -560,5 +576,10 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public Page<T> selectPage(Page<T> page, Criteria<T> criteria){
         return this.selectPage(page,new EntityWrapper<>(),criteria,null);
+    }
+
+    @Override
+    public Page<T> selectPage(PageableCriteria pageableCriteria) {
+        return this.selectPage(pageableCriteria.getPage(),pageableCriteria);
     }
 }

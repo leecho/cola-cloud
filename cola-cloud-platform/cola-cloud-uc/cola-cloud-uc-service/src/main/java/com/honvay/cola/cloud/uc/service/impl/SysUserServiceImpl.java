@@ -47,16 +47,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
         return StringUtils.camelCaseToUnderline(SysUser.class.getSimpleName()).toUpperCase();
     }
 
-    /**
-     * 查询分页用户
-     * @param page
-     * @param sysUserCriteria
-     * @return
-     */
-    @Override
-    public Page<SysUser> list(Page page, SysUserCriteria sysUserCriteria){
-        return this.selectPage(page, sysUserCriteria);
-    }
 
     private SysUserAuthentication getSysUserAuthentication(SysUser sysUser) {
         if (sysUser == null) {

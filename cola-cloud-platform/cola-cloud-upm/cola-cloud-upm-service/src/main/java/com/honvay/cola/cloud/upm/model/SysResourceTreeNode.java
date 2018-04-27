@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Data
 @Accessors
-public class SysMenuVO implements Serializable {
+public class SysResourceTreeNode implements Serializable {
 
     private Long id;
     private String code;
@@ -22,11 +22,12 @@ public class SysMenuVO implements Serializable {
     private String url;
     private String loadType;
     private Integer sort;
-    private String portalUrl;
+    private String route;
     private Integer type;
-    private Long pid;
+    private Long parent;
     private String status;
+    private String serviceId;
 
-    private List<SysMenuVO> children;
+    private List<SysResourceTreeNode> children;
 
 }

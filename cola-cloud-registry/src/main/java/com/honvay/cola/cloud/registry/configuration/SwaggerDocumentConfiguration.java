@@ -1,4 +1,4 @@
-package com.honvay.cola.cloud.gateway.configuration;
+package com.honvay.cola.cloud.registry.configuration;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

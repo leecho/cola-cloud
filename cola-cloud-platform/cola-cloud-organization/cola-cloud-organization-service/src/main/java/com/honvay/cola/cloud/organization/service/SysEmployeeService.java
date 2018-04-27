@@ -52,5 +52,5 @@ public interface SysEmployeeService extends BaseService<SysEmployee> {
      * @param status
      * @return
      */
-    Page<List<SysEmployeeVO>> getEmployeeListByOrgId(Page page, String name, String username, Integer status);
+    Page<SysEmployeeVO> getEmployeeListByOrgId(Page page, String name, String username, Integer status);
 }

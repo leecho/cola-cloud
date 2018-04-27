@@ -39,8 +39,8 @@ public class SysRoleController extends BaseController {
      */
     @ApiOperation("获取角色列表")
     @GetMapping("/list")
-    public Result<Page<SysRole>> list(Pagination pagination, SysRoleCriteria sysRoleCriteria) {
-        return this.success(this.sysRoleService.selectPage(pagination.getPage(),sysRoleCriteria));
+    public Result<Page<SysRole>> list(SysRoleCriteria sysRoleCriteria) {
+        return this.success(this.sysRoleService.selectPage(sysRoleCriteria));
     }
 
     /**
@@ -51,7 +51,7 @@ public class SysRoleController extends BaseController {
      */
     @PostMapping("/save")
     @ApiOperation("添加角色")
-    public Result save(@Validated  SysRole t) {
+    public Result save(@Validated SysRole t) {
         this.sysRoleService.insert(t);
         return this.success();
     }
@@ -64,7 +64,7 @@ public class SysRoleController extends BaseController {
      */
     @ApiOperation("修改角色")
     @PostMapping("/update")
-    public Result update(@Validated  SysRole t) {
+    public Result update(@Validated SysRole t) {
         SysRole sysRole = sysRoleService.selectById(t.getId());
         sysRole.setCode(t.getCode());
         sysRole.setName(t.getName());

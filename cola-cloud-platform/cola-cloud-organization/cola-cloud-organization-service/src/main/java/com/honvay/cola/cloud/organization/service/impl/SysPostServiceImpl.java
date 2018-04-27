@@ -29,38 +29,40 @@ public class SysPostServiceImpl extends TenancyServiceImpl<SysPost> implements S
 
     /**
      * 检查配置项是否有重复
+     *
      * @param sysPost
      * @return
      */
-    private boolean check(SysPost sysPost){
+    private boolean check(SysPost sysPost) {
         EntityWrapper<SysPost> wrapper = new EntityWrapper<SysPost>();
-        wrapper.eq("code",sysPost.getCode());
-        if(sysPost.getId() != null){
-            wrapper.ne("id",sysPost.getId());
+        wrapper.eq("code", sysPost.getCode());
+        if (sysPost.getId() != null) {
+            wrapper.ne("id", sysPost.getId());
         }
         return this.selectList(wrapper).size() == 0;
     }
 
     @Override
     public boolean insert(SysPost entity) {
-        Assert.isTrue(check(entity),"编号已存在");
+        Assert.isTrue(check(entity), "编号已存在");
         return super.insert(entity);
     }
 
     @Override
     public boolean updateById(SysPost entity) {
-        org.springframework.util.Assert.isTrue(check(entity),"编号已存在");
+        Assert.isTrue(check(entity), "编号已存在");
         return super.updateById(entity);
     }
 
     /**
      * 判断是否分配给员工
+     *
      * @param id
      */
-    private void assertUsedByEmployee(Serializable id){
+    private void assertUsedByEmployee(Serializable id) {
         EntityWrapper<SysEmployee> wrapper = new EntityWrapper<>();
-        wrapper.eq("sys_post_id",id);
-        org.springframework.util.Assert.isTrue(CollectionUtils.isEmpty(this.sysEmployeeMapper.selectList(wrapper)),"岗位已分配给员工，无法删除");
+        wrapper.eq("sys_post_id", id);
+        Assert.isTrue(CollectionUtils.isEmpty(this.sysEmployeeMapper.selectList(wrapper)), "岗位已分配给员工，无法删除");
     }
 
     @Override

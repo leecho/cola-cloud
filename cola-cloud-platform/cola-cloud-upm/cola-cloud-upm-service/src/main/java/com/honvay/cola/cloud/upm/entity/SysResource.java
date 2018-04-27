@@ -34,7 +34,7 @@ public class SysResource implements Serializable {
     /**
      * 父id
      */
-    private Long    pid;
+    private Long parent;
     /**
      * 权限名称
      */
@@ -48,31 +48,13 @@ public class SysResource implements Serializable {
      */
     private String  icon;
     /**
-     * 菜单层级
-     */
-    private Integer level;
-    /**
      * 排序
      */
     private Integer sort;
     /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date    createTime;
-    /**
-     * 修改时间
-     */
-    @TableField("update_time")
-    private Date    updateTime;
-    /**
      * 是否可用：Y-可用；N-不可用
      */
     private String  status;
-    /**
-     * 是否删除:  Y-已删除; N-未删除
-     */
-    private String  deleted;
     /**
      * 加载类型 0：普通加载，1、IFRAME加载
      */

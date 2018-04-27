@@ -46,9 +46,6 @@ public class SysEmployeeServiceImpl extends BaseServiceImpl<SysEmployee> impleme
     private SysUserClient sysUserClient;
 
     @Autowired
-    private SysMemberClient sysMemberClient;
-
-    @Autowired
     private SysPostMapper sysPostMapper;
 
     @Autowired
@@ -56,6 +53,7 @@ public class SysEmployeeServiceImpl extends BaseServiceImpl<SysEmployee> impleme
 
     @Autowired
     private CommonMapper commonMapper;
+
 
     /**
      * 获取员工详细信息
@@ -69,13 +67,12 @@ public class SysEmployeeServiceImpl extends BaseServiceImpl<SysEmployee> impleme
         Assert.notNull(id, "ID不能为空");
 
         String sql = "select ase.id,asu.name,asu.username,asu.status,asu.email," +
-                "asu.phone_number as phoneNumber," +
-                "asp.name as postName," +
-                "           ase.sys_org_id as orgId" +
-                "       from cola_sys_employee ase" +
-                "      left join cola_sys_user asu on asu.id = ase.sys_user_id" +
-                "      left join cola_sys_post asp on asp.id = ase.sys_post_id" +
-                " where ase.id = {0}";
+                "            asu.phone_number as phoneNumber," +
+                "            asp.name as postName,ase.sys_org_id as orgId" +
+                "       from adi_sys_employee ase" +
+                "  left join adi_sys_user asu on asu.id = ase.sys_user_id" +
+                "  left join adi_sys_post asp on asp.id = ase.sys_post_id" +
+                "      where ase.id = {0}";
         Map<String, Object> result = this.commonMapper.selectOne(sql, id);
         SysEmployeeVO sysEmployeeVO = new SysEmployeeVO();
         try {
@@ -89,7 +86,7 @@ public class SysEmployeeServiceImpl extends BaseServiceImpl<SysEmployee> impleme
 
 
     @Override
-    public Page<List<SysEmployeeVO>> getEmployeeListByOrgId(Page page, String name, String username, Integer status) {
+    public Page<SysEmployeeVO> getEmployeeListByOrgId(Page page, String name, String username, Integer status) {
         SysEmployeeMapper mapper = this.getMapper(SysEmployeeMapper.class);
         name = StringUtils.concatLikeAll(name);
         username = StringUtils.concatLikeAll(username);
@@ -138,7 +135,7 @@ public class SysEmployeeServiceImpl extends BaseServiceImpl<SysEmployee> impleme
         EntityWrapper<SysEmployee> wrapper = new EntityWrapper<>();
         wrapper.eq("sys_org_id", orgId);
         wrapper.eq("sys_user_id", userId);
-        Assert.isTrue(this.selectList(wrapper).size() == 0, "用户已经在该部门中");
+        org.springframework.util.Assert.isTrue(this.selectList(wrapper).size() == 0, "用户已经在该部门中");
     }
 
     /**
@@ -149,25 +146,8 @@ public class SysEmployeeServiceImpl extends BaseServiceImpl<SysEmployee> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(SysEmployeeAddDTO sysEmployeeAddDTO) {
-        Long tenantId = SecurityUtils.getTenantId();
 
         this.assertEmployeeExists(sysEmployeeAddDTO.getOrgId(), sysEmployeeAddDTO.getUserId());
-
-        //检查组织架构数据
-        this.validateOrganization(tenantId, sysEmployeeAddDTO.getOrgId());
-
-        //检查岗位数据
-        if (sysEmployeeAddDTO.getPostId() != null) {
-            this.validatePost(tenantId, sysEmployeeAddDTO.getPostId());
-        }
-
-        //如果是租户登录则新增租户成员记录
-        if (tenantId != null) {
-            SysMemberDTO member = new SysMemberDTO();
-            member.setSysUserId(sysEmployeeAddDTO.getUserId());
-            member.setTenantId(tenantId);
-            this.sysMemberClient.add(member);
-        }
 
         //新增员工记录
         SysEmployee employee = new SysEmployee();
@@ -186,30 +166,13 @@ public class SysEmployeeServiceImpl extends BaseServiceImpl<SysEmployee> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(SysEmployeeDTO sysEmployeeDTO) {
-        Long tenantId = SecurityUtils.getTenantId();
-
-        //检查组织架构数据
-        this.validateOrganization(tenantId, sysEmployeeDTO.getOrgId());
-
-        //检查岗位数据
-        if (sysEmployeeDTO.getPostId() != null) {
-            this.validatePost(tenantId, sysEmployeeDTO.getPostId());
-        }
 
         //新增用户记录
-        SysUserDTO user = new SysUserDTO();
-        BeanUtils.copyProperties(sysEmployeeDTO, user);
+        SysUserDTO dto = new SysUserDTO();
+        BeanUtils.copyProperties(sysEmployeeDTO, dto);
+        Result rs = this.sysUserClient.save(dto);
 
-        Result rs = this.sysUserClient.save(user);
-        Assert.isTrue(rs.getSuccess(), rs.getMsg());
-
-        //如果是租户登录则新增租户成员记录
-        if (tenantId != null) {
-            SysMemberDTO member = new SysMemberDTO();
-            member.setSysUserId(user.getId());
-            member.setTenantId(tenantId);
-            this.sysMemberClient.add(member);
-        }
+        Assert.isTrue(rs.getSuccess(),rs.getMsg());
 
         //新增员工记录
         SysEmployee employee = new SysEmployee();
@@ -229,25 +192,18 @@ public class SysEmployeeServiceImpl extends BaseServiceImpl<SysEmployee> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysEmployeeDTO sysEmployeeDTO) {
-        Long tenantId = SecurityUtils.getTenantId();
-
         Assert.notNull(sysEmployeeDTO.getOrgId(), "所属部门不能为空");
-        //检查组织架构数据
-        this.validateOrganization(tenantId, sysEmployeeDTO.getOrgId());
-
-        //检查岗位数据
-        if (sysEmployeeDTO.getPostId() != null) {
-            this.validatePost(tenantId, sysEmployeeDTO.getPostId());
-        }
-
-        SysUserDTO sysUserDTO = new SysUserDTO();
-        BeanUtils.copyProperties(sysEmployeeDTO, sysUserDTO);
-        this.sysUserClient.update(sysUserDTO);
 
         SysEmployee employee = this.selectById(sysEmployeeDTO.getId());
         //需改员工信息
         BeanUtils.copyProperties(sysEmployeeDTO, employee);
         this.updateById(employee);
+
+        SysUserDTO dto = new SysUserDTO();
+        BeanUtils.copyProperties(sysEmployeeDTO, dto);
+        dto.setId(employee.getSysUserId());
+        Result rs = this.sysUserClient.update(dto);
+        Assert.isTrue(rs.getSuccess(),rs.getMsg());
     }
 
 }

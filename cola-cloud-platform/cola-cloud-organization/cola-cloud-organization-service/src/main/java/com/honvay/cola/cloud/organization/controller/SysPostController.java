@@ -4,6 +4,7 @@ import com.honvay.cola.cloud.framework.base.audit.EnableAudit;
 import com.honvay.cola.cloud.framework.base.controller.BaseController;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.organization.entity.SysPost;
+import com.honvay.cola.cloud.organization.model.SysPostCriteria;
 import com.honvay.cola.cloud.organization.service.SysPostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,8 +35,8 @@ public class SysPostController extends BaseController {
      */
     @GetMapping(value = "/list")
     @ApiOperation("获取岗位列表")
-    public Result<List<SysPost>> list() {
-        return this.success(sysPostService.selectList());
+    public Result<List<SysPost>> list(SysPostCriteria sysPostCriteria) {
+        return this.success(sysPostService.selectPage(sysPostCriteria));
     }
 
     /**

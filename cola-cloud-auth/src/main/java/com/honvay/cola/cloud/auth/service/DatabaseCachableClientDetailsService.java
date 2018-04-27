@@ -142,7 +142,7 @@ public class DatabaseCachableClientDetailsService implements ClientDetailsServic
 
         clientDetails.setAuthorizedGrantTypes(Arrays.asList(StringUtils.split(entity.getGrantType(),",")));
 
-        List<Scope> scopes = this.scopeService.selectListByColumn("client_id", entity.getId());
+        List<Scope> scopes = this.scopeService.selectList("client_id", entity.getId());
 
         clientDetails.setScope(scopes.stream().map(scope -> scope.getScope()).collect(Collectors.toList()));
 

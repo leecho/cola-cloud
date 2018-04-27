@@ -37,7 +37,7 @@ public class SysUserController extends BaseController {
     private SysSocialService sysSocialService;
 
     @GetMapping("/findUserBySocial/{type}/{token}")
-    public SysUserAuthentication findUserBySocial(@PathVariable("type") String type, @PathVariable("token") String token){
+    public SysUserAuthentication findUserBySocial(@PathVariable("type") String type, @PathVariable("token") String token) {
         SysSocial sysSocial = this.sysSocialService.getSocialByTokenAndType(token, type);
         if (sysSocial != null) {
             return this.sysUserService.findUserById(sysSocial.getSysUserId());
@@ -76,18 +76,10 @@ public class SysUserController extends BaseController {
      */
     @GetMapping("/list")
     @ApiOperation("获取用户列表")
-    public Object list(Pagination pagination,SysUserCriteria sysUserCriteria) {
-        return this.success(this.sysUserService.list(pagination.getPage(), sysUserCriteria));
+    public Object list(SysUserCriteria sysUserCriteria) {
+        return this.success(this.sysUserService.selectPage(sysUserCriteria));
     }
 
-    /*@PostMapping("/upload/avatar")
-    @ApiOperation("上传头像")
-    public Result<String> uplodateAvatar(@RequestPart("avatar") MultipartFile avatar) throws IOException {
-        UserEntity user = SecurityUtils.currentUser();
-        String key = this.sysUserService.setUserAvatar(user.getId(), avatar);
-        return this.success(key);
-    }
-*/
     /**
      * 添加用户
      *
@@ -149,6 +141,7 @@ public class SysUserController extends BaseController {
 
     /**
      * 禁用用户
+     *
      * @param id
      * @return
      */
@@ -159,6 +152,7 @@ public class SysUserController extends BaseController {
 
     /**
      * 启用用户
+     *
      * @param id
      * @return
      */
@@ -188,13 +182,15 @@ public class SysUserController extends BaseController {
     public Object unlock(Long id) {
         return this.success(this.sysUserService.doUnlock(id).getStatus());
     }
-    
+
     /**
      * 创建保险员业务异常,物理删除用户数据
      */
     @GetMapping("/delete/{username}")
-    public Object deleteSysUser(@PathVariable String username){
-    	this.sysUserService.deleteSysUser(username);
-    	return this.success();
-    };
+    public Object deleteSysUser(@PathVariable String username) {
+        this.sysUserService.deleteSysUser(username);
+        return this.success();
+    }
+
+    ;
 }

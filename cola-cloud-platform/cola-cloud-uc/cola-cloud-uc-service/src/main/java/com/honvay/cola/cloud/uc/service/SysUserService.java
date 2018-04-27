@@ -105,8 +105,6 @@ public interface SysUserService extends BaseService<SysUser> {
     
     boolean deleteSysUser(String username);
 
-    Page<SysUser> list(Page page, SysUserCriteria sysUserCriteria);
-
     /**
      * 创建用户
      * @param sysUserDTO

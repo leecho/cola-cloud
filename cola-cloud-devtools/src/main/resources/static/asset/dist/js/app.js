@@ -891,7 +891,7 @@ app.controller('DepartmentCtrl', [
 					url = '/organization/department/update';
 				}*/
 				/*if($scope.department.parent){
-					$scope.department.pid = $scope.department.parent.id;
+					$scope.department.parent = $scope.department.parent.id;
 				}*/
 				if($scope.parent){
 					$scope.department.pid = $scope.parent.id;
@@ -946,7 +946,7 @@ app.controller('DepartmentMoveCtrl', [
 			/*if (data.id != null) {
 				$http.get("/tenant/organization/get?id=" + data.id).success(function(result) {
 					$scope.department = result.data;
-					$scope.newParent = result.data.pid;
+					$scope.newParent = result.data.parent;
 				});
 			}*/
 			
@@ -1308,7 +1308,7 @@ app.controller('ResourceMoveCtrl', [
 			/*if (data.id != null) {
 				$http.get("/tenant/organization/get?id=" + data.id).success(function(result) {
 					$scope.department = result.data;
-					$scope.newParent = result.data.pid;
+					$scope.newParent = result.data.parent;
 				});
 			}*/
 			

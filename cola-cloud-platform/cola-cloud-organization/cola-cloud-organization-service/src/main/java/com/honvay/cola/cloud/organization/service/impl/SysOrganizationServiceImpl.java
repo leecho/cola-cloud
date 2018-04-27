@@ -29,39 +29,41 @@ public class SysOrganizationServiceImpl extends TenancyServiceImpl<SysOrganizati
 		implements SysOrganizationService {
 
     @Autowired
-	private SysEmployeeService sysEmployeeService;
+    private SysEmployeeService sysEmployeeService;
 
     /**
      * 分页查询组织架构列表
+     *
      * @param page
      * @param name
      * @param code
      * @return
      */
     @Override
-    public List<SysOrganizationVO> list(Page page, String name, String code,String status){
-        return this.getMapper(SysOrganizationMapper.class).getOrganizationList(page,name,code,status);
+    public List<SysOrganizationVO> list(Page page, String name, String code, String status) {
+        return this.getMapper(SysOrganizationMapper.class).getOrganizationList(page, name, code, status);
     }
 
     /**
      * 获取组织架构信息
+     *
      * @param id
      * @return
      */
     @Override
-    public SysOrganizationVO get(Long id){
+    public SysOrganizationVO get(Long id) {
         return this.getMapper(SysOrganizationMapper.class).getOrganization(id);
     }
 
-	/**
-	 * @param id
-	 * @return
-	 */
-	@Override
-	public List<SysOrganization> getOrganizationListByPid(Long id){
-		EntityWrapper<SysOrganization> wrapper = this.newEntityWrapper();
-		//添加租户查询条件
-		this.addTenantCondition(wrapper);
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public List<SysOrganization> getOrganizationListByPid(Long id) {
+        EntityWrapper<SysOrganization> wrapper = this.newEntityWrapper();
+        //添加租户查询条件
+        this.addTenantCondition(wrapper);
         if (id == null) {
             wrapper.isNull("parent");
         } else {
@@ -69,30 +71,32 @@ public class SysOrganizationServiceImpl extends TenancyServiceImpl<SysOrganizati
         }
         wrapper.andNew().eq("deleted", CommonConstant.COMMON_NO).or().isNull("deleted");
         return this.selectList(wrapper);
-	}
+    }
 
 
     /**
      * 判断是否有子部门
+     *
      * @param id
      * @return
      */
-	private void assertHasChild(Serializable id) {
-		Assert.isTrue(CollectionUtils.isEmpty(this.selectListByColumn("parent", id)),"存在子部门无法删除");
-	}
+    private void assertHasChild(Serializable id) {
+        Assert.isTrue(CollectionUtils.isEmpty(this.selectList("parent", id)), "存在子部门无法删除");
+    }
 
     /**
      * 判断是否有员工
+     *
      * @param id
      * @return
      */
     private void assertHasEmployee(Serializable id) {
-        Assert.isTrue(CollectionUtils.isEmpty(this.sysEmployeeService.selectListByColumn("sys_org_id", id)),"存在员工无法删除");
-	}
+        Assert.isTrue(CollectionUtils.isEmpty(this.sysEmployeeService.selectList("sys_org_id", id)), "存在员工无法删除");
+    }
 
 
     @Override
-    public void delete(Serializable id){
+    public void delete(Serializable id) {
         this.assertHasChild(id);
         this.assertHasEmployee(id);
         SysOrganization sysOrganization = this.selectById(id);
@@ -101,52 +105,41 @@ public class SysOrganizationServiceImpl extends TenancyServiceImpl<SysOrganizati
     }
 
     @Override
-    public void insert(SysOrganizationDTO sysOrganizationDTO) {
-        SysOrganization sysOrganization = new SysOrganization();
-        BeanUtils.copyProperties(sysOrganizationDTO,sysOrganization);
-        this.insert(sysOrganization);
-        sysOrganizationDTO.setId(sysOrganization.getId());
+    public void update(SysOrganizationDTO dto) {
+        this.checkOrganization(dto);
+        SysOrganization sysOrganization = super.selectById(dto.getId());
+        org.springframework.beans.BeanUtils.copyProperties(dto, sysOrganization);
+        Long current = sysOrganization.getId();
+        Long pid = current;
+
+        if (sysOrganization.getId() != null) {
+            Assert.isTrue(!sysOrganization.getParent().equals(sysOrganization.getId()), "不能将自己设置为上级部门");
+        }
+
+        while (pid != null) {
+            pid = this.selectById(pid).getParent();
+            Assert.isTrue(pid.equals(current), "不能设置下级部门为上级");
+        }
+        super.updateById(sysOrganization);
     }
 
     @Override
-    public boolean insert(SysOrganization entity) {
-        this.assertDuplication(entity);
-        entity.setDeleted(CommonConstant.COMMON_NO);
-        return super.insert(entity);
+    public void insert(SysOrganizationDTO dto) {
+        SysOrganization sysOrganization = new SysOrganization();
+        org.springframework.beans.BeanUtils.copyProperties(dto, sysOrganization);
+        this.checkOrganization(dto);
+        sysOrganization.setDeleted(CommonConstant.COMMON_NO);
+        super.insert(sysOrganization);
     }
 
     /**
      * 判断重复
-     * @param sysOrganization
+     *
+     * @param dto
      */
-    private void assertDuplication(SysOrganization sysOrganization){
+    private void checkOrganization(SysOrganizationDTO dto) {
         EntityWrapper<SysOrganization> wrapper = this.newEntityWrapper();
-        wrapper.eq("code",sysOrganization.getCode());
-        if(sysOrganization.getTenantId() != null){
-            wrapper.eq("tenant_id",sysOrganization.getTenantId());
-        }else{
-            wrapper.isNull("tenant_id");
-        }
-        if(sysOrganization.getId() != null){
-            wrapper.ne("id",sysOrganization.getId());
-        }
-        Assert.isTrue(CollectionUtils.isEmpty(this.selectList(wrapper)),"部门编号已存在");
+        wrapper.eq("code", dto.getCode());
+        Assert.isTrue(CollectionUtils.isEmpty(this.selectList(wrapper)), "部门编号已存在");
     }
-
-    @Override
-	public boolean update(SysOrganizationDTO organizationDTO) {
-		SysOrganization sysOrganization = super.selectById(organizationDTO.getId());
-        this.assertDuplication(sysOrganization);
-        BeanUtils.copyProperties(organizationDTO,sysOrganization);
-		Long current = sysOrganization.getId();
-		Long pid = current;
-		if(sysOrganization.getId() != null){
-		    Assert.isTrue(!sysOrganization.getParent().equals(sysOrganization.getId()),"不能将自己设置为上级部门");
-        }
-		while(pid != null) {
-			pid = this.selectById(pid).getParent();
-			Assert.isTrue(pid.equals(current),"不能设置下级部门为上级");
-		}
-		return super.updateById(sysOrganization);
-	}
 }

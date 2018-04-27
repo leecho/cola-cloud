@@ -20,3 +20,14 @@ eureka:
     fetchRegistry: false
     server:
       waitTimeInMsWhenSyncEmpty: 0
+
+cola:
+  swagger2:
+    enable: true
+    base-package: com.honvay.cola
+    title : Cola-Cloud
+    description: Cola cloud Restful API docs
+    termsOfServiceUrl : http://localhost:4000
+    version: 1.0
+    apiName: Authorization
+    apiKeyName: Authorization

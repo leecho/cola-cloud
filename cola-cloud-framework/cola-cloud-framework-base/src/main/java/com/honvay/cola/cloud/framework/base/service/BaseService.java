@@ -4,10 +4,16 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import com.honvay.cloud.framework.criteria.Criteria;
+import com.honvay.cola.cloud.framework.base.pagination.PageableCriteria;
 
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 基础服务类
+ * @author LIQIU
+ * @param <T>
+ */
 public interface BaseService<T> extends IService<T>{
 
     /**
@@ -24,7 +30,7 @@ public interface BaseService<T> extends IService<T>{
      * @param value
      * @return
      */
-    List<T> selectListByColumn(String column, Object value);
+    List<T> selectList(String column, Object value);
 
     /**
      * 查询里欸包
@@ -77,4 +83,6 @@ public interface BaseService<T> extends IService<T>{
     Page<T> selectPage(Page<T> page, EntityWrapper<T> wrapper, Criteria<T> criteria);
 
     Page<T> selectPage(Page<T> page, Criteria<T> criteria);
+
+    Page<T> selectPage(PageableCriteria pageableCriteria);
 }

@@ -6,6 +6,7 @@ import com.honvay.cola.cloud.framework.base.controller.BaseController;
 import com.honvay.cola.cloud.framework.core.protocol.Result;
 import com.honvay.cola.cloud.framework.util.Assert;
 import com.honvay.cola.cloud.organization.entity.SysOrganization;
+import com.honvay.cola.cloud.organization.model.SysOrganizationCriteria;
 import com.honvay.cola.cloud.organization.model.SysOrganizationDTO;
 import com.honvay.cola.cloud.organization.model.SysOrganizationVO;
 import com.honvay.cola.cloud.organization.service.SysOrganizationService;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * 组织架构管理
  * </p>
  *
- * @Author 李球
+ * @Author LIQIU
  * @Date 2017-12-09
  */
 @EnableAudit
@@ -34,36 +35,32 @@ public class SysOrganizationController extends BaseController {
 
     @ApiOperation(value = "获取机构列表")
     @GetMapping("/list")
-    public Result<Page<SysOrganization>> list(String name, String code, String status) {
-        Page page = this.getPagination();
-        page.setRecords(this.sysOrganizationService.list(page, name, code, status));
-        return this.success(page);
+    public Result<Page<SysOrganization>> list(SysOrganizationCriteria sysOrganizationCriteria) {
+        return this.success(this.sysOrganizationService.selectPage(sysOrganizationCriteria));
     }
 
     @ApiOperation(value = "查询机构树")
-    @GetMapping("/getByParentId")
+    @GetMapping("/getByParent")
     public Object getByParentId(Long id) {
         return this.sysOrganizationService.getOrganizationListByPid(id);
     }
 
     @ApiOperation(value = "删除机构")
     @PostMapping("/delete")
-    public Result<String> del(@RequestParam Long id) {
+    public Result<String> delete(@RequestParam Long id) {
         sysOrganizationService.delete(id);
         return this.success();
     }
 
-    @ApiOperation(value = "新增机构")
-    @PostMapping("/add")
-    public Result<String> add(@Validated SysOrganizationDTO sysOrganizationDTO) {
-        this.sysOrganizationService.insert(sysOrganizationDTO);
-        return this.success();
-    }
-
-    @ApiOperation(value = "修改机构")
-    @PostMapping("/update")
-    public Result<String> update(@Validated SysOrganizationDTO sysOrganizationDTO) {
-        this.sysOrganizationService.update(sysOrganizationDTO);
+    @ApiOperation(value = "新增/修改机构")
+    @PostMapping("/save")
+    public Result<String> save(@Validated SysOrganizationDTO sysOrganizationDTO) {
+        if (sysOrganizationDTO.getId() != null) {
+            this.sysOrganizationService.update(sysOrganizationDTO);
+        } else {
+            Assert.notNull(sysOrganizationDTO.getParent(), "所属部门不能为空");
+            this.sysOrganizationService.insert(sysOrganizationDTO);
+        }
         return this.success();
     }
 

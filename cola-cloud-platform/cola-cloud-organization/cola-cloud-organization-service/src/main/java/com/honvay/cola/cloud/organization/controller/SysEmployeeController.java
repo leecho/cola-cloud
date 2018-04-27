@@ -37,7 +37,7 @@ public class SysEmployeeController extends BaseController {
      */
     @GetMapping(value = "/list")
     @ApiOperation("获取部门成员列表")
-    public Result<Page<List<SysEmployeeVO>>> list(String name, String username, Integer status) {
+    public Result<Page<SysEmployeeVO>> list(String name, String username, Integer status) {
         return this.success(sysEmployeeService.getEmployeeListByOrgId(this.getPagination(),name,username,status));
     }
 

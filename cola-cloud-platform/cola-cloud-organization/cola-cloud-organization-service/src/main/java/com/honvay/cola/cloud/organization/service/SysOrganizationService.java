@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface SysOrganizationService extends BaseService<SysOrganization> {
 
-    List<SysOrganizationVO> list(Page page, String name, String code, String status);
+	List<SysOrganizationVO> list(Page page, String name, String code,String status);
 
 	SysOrganizationVO get(Long id);
 
@@ -20,25 +20,15 @@ public interface SysOrganizationService extends BaseService<SysOrganization> {
 	 * @param id
 	 * @return
 	 */
-    List<SysOrganization> getOrganizationListByPid(Long id);
+	List<SysOrganization> getOrganizationListByPid(Long id);
 
 	/**
 	 * 删除部门，逻辑删除
 	 * @param id
 	 */
-    void delete(Serializable id);
+	void delete(Serializable id);
 
-	/**
-	 * 新增组织架构
-	 * @param sysOrganizationDTO
-	 */
-    void insert(SysOrganizationDTO sysOrganizationDTO);
+	void update(SysOrganizationDTO sysOrganizationDTO);
 
-
-    /**
-     * 修改组织架构
-     * @param organizationDTO
-     * @return
-     */
-    boolean update(SysOrganizationDTO organizationDTO);
+	void insert(SysOrganizationDTO sysOrganizationDTO);
 }
