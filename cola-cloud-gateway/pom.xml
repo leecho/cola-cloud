@@ -43,6 +43,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.honvay.cola</groupId>
+			<artifactId>cola-cloud-framework-starter-swagger</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
